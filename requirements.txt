@@ -1,0 +1,21 @@
+Django==5.0
+djangorestframework
+django-cors-headers
+celery
+redis
+pandas
+numpy
+scikit-learn
+torch
+torchvision
+transformers
+pytesseract
+opencv-python
+xgboost
+prophet
+mlflow
+gunicorn
+boto3
+pytesseract
+Pillow
+pdf2image    # optionnel si tu veux supporter les PDF (requires poppler)

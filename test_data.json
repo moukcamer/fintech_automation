@@ -1,0 +1,190 @@
+[
+  {
+    "model": "core.Company",
+    "pk": 1,
+    "fields": {
+      "name": "FinOptiAI Ltd",
+      "address": "Avenue Kennedy, Douala, Cameroon",
+      "email": "info@finoptiai.com",
+      "phone": "+237650000000",
+      "website": "https://finoptiai.com"
+    }
+  },
+
+  {
+    "model": "auth.User",
+    "pk": 1,
+    "fields": {
+      "username": "admin",
+      "password": "pbkdf2_sha256$260000$syntheticpass$PvZa9L12xd2s+fakehash==",
+      "is_active": true,
+      "is_staff": true,
+      "is_superuser": true
+    }
+  },
+
+  {
+    "model": "core.Profile",
+    "pk": 1,
+    "fields": {
+      "user": 1,
+      "company": 1,
+      "job_title": "Chief Data Officer",
+      "phone": "+237651111111"
+    }
+  },
+
+  {
+    "model": "accounting.Account",
+    "pk": 1,
+    "fields": {
+      "name": "Cash Account",
+      "code": "1001",
+      "account_type": "ASSET",
+      "balance": "2500000.00",
+      "created_at": "2024-08-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "accounting.Account",
+    "pk": 2,
+    "fields": {
+      "name": "Sales Income",
+      "code": "4001",
+      "account_type": "INCOME",
+      "balance": "840000.00",
+      "created_at": "2024-08-01T10:05:00Z"
+    }
+  },
+  {
+    "model": "accounting.Account",
+    "pk": 3,
+    "fields": {
+      "name": "Office Expense",
+      "code": "5001",
+      "account_type": "EXPENSE",
+      "balance": "340000.00",
+      "created_at": "2024-08-01T10:10:00Z"
+    }
+  },
+
+  {
+    "model": "accounting.Transaction",
+    "pk": 1,
+    "fields": {
+      "account": 1,
+      "amount": "150000.00",
+      "transaction_type": "DEBIT",
+      "description": "Initial cash injection",
+      "reference": "TRX-INIT-001",
+      "created_by": 1,
+      "created_at": "2024-08-02T08:10:00Z"
+    }
+  },
+  {
+    "model": "accounting.Transaction",
+    "pk": 2,
+    "fields": {
+      "account": 2,
+      "amount": "400000.00",
+      "transaction_type": "CREDIT",
+      "description": "Customer payment for services",
+      "reference": "TRX-SALE-001",
+      "created_by": 1,
+      "created_at": "2024-08-02T09:00:00Z"
+    }
+  },
+
+  {
+    "model": "accounting.Invoice",
+    "pk": 1,
+    "fields": {
+      "customer_name": "Alpha Construction",
+      "customer_email": "alpha@company.com",
+      "invoice_number": "INV-2025-001",
+      "issue_date": "2025-01-01",
+      "due_date": "2025-01-15",
+      "total_amount": "500000.00",
+      "paid": false
+    }
+  },
+
+  {
+    "model": "accounting.Payment",
+    "pk": 1,
+    "fields": {
+      "invoice": 1,
+      "amount": "250000.00",
+      "payment_date": "2025-01-10",
+      "method": "BANK_TRANSFER",
+      "reference": "PAY-2025-001"
+    }
+  },
+
+  {
+    "model": "documents.Document",
+    "pk": 1,
+    "fields": {
+      "title": "Service Contract Alpha",
+      "document_type": "CONTRACT",
+      "uploaded_by": 1,
+      "file": "documents/contract_alpha.pdf",
+      "upload_date": "2024-08-05T11:00:00Z",
+      "description": "Contract for financial automation deployment"
+    }
+  },
+
+  {
+    "model": "documents.Receipt",
+    "pk": 1,
+    "fields": {
+      "document": 1,
+      "amount": "150000.00",
+      "received_from": "Alpha Construction",
+      "date": "2024-08-05"
+    }
+  },
+
+  {
+    "model": "ml.Dataset",
+    "pk": 1,
+    "fields": {
+      "name": "Transaction Training Set",
+      "description": "Synthetic transactional data for fraud detection",
+      "file": "ml/datasets/training_data.csv",
+      "uploaded_by": 1,
+      "uploaded_at": "2024-07-22T09:00:00Z"
+    }
+  },
+
+  {
+    "model": "ml.MLModel",
+    "pk": 1,
+    "fields": {
+      "name": "FraudDetector",
+      "version": "1.0",
+      "accuracy": 0.92,
+      "created_at": "2024-09-11T15:00:00Z",
+      "file": "ml/models/fraud_detector_v1.pkl"
+    }
+  },
+
+  {
+    "model": "ml.Prediction",
+    "pk": 1,
+    "fields": {
+      "model": 1,
+      "input_data": {
+        "amount": 350000,
+        "country": "CM",
+        "channel": "mobile"
+      },
+      "output_data": {
+        "fraud_probability": 0.03,
+        "label": "legitimate"
+      },
+      "predicted_at": "2025-01-01T10:00:00Z",
+      "user": 1
+    }
+  }
+]
