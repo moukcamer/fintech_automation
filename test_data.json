@@ -1,190 +1,172 @@
 [
   {
-    "model": "core.Company",
+    "model": "finance.company",
     "pk": 1,
     "fields": {
-      "name": "FinOptiAI Ltd",
-      "address": "Avenue Kennedy, Douala, Cameroon",
-      "email": "info@finoptiai.com",
-      "phone": "+237650000000",
-      "website": "https://finoptiai.com"
-    }
-  },
-
-  {
-    "model": "auth.User",
-    "pk": 1,
-    "fields": {
-      "username": "admin",
-      "password": "pbkdf2_sha256$260000$syntheticpass$PvZa9L12xd2s+fakehash==",
-      "is_active": true,
-      "is_staff": true,
-      "is_superuser": true
-    }
-  },
-
-  {
-    "model": "core.Profile",
-    "pk": 1,
-    "fields": {
-      "user": 1,
-      "company": 1,
-      "job_title": "Chief Data Officer",
-      "phone": "+237651111111"
-    }
-  },
-
-  {
-    "model": "accounting.Account",
-    "pk": 1,
-    "fields": {
-      "name": "Cash Account",
-      "code": "1001",
-      "account_type": "ASSET",
-      "balance": "2500000.00",
-      "created_at": "2024-08-01T10:00:00Z"
+      "name": "MTN Cameroon",
+      "address": "Rue des Banques, Douala",
+      "email": "contact@mtn.cm",
+      "phone": "+237 6 99 00 00 00",
+      "created_at": "2025-01-01T08:00:00Z"
     }
   },
   {
-    "model": "accounting.Account",
+    "model": "finance.company",
     "pk": 2,
     "fields": {
-      "name": "Sales Income",
-      "code": "4001",
-      "account_type": "INCOME",
-      "balance": "840000.00",
-      "created_at": "2024-08-01T10:05:00Z"
+      "name": "Orange Cameroun",
+      "address": "Immeuble Orange, Yaoundé",
+      "email": "info@orange.cm",
+      "phone": "+237 6 98 11 22 33",
+      "created_at": "2025-01-02T09:30:00Z"
     }
   },
   {
-    "model": "accounting.Account",
+    "model": "finance.company",
     "pk": 3,
     "fields": {
-      "name": "Office Expense",
-      "code": "5001",
-      "account_type": "EXPENSE",
-      "balance": "340000.00",
-      "created_at": "2024-08-01T10:10:00Z"
+      "name": "UBA Cameroon",
+      "address": "Avenue Kennedy, Yaoundé",
+      "email": "contact.cm@ubagroup.com",
+      "phone": "+237 6 77 88 99 00",
+      "created_at": "2025-01-03T14:20:00Z"
     }
   },
 
   {
-    "model": "accounting.Transaction",
+    "model": "finance.account",
+    "pk": 1,
+    "fields": {
+      "company": 1,
+      "name": "MTN Mobile Money Wallet",
+      "account_type": "ASSET",
+      "balance": "1250000.00",
+      "created_at": "2025-01-10T10:00:00Z"
+    }
+  },
+  {
+    "model": "finance.account",
+    "pk": 2,
+    "fields": {
+      "company": 2,
+      "name": "Orange Money Principal",
+      "account_type": "ASSET",
+      "balance": "890000.50",
+      "created_at": "2025-01-11T11:15:00Z"
+    }
+  },
+  {
+    "model": "finance.account",
+    "pk": 3,
+    "fields": {
+      "company": 3,
+      "name": "Compte Courant UBA",
+      "account_type": "ASSET",
+      "balance": "3500000.00",
+      "created_at": "2025-01-12T15:45:00Z"
+    }
+  },
+  {
+    "model": "finance.account",
+    "pk": 4,
+    "fields": {
+      "company": 1,
+      "name": "Revenus Commissions MTN",
+      "account_type": "INCOME",
+      "balance": "0.00",
+      "created_at": "2025-01-13T09:00:00Z"
+    }
+  },
+
+  {
+    "model": "finance.transaction",
     "pk": 1,
     "fields": {
       "account": 1,
-      "amount": "150000.00",
-      "transaction_type": "DEBIT",
-      "description": "Initial cash injection",
-      "reference": "TRX-INIT-001",
-      "created_by": 1,
-      "created_at": "2024-08-02T08:10:00Z"
+      "amount": "500000.00",
+      "transaction_type": "CREDIT",
+      "description": "Rechargement flotte agents MTN",
+      "date": "2025-11-15T14:30:00Z"
     }
   },
   {
-    "model": "accounting.Transaction",
+    "model": "finance.transaction",
     "pk": 2,
     "fields": {
-      "account": 2,
-      "amount": "400000.00",
+      "account": 1,
+      "amount": "125000.00",
+      "transaction_type": "DEBIT",
+      "description": "Paiement fournisseur internet",
+      "date": "2025-11-20T09:20:00Z"
+    }
+  },
+  {
+    "model": "finance.transaction",
+    "pk": 3,
+    "fields": {
+      "account": 3,
+      "amount": "2000000.00",
       "transaction_type": "CREDIT",
-      "description": "Customer payment for services",
-      "reference": "TRX-SALE-001",
-      "created_by": 1,
-      "created_at": "2024-08-02T09:00:00Z"
+      "description": "Virement reçu client entreprise",
+      "date": "2025-11-28T16:45:00Z"
     }
   },
 
   {
-    "model": "accounting.Invoice",
+    "model": "finance.invoice",
     "pk": 1,
     "fields": {
-      "customer_name": "Alpha Construction",
-      "customer_email": "alpha@company.com",
-      "invoice_number": "INV-2025-001",
-      "issue_date": "2025-01-01",
-      "due_date": "2025-01-15",
-      "total_amount": "500000.00",
-      "paid": false
+      "invoice_number": "INV-2025-0001",
+      "company": 1,
+      "issued_to": "Société CamTel S.A.",
+      "total_amount": "3750000.00",
+      "status": "PAID",
+      "issued_at": "2025-10-01T10:00:00Z"
+    }
+  },
+  {
+    "model": "finance.invoice",
+    "pk": 2,
+    "fields": {
+      "invoice_number": "INV-2025-0002",
+      "company": 2,
+      "issued_to": "Nexttel Cameroun",
+      "total_amount": "2150000.00",
+      "status": "UNPAID",
+      "issued_at": "2025-11-10T14:30:00Z"
+    }
+  },
+  {
+    "model": "finance.invoice",
+    "pk": 3,
+    "fields": {
+      "invoice_number": "INV-2025-0003",
+      "company": 1,
+      "issued_to": "Ministère des Finances",
+      "total_amount": "8900000.00",
+      "status": "PARTIAL",
+      "issued_at": "2025-11-20T09:00:00Z"
     }
   },
 
   {
-    "model": "accounting.Payment",
+    "model": "finance.payment",
     "pk": 1,
     "fields": {
       "invoice": 1,
-      "amount": "250000.00",
-      "payment_date": "2025-01-10",
-      "method": "BANK_TRANSFER",
-      "reference": "PAY-2025-001"
+      "amount": "3750000.00",
+      "payment_method": "BANK_TRANSFER",
+      "date": "2025-10-15T11:20:00Z"
     }
   },
-
   {
-    "model": "documents.Document",
-    "pk": 1,
+    "model": "finance.payment",
+    "pk": 2,
     "fields": {
-      "title": "Service Contract Alpha",
-      "document_type": "CONTRACT",
-      "uploaded_by": 1,
-      "file": "documents/contract_alpha.pdf",
-      "upload_date": "2024-08-05T11:00:00Z",
-      "description": "Contract for financial automation deployment"
-    }
-  },
-
-  {
-    "model": "documents.Receipt",
-    "pk": 1,
-    "fields": {
-      "document": 1,
-      "amount": "150000.00",
-      "received_from": "Alpha Construction",
-      "date": "2024-08-05"
-    }
-  },
-
-  {
-    "model": "ml.Dataset",
-    "pk": 1,
-    "fields": {
-      "name": "Transaction Training Set",
-      "description": "Synthetic transactional data for fraud detection",
-      "file": "ml/datasets/training_data.csv",
-      "uploaded_by": 1,
-      "uploaded_at": "2024-07-22T09:00:00Z"
-    }
-  },
-
-  {
-    "model": "ml.MLModel",
-    "pk": 1,
-    "fields": {
-      "name": "FraudDetector",
-      "version": "1.0",
-      "accuracy": 0.92,
-      "created_at": "2024-09-11T15:00:00Z",
-      "file": "ml/models/fraud_detector_v1.pkl"
-    }
-  },
-
-  {
-    "model": "ml.Prediction",
-    "pk": 1,
-    "fields": {
-      "model": 1,
-      "input_data": {
-        "amount": 350000,
-        "country": "CM",
-        "channel": "mobile"
-      },
-      "output_data": {
-        "fraud_probability": 0.03,
-        "label": "legitimate"
-      },
-      "predicted_at": "2025-01-01T10:00:00Z",
-      "user": 1
+      "invoice": 3,
+      "amount": "4000000.00",
+      "payment_method": "MOBILE_MONEY",
+      "date": "2025-11-25T13:45:00Z"
     }
   }
 ]

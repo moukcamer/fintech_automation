@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Invoice #{{ invoice.id }}</h2>
+
+<div class="card shadow-sm mt-3">
+    <div class="card-body">
+
+        <p><strong>Customer:</strong> {{ invoice.customer }}</p>
+        <p><strong>Amount:</strong> {{ invoice.amount }} XAF</p>
+        <p><strong>Status:</strong> {{ invoice.status }}</p>
+        <p><strong>Date:</strong> {{ invoice.date }}</p>
+        <hr>
+
+        <h4>Payments</h4>
+        <ul class="list-group mb-4">
+            {% for p in payments %}
+            <li class="list-group-item d-flex justify-content-between">
+                <span>{{ p.payment_date }} — {{ p.method }}</span>
+                <span class="fw-bold">{{ p.amount }} XAF</span>
+            </li>
+            {% empty %}
+            <li class="list-group-item text-muted">No payments</li>
+            {% endfor %}
+        </ul>
+
+        <h4>Documents</h4>
+        <ul class="list-group">
+            {% for doc in documents %}
+            <li class="list-group-item">
+                <a href="{{ doc.file.url }}" target="_blank">{{ doc.file.name }}</a>
+            </li>
+            {% empty %}
+            <li class="list-group-item text-muted">No documents</li>
+            {% endfor %}
+        </ul>
+
+    </div>
+</div>
+{% endblock %}

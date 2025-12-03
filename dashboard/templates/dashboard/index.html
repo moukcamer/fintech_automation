@@ -1,0 +1,97 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-4">
+    <h2 class="mb-4 text-center">📊 Tableau de bord financier</h2>
+
+    <div class="row">
+
+        <!-- Total Factures -->
+        <div class="col-md-3">
+            <div class="card shadow">
+                <div class="card-body text-center">
+                    <h5>Total Factures</h5>
+                    <h3>{{ total_invoices }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Factures Payées -->
+        <div class="col-md-3">
+            <div class="card shadow bg-success text-white">
+                <div class="card-body text-center">
+                    <h5>Payées</h5>
+                    <h3>{{ total_paid }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Factures Impayées -->
+        <div class="col-md-3">
+            <div class="card shadow bg-danger text-white">
+                <div class="card-body text-center">
+                    <h5>Impayées</h5>
+                    <h3>{{ total_unpaid }}</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total Paiements -->
+        <div class="col-md-3">
+            <div class="card shadow bg-primary text-white">
+                <div class="card-body text-center">
+                    <h5>Total Paiements</h5>
+                    <h3>{{ total_payments_amount }} FCFA</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Solde total -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <div class="card shadow bg-warning">
+                <div class="card-body text-center">
+                    <h4>💰 Solde Total des Comptes</h4>
+                    <h2><strong>{{ total_balance }} FCFA</strong></h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Transactions récentes -->
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <h4>🧾 Transactions récentes</h4>
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Compte</th>
+                        <th>Type</th>
+                        <th>Montant</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tx in recent_transactions %}
+                    <tr>
+                        <td>{{ tx.account.name }}</td>
+                        <td>{{ tx.transaction_type }}</td>
+                        <td>{{ tx.amount }} FCFA</td>
+                        <td>{{ tx.description }}</td>
+                        <td>{{ tx.created_at }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center">Aucune transaction récente</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+{% endblock %}

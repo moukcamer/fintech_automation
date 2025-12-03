@@ -13,7 +13,13 @@ class Document(models.Model):
 
     title = models.CharField(max_length=100)
     document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPES)
-    uploaded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    uploaded_by = models.ForeignKey(
+    User,
+    on_delete=models.SET_NULL,
+    null=True,
+    related_name="uploaded_documents"
+)
+
     file = models.FileField(upload_to="documents/")
     upload_date = models.DateTimeField(auto_now_add=True)
     description = models.TextField(blank=True)
