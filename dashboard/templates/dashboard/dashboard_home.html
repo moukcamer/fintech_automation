@@ -1,227 +1,262 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Fintech Automation | Dashboard</title>
 
-  <!-- Bootstrap 5 + Icons -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+{% block extra_css %}
 
-  <!-- Chart.js -->
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<link rel="stylesheet" href="{% static 'dashboard/dashboard.css' %}">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    height: 100vh;
+    background: #1d3557;
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 25px;
+    display: flex;
+    flex-direction: column;
+}
 
-  <!-- Google Fonts: Inter (comme dans les fintechs modernes) -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <style>
-    body { font-family: 'Inter', sans-serif; background: #f8f9fa; }
-    .card { border: none; border-radius: 16px; box-shadow: 0 4px 20px rgba(0,0,0,0.05); }
-    .stat-card { transition: transform 0.2s; }
-    .stat-card:hover { transform: translateY(-5px); }
-    .badge-paid { background: #d4edda; color: #155724; }
-    .badge-unpaid { background: #f8d7da; color: #721c24; }
-    .badge-partial { background: #fff3cd; color: #856404; }
-    canvas { max-height: 320px; }
-  </style>
-</head>
-<body class="bg-light">
+.sidebar h2 {
+    font-size: 22px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-weight: 800;
+}
 
-<div class="container-fluid py-4">
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2 class="fw-bold text-dark mb-0">
-      Bonjour, <span class="text-primary">{{ user.get_full_name|default:user.username }}</span>
-    </h2>
-    <small class="text-muted">Aujourd'hui : {{ today|date:"d F Y" }}</small>
-  </div>
+.sidebar a {
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: #cbd5e1;
+    text-decoration: none;
+    font-size: 15px;
+    transition: .2s;
+}
 
-  <!-- Cartes de résumé -->
-  <div class="row g-4 mb-5">
-    <div class="col-md-3">
-      <div class="card stat-card bg-primary text-white">
-        <div class="card-body">
-          <div class="d-flex justify-content-between">
-            <div>
-              <h5 class="mb-1">Solde Total</h5>
-              <h3 class="mb-0">{{ total_balance|floatformat:0 }} FCFA</h3>
-              <small class="opacity-75">+12% vs mois dernier</small>
-            </div>
-            <i class="bi bi-wallet2 fs-1 opacity-75"></i>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card stat-card bg-success text-white">
-        <div class="card-body">
-          <h5 class="mb-1">Revenus (30j)</h5>
-          <h3 class="mb-0">{{ total_income|floatformat:0 }} FCFA</h3>
-          <small class="opacity-75">Crédits</small>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card stat-card bg-danger text-white">
-        <div class="card-body">
-          <h5 class="mb-1">Dépenses (30j)</h5>
-          <h3 class="mb-0">{{ total_expenses|floatformat:0 }} FCFA</h3>
-          <small class="opacity-75">Débits</small>
-        </div>
-      </div>
-    </div>
-    <div class="col-md-3">
-      <div class="card stat-card bg-warning text-dark">
-        <div class="card-body">
-          <h5 class="mb-1">Factures en attente</h5>
-          <h3 class="mb-0">{{ unpaid_invoices }} factures</h3>
-          <small class="opacity-75">{{ unpaid_amount|floatformat:0 }} FCFA</small>
-        </div>
-      </div>
-    </div>
-  </div>
+.sidebar a:hover,
+.sidebar a.active {
+    background: #457b9d;
+    color: white;
+}
 
-  <div class="row g-4">
-    <!-- Graphique évolution solde -->
-    <div class="col-lg-8">
-      <div class="card">
-        <div class="card-header bg-white border-0 pb-0">
-          <h5 class="mb-0">Évolution du solde (30 derniers jours)</h5>
-        </div>
-        <div class="card-body">
-          <canvas id="balanceChart"></canvas>
-        </div>
-      </div>
-    </div>
+/* NAVBAR */
+.navbar-custom {
+    margin-left: 240px;
+    height: 60px;
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 0 25px;
+    justify-content: space-between;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
 
-    <!-- Dernières transactions -->
-    <div class="col-lg-4">
-      <div class="card h-100">
-        <div class="card-header bg-white border-0">
-          <h5 class="mb-0">Dernières transactions</h5>
-        </div>
-        <div class="card-body p-0">
-          <div class="list-group list-group-flush">
-            {% for tx in recent_transactions %}
-              <div class="list-group-item px-4 py-3">
-                <div class="d-flex justify-content-between align-items-center">
-                  <div>
-                    <strong>{{ tx.description|default:"Transaction" }}</strong><br>
-                    <small class="text-muted">{{ tx.account.name }} • {{ tx.date|date:"d/m H:i" }}</small>
-                  </div>
-                  <span class="{% if tx.transaction_type == 'CREDIT' %}text-success{% else %}text-danger{% endif %} fw-bold">
-                    {% if tx.transaction_type == 'CREDIT' %}+{% else %}-{% endif %}{{ tx.amount|floatformat:0 }} FCFA
-                  </span>
-                </div>
-              </div>
-            {% empty %}
-              <div class="list-group-item text-center text-muted py-5">
-                Aucune transaction récente
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+.navbar-custom .user {
+    font-weight: 600;
+    color: #1d3557;
+}
 
-  <div class="row g-4 mt-3">
-    <!-- Factures récentes -->
-    <div class="col-lg-7">
-      <div class="card">
-        <div class="card-header bg-white border-0">
-          <h5 class="mb-0">Factures récentes</h5>
-        </div>
-        <div class="card-body">
-          <div class="table-responsive">
-            <table class="table table-hover align-middle">
-              <thead class="text-muted small">
-                <tr>
-                  <th>N° Facture</th>
-                  <th>Client</th>
-                  <th>Montant</th>
-                  <th>Statut</th>
-                  <th>Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {% for inv in recent_invoices %}
-                  <tr>
-                    <td><strong>{{ inv.invoice_number }}</strong></td>
-                    <td>{{ inv.issued_to }}</td>
-                    <td>{{ inv.total_amount|floatformat:0 }} FCFA</td>
-                    <td>
-                      {% if inv.status == "PAID" %}
-                        <span class="badge badge-paid rounded-pill">Payée</span>
-                      {% elif inv.status == "UNPAID" %}
-                        <span class="badge badge-unpaid rounded-pill">Impayée</span>
-                      {% else %}
-                        <span class="badge badge-partial rounded-pill">Partielle</span>
-                      {% endif %}
-                    </td>
-                    <td>{{ inv.issued_at|date:"d/m/Y" }}</td>
-                  </tr>
-                {% empty %}
-                  <tr><td colspan="5" class="text-center text-muted">Aucune facture</td></tr>
-                {% endfor %}
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
+/* CONTENT */
+.main-content {
+    margin-left: 240px;
+    padding: 25px 35px;
+}
 
-    <!-- Répartition par compte -->
-    <div class="col-lg-5">
-      <div class="card h-100">
-        <div class="card-header bg-white border-0">
-          <h5 class="mb-0">Répartition par compte</h5>
-        </div>
-        <div class="card-body d-flex align-items-center justify-content-center">
-          <canvas id="accountChart" width="300" height="300"></canvas>
-        </div>
-      </div>
-    </div>
-  </div>
+.section-title {
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 18px;
+    color: #1d3557;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+    <h2>FINTECH BI</h2>
+
+    <a href="{% url 'dashboard' %}" class="active">
+        <i class="bi bi-speedometer2"></i> Dashboard
+    </a>
+
+    <a href="#">
+        <i class="bi bi-cash-stack"></i> Transactions
+    </a>
+
+    <a href="#">
+        <i class="bi bi-receipt"></i> Invoices
+    </a>
+
+    <a href="#">
+        <i class="bi bi-credit-card"></i> Comptes
+    </a>
+
+    <a href="#">
+        <i class="bi bi-gear"></i> Paramètres
+    </a>
 </div>
 
-<!-- Scripts Chart.js -->
+<!-- NAVBAR -->
+<div class="navbar-custom">
+    <span class="fs-5 fw-bold">Dashboard financier</span>
+
+    <div class="user">
+        Bonjour, {{ user.first_name|default:user.username }}
+    </div>
+</div>
+
+<!-- PAGE CONTENT -->
+<div class="main-content">
+
+    <!-- FILTRES -->
+    <div class="filter-box">
+        <form method="get" class="d-flex gap-3">
+            <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
+            <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
+            
+            <select name="t_type" class="form-select">
+                <option value="">Type transaction</option>
+                <option value="deposit">Dépôt</option>
+                <option value="withdrawal">Retrait</option>
+            </select>
+
+            <button class="btn btn-primary">
+                <i class="bi bi-funnel"></i> Filtrer
+            </button>
+        </form>
+    </div>
+
+    <!-- KPI -->
+    <div class="kpi-grid">
+        <div class="kpi-card">
+            <div class="kpi-title">Solde total</div>
+            <div class="kpi-value">{{ summary.total_balance|floatformat:0 }} FCFA</div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-title">Revenus</div>
+            <div class="kpi-value text-success">+{{ summary.total_income|floatformat:0 }} FCFA</div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-title">Dépenses</div>
+            <div class="kpi-value text-danger">-{{ summary.total_expenses|floatformat:0 }} FCFA</div>
+        </div>
+
+        <div class="kpi-card">
+            <div class="kpi-title">Factures en attente</div>
+            <div class="kpi-value">{{ summary.pending_invoices }}</div>
+        </div>
+    </div>
+
+    <!-- GRAPHIQUES -->
+    <div class="charts-grid">
+        <div class="chart-box">
+            <h3 class="section-title"><i class="bi bi-graph-up"></i> Évolution du solde</h3>
+            <canvas id="balanceChart"></canvas>
+        </div>
+
+        <div class="chart-box">
+            <h3 class="section-title"><i class="bi bi-bar-chart"></i> Distribution comptes</h3>
+            <canvas id="accountsChart"></canvas>
+        </div>
+    </div>
+
+    <!-- TABLES -->
+    <div class="tables-grid">
+        
+        <div>
+            <h3 class="section-title"><i class="bi bi-arrow-left-right"></i> Transactions récentes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for tr in recent_transactions %}
+                    <tr>
+                        <td>{{ tr.transaction_type }}</td>
+                        <td>{{ tr.description }}</td>
+                        <td>{{ tr.amount }} FCFA</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" class="text-center py-4">Aucune transaction</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div>
+            <h3 class="section-title"><i class="bi bi-receipt"></i> Factures récentes</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Numéro</th>
+                        <th>Client</th>
+                        <th>Montant</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for inv in invoices %}
+                    <tr>
+                        <td>{{ inv.invoice_number }}</td>
+                        <td>{{ inv.customer }}</td>
+                        <td>{{ inv.amount }} FCFA</td>
+                    </tr>
+                    {% empty %}
+                    <tr><td colspan="3" class="text-center py-4">Aucune facture</td></tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-  const balanceCtx = document.getElementById('balanceChart').getContext('2d');
-  new Chart(balanceCtx, {
+const chartData = {{ chart_data|safe }};
+
+// Balance evolution
+new Chart(document.getElementById("balanceChart"), {
     type: 'line',
     data: {
-      labels: {{ balance_dates|safe }},
-      datasets: [{
-        label: 'Solde total',
-        data: {{ balance_values|safe }},
-        borderColor: '#4361ee',
-        backgroundColor: 'rgba(67, 97, 238, 0.1)',
-        fill: true,
-        tension: 0.4,
-        pointBackgroundColor: '#4361ee'
-      }]
-    },
-    options: { responsive: true, plugins: { legend: { display: false } } }
-  });
-
-  const accountCtx = document.getElementById('accountChart').getContext('2d');
-  new Chart(accountCtx, {
-    type: 'doughnut',
-    data: {
-      labels: {{ account_names|safe }},
-      datasets: [{
-        data: {{ account_balances|safe }},
-        backgroundColor: ['#4361ee', '#3f37c9', '#560bad', '#7209b7', '#b5179e', '#f72585']
-      }]
-    },
-    options: {
-      responsive: true,
-      plugins: { legend: { position: 'right' } }
+        labels: chartData.labels,
+        datasets: [{
+            label: "Solde",
+            data: chartData.balance,
+            borderWidth: 3,
+            tension: 0.4
+        }]
     }
-  });
+});
+
+// Accounts distribution
+new Chart(document.getElementById("accountsChart"), {
+    type: 'bar',
+    data: {
+        labels: chartData.accounts_labels,
+        datasets: [{
+            label: "Comptes",
+            data: chartData.accounts_values,
+            borderWidth: 1
+        }]
+    }
+});
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+{% endblock %}

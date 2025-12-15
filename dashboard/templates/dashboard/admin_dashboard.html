@@ -1,0 +1,61 @@
+from django.contrib import admin
+from django.urls import path
+from django.template.response import TemplateResponse
+from django.db.models import Sum, Count
+from finance.models import Invoice, Payment, Account, Transaction
+
+class DashboardAdminSite(admin.AdminSite):
+site_header = "Fintech Automation Admin"
+site_title = "Fintech Automation"
+index_title = "Tableau de bord"
+
+```
+def get_urls(self):
+    urls = super().get_urls()
+    custom_urls = [
+        path('dashboard/', self.admin_view(self.dashboard_view), name='admin-dashboard'),
+    ]
+    return custom_urls + urls
+
+def dashboard_view(self, request):
+    # Statistiques principales
+    total_balance = Account.objects.aggregate(total=Sum("balance"))["total"] or 0
+    total_income = Transaction.objects.filter(transaction_type='CREDIT').aggregate(total=Sum("amount"))["total"] or 0
+    total_expenses = Transaction.objects.filter(transaction_type'DEBIT').aggregate(total=Sum("amount"))["total"] or 0
+    pending_invoices = Invoice.objects.filter(status="UNPAID").count()
+
+    # Transactions et factures récentes
+    recent_transactions = Transaction.objects.order_by("-created_at")[:10]
+    recent_invoices = Invoice.objects.order_by("-issued_at")[:10]
+
+    # Évolution du solde
+    balance_evolution = Transaction.objects.order_by("created_at").values_list("created_at", "amount")
+
+    # Répartition des comptes
+    accounts_distribution = Account.objects.values("account_type").annotate(total=Count("id"))
+
+    context = dict(
+        self.each_context(request),
+        total_balance=total_balance,
+        total_income=total_income,
+        total_expenses=total_expenses,
+        pending_invoices=pending_invoices,
+        recent_transactions=recent_transactions,
+        recent_invoices=recent_invoices,
+        balance_evolution=list(balance_evolution),
+        accounts_distribution=list(accounts_distribution),
+    )
+
+    return TemplateResponse(request, "dashboard/admin_powerbi_dashboard.html", context)
+```
+
+# Instanciation du site admin personnalisé
+
+dashboard_admin = DashboardAdminSite(name='dashboard_admin')
+
+# Enregistrement des modèles pour ce site admin
+
+dashboard_admin.register(Account)
+dashboard_admin.register(Invoice)
+dashboard_admin.register(Payment)
+dashboard_admin.register(Transaction)

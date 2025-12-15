@@ -1,0 +1,91 @@
+/* main.css — styles globaux */
+:root{
+  --bg: #f4f6f9;
+  --card-bg: #ffffff;
+  --muted: #6c757d;
+  --primary: #0d6efd;
+  --success: #198754;
+  --danger: #dc3545;
+  --shadow: 0 6px 18px rgba(13, 20, 30, 0.06);
+  --radius: 12px;
+  --max-width: 1200px;
+}
+
+/* Reset simple */
+* { box-sizing: border-box; }
+html,body { height:100%; margin:0; font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; color:#222; background:var(--bg); }
+
+/* Container */
+.container {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Navbar */
+.navbar {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+/* Cards */
+.card {
+  background: var(--card-bg);
+  border: none;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 18px;
+}
+
+/* Headings */
+h1, h2, h3, h4 {
+  margin: 0 0 12px 0;
+  font-weight: 600;
+  color: #111;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 8px 14px;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+}
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-success { background: var(--success); color: #fff; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-outline { background: transparent; border: 1px solid rgba(0,0,0,0.08); }
+
+/* Utility */
+.text-center { text-align:center; }
+.mt-1{ margin-top:8px } .mt-2{ margin-top:16px } .mt-3{ margin-top:24px }
+.mb-1{ margin-bottom:8px } .mb-2{ margin-bottom:16px } .mb-3{ margin-bottom:24px }
+
+/* Tables (global) */
+.table {
+  width:100%;
+  border-collapse: collapse;
+  background: var(--card-bg);
+  border-radius: 8px;
+  overflow: hidden;
+}
+.table th, .table td {
+  padding: 12px 14px;
+  text-align: left;
+  border-bottom: 1px solid #eef0f3;
+}
+.table thead th {
+  background: #f8f9fb;
+  font-weight: 700;
+}
+
+/* Small screens */
+@media (max-width: 768px){
+  .container { padding: 12px; }
+  .card { padding: 12px; }
+  .table th, .table td { padding: 10px; font-size: 14px; }
+}

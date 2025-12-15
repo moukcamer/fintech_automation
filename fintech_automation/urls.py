@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from dashboard.admin import dashboard_admin
 
 def home(request):
     return render(request, "index.html")
@@ -26,5 +27,8 @@ urlpatterns = [
     path('', home, name='home'),  # PAGE D'ACCUEIL
     path('api/', include('finance.urls')),
     path("dashboard/", include("dashboard.urls")),
+    path('admin/dashboard/', dashboard_admin.dashboard_view, name="admin-dashboard"),
 ]
+
+
 

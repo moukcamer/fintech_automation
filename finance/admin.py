@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Company, Account, Transaction, Invoice, Payment, Document
+from .models import Company, Account, Transaction, Invoice, Payment, Document, Notification, DashboardStats
 
 
 @admin.register(Company)
@@ -18,8 +18,8 @@ class AccountAdmin(admin.ModelAdmin):
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
-    list_display = ["account", "transaction_type", "amount", "description", "date"]
-    list_filter = ["transaction_type", "date"]
+    list_display = ["account", "transaction_type", "amount", "description", "created_at"]
+    list_filter = ["transaction_type", "created_at"]
     search_fields = ["description"]
 
 
@@ -32,8 +32,8 @@ class InvoiceAdmin(admin.ModelAdmin):
 
 @admin.register(Payment)
 class PaymentAdmin(admin.ModelAdmin):
-    list_display = ["invoice", "amount", "payment_method", "date"]
-    list_filter = ["payment_method", "date"]
+    list_display = ["invoice", "amount", "payment_types", "date"]
+    list_filter = ["payment_types", "date"]
     search_fields = ["invoice__invoice_number"]
 
 
@@ -42,3 +42,21 @@ class DocumentAdmin(admin.ModelAdmin):
     list_display = ["invoice", "uploaded_by", "file", "uploaded_at"]
     list_filter = ["uploaded_at"]
     search_fields = ["invoice__invoice_number"]
+
+
+@admin.register(Notification)
+class NotificationAdmin(admin.ModelAdmin):
+    list_display = ["customer", "message", "is_read", "created_at"]
+    list_filter = ["is_read", "created_at"]
+    search_fields = ["customer__user__username", "message"]
+    readonly_fields = ["created_at"]
+    ordering = ["-created_at"]
+
+
+@admin.register(DashboardStats)
+class DashboardStatsAdmin(admin.ModelAdmin):
+    list_display = ["total_customers", "total_transactions", "total_balance", "updated_at"]
+    list_filter = ["updated_at"]
+    search_fields = ["total_customers", "total_transactions", "total_balance"]
+    readonly_fields = ["updated_at"]
+    ordering = ["-updated_at"]
