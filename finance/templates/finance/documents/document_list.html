@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-4">
+    <h3>📂 Documents financiers</h3>
+
+    <a href="{% url 'finance:documents-upload' %}" class="btn btn-primary mb-3">
+        ➕ Ajouter un document
+    </a>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Facture</th>
+                <th>Date</th>
+                <th>Fichier</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for doc in documents %}
+            <tr>
+                <td>{{ doc.title }}</td>
+                <td>{{ doc.invoice|default:"—" }}</td>
+                <td>{{ doc.uploaded_at|date:"d/m/Y H:i" }}</td>
+                <td>
+                    <a href="{{ doc.file.url }}" target="_blank">📎 Télécharger</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="4" class="text-center">Aucun document</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

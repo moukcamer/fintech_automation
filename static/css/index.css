@@ -1,0 +1,150 @@
+:root {
+    --primary: #0f2a44;
+    --secondary: #1f6fb2;
+    --accent: #00b4d8;
+    --success: #2ec4b6;
+    --bg-light: #f5f7fa;
+    --text-dark: #1c1c1c;
+    --text-muted: #6c757d;
+}
+
+
+ body {
+    font-family: "Inter", "Segoe UI", sans-serif;
+    background: var(--bg-light);
+    color: var(--text-dark);
+    line-height: 1.6;
+}
+
+section {
+    padding: 90px 0;
+}
+
+h1, h2, h3 {
+    font-weight: 700;
+}
+
+a {
+    text-decoration: none;
+}
+
+
+
+#navbar {
+    background: linear-gradient(90deg, var(--primary), var(--secondary));
+}
+
+.navbar-brand {
+    font-weight: 700;
+    font-size: 1.3rem;
+}
+
+.nav-link {
+    color: #fff !important;
+    margin-left: 1rem;
+    font-weight: 500;
+}
+
+.nav-link:hover {
+    color: var(--accent) !important;
+}
+
+
+ #hero {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+}
+
+#hero h1 {
+    font-size: 3rem;
+}
+
+#hero p {
+    font-size: 1.1rem;
+    max-width: 600px;
+}
+
+.hero-btn {
+    background: var(--accent);
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+
+      #features {
+    background: white;
+}
+
+.feature-card {
+    background: #fff;
+    border-radius: 12px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+    transition: all 0.3s ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+}
+
+.feature-icon {
+    font-size: 2rem;
+    color: var(--secondary);
+}
+
+
+
+#stats {
+    background: var(--primary);
+    color: white;
+}
+
+.stat-box {
+    text-align: center;
+}
+
+.stat-value {
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent);
+}
+
+
+
+#cta {
+    background: linear-gradient(135deg, var(--secondary), var(--accent));
+    color: white;
+    text-align: center;
+}
+
+#cta h2 {
+    margin-bottom: 20px;
+}
+
+.cta-btn {
+    background: white;
+    color: var(--secondary);
+    padding: 14px 35px;
+    border-radius: 30px;
+    font-weight: 700;
+}
+
+
+#footer {
+    background: #0b1c2d;
+    color: #ccc;
+    padding: 40px 0;
+}
+
+#footer a {
+    color: #ccc;
+}
+
+#footer a:hover {
+    color: var(--accent);
+}

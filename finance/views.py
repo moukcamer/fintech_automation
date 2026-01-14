@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404
 from django.http import JsonResponse
 from rest_framework import generics, viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from django.shortcuts import redirect
+from .models import Document
+from .forms import DocumentForm
 
 from .models import Company, Account, Transaction, Invoice, Payment, Document
 from .serializers import (
@@ -40,9 +43,32 @@ def transaction_list(request):
 
 
 def invoice_list(request):
-    invoices = Invoice.objects.all().order_by("-issued_at")
+    invoices = Invoice.objects.all().order_by("-created_at")
     return render(request, "finance/invoice_list.html", {"invoices": invoices})
 
+def upload_document(request):
+    if request.method == "POST":
+        form = DocumentForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect("finance:documents-list")
+    else:
+        form = DocumentForm()
+
+    return render(request, "finance/documents/upload.html", {"form": form})
+
+
+def document_list(request):
+    """
+    Liste des documents financiers
+    """
+    documents = Document.objects.order_by("-uploaded_at")
+
+    return render(
+        request,
+        "finance/document_list.html",
+        {"documents": documents}
+    )
 
 
 class CompanyViewSet(viewsets.ModelViewSet):
@@ -79,3 +105,5 @@ class DocumentViewSet(viewsets.ModelViewSet):
     queryset = Document.objects.all()
     serializer_class = DocumentSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+

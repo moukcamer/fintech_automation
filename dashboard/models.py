@@ -162,7 +162,11 @@ class Payment(models.Model):
         choices=[("IN", "Incoming"), ("OUT", "Outgoing")],
         default="IN"
     )
-    date = models.DateTimeField(default=timezone.now)  # <-- valeur par défaut dynamique
+    date = models.DateTimeField(
+        default=timezone.now,
+        null=True,
+        blank=True
+)
 
     def __str__(self):
         return f"Payment {self.amount} for {self.invoice}"

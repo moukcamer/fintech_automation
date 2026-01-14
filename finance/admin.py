@@ -1,5 +1,59 @@
 from django.contrib import admin
-from .models import Company, Account, Transaction, Invoice, Payment, Document, Notification, DashboardStats
+from .models import Company, Account, Transaction, Invoice, Payment, Document, DashboardStats
+
+
+
+# =========================
+# ACCOUNT ADMIN
+# =========================
+@admin.register(Account)
+class AccountAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "name",
+        "balance",
+    )
+    search_fields = ("name",)
+    ordering = ("name",)
+
+
+# =========================
+# INVOICE ADMIN
+# =========================
+@admin.register(Invoice)
+class InvoiceAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "customer_name",
+        "customer_email",
+        "amount",
+        "status",
+        "created_at",
+    )
+    list_filter = ("status", "created_at")
+    search_fields = ("customer_name", "customer_email")
+    ordering = ("-created_at",)
+    date_hierarchy = "created_at"
+
+
+# =========================
+# PAYMENT ADMIN
+# =========================
+@admin.register(Payment)
+class PaymentAdmin(admin.ModelAdmin):
+    list_display = (
+        "id",
+        "invoice",
+        "account",
+        "amount",
+        "date",
+        "payment_type",
+    )
+    list_filter = ("date", "account", "payment_type")
+    search_fields = ("invoice__customer_name", "account__name")
+    ordering = ("-date",)
+    date_hierarchy = "date"
+
 
 
 @admin.register(Company)
@@ -9,12 +63,6 @@ class CompanyAdmin(admin.ModelAdmin):
     list_filter = ["created_at"]
 
 
-@admin.register(Account)
-class AccountAdmin(admin.ModelAdmin):
-    list_display = ["name", "account_type", "balance", "company", "created_at"]
-    list_filter = ["account_type", "company"]
-    search_fields = ["name"]
-
 
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
@@ -23,34 +71,11 @@ class TransactionAdmin(admin.ModelAdmin):
     search_fields = ["description"]
 
 
-@admin.register(Invoice)
-class InvoiceAdmin(admin.ModelAdmin):
-    list_display = ["invoice_number", "company", "issued_to", "total_amount", "status", "issued_at"]
-    list_filter = ["status", "issued_at"]
-    search_fields = ["invoice_number", "issued_to"]
-
-
-@admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
-    list_display = ["invoice", "amount", "payment_types", "date"]
-    list_filter = ["payment_types", "date"]
-    search_fields = ["invoice__invoice_number"]
-
-
 @admin.register(Document)
 class DocumentAdmin(admin.ModelAdmin):
     list_display = ["invoice", "uploaded_by", "file", "uploaded_at"]
     list_filter = ["uploaded_at"]
     search_fields = ["invoice__invoice_number"]
-
-
-@admin.register(Notification)
-class NotificationAdmin(admin.ModelAdmin):
-    list_display = ["customer", "message", "is_read", "created_at"]
-    list_filter = ["is_read", "created_at"]
-    search_fields = ["customer__user__username", "message"]
-    readonly_fields = ["created_at"]
-    ordering = ["-created_at"]
 
 
 @admin.register(DashboardStats)

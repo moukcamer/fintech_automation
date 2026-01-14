@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h2>🔮 Prévision Financière (6 mois)</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Mois futur</th>
+            <th>Montant prédit (XAF)</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for f in forecast %}
+        <tr>
+            <td>M + {{ f.month }}</td>
+            <td>{{ f.predicted_amount }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="2">Pas assez de données</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<canvas id="forecastChart"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+const labels = [{% for f in forecast %}"M+{{ f.month }}",{% endfor %}];
+const data = [{% for f in forecast %}{{ f.predicted_amount }},{% endfor %}];
+
+new Chart(document.getElementById("forecastChart"), {
+    type: "line",
+    data: {
+        labels: labels,
+        datasets: [{
+            label: "Prévision trésorerie",
+            data: data,
+            tension: 0.4
+        }]
+    }
+});
+</script>
+
+{% endblock %}

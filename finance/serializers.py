@@ -50,10 +50,10 @@ class InvoiceSerializer(serializers.ModelSerializer):
             "invoice_number",
             "company",
             "company_name",
-            "issued_to",
+            "created_to",
             "total_amount",
             "status",
-            "issued_at",
+            "created_at",
             "documents",
         ]
 

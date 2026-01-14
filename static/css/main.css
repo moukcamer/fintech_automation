@@ -89,3 +89,19 @@ h1, h2, h3, h4 {
   .card { padding: 12px; }
   .table th, .table td { padding: 10px; font-size: 14px; }
 }
+
+.bg-finance {
+    background: linear-gradient(90deg, #0d2a52, #0a3d62);
+}
+
+body {
+    font-family: "Segoe UI", Roboto, Arial, sans-serif;
+}
+
+.navbar-brand {
+    font-size: 1.3rem;
+}
+
+footer {
+    font-size: 0.9rem;
+}

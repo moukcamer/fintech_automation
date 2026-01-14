@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    
     'core',
     'accounting',
     'api',
@@ -48,6 +50,7 @@ INSTALLED_APPS = [
     'finance',
     'rest_framework',
     'corsheaders',
+    'data_processing',
 ]
 
 MIDDLEWARE = [

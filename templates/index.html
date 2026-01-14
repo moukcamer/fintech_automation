@@ -1,103 +1,138 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Fintech Automation - Accueil</title>
+{% extends "base.html" %}
+{% load static %}
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+{% block title %}Fintech Automation | Plateforme financière intelligente{% endblock %}
 
-    <style>
-        body {
-            background: #f5f7fa;
-        }
-        .hero {
-            padding: 80px 20px;
-            text-align: center;
-        }
-        .hero h1 {
-            font-size: 42px;
-            font-weight: 700;
-            color: #1a1a1a;
-        }
-        .hero p {
-            font-size: 18px;
-            color: #555;
-            margin-top: 10px;
-        }
-        .btn-main {
-            background-color: #0d6efd;
-            color: white;
-            padding: 12px 30px;
-            font-size: 18px;
-            border-radius: 8px;
-        }
-        .section-title {
-            font-size: 26px;
-            margin-top: 40px;
-            text-align: center;
-            font-weight: 600;
-        }
-        .feature-card {
-            border-radius: 12px;
-            padding: 25px;
-            text-align: center;
-            background: white;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-            transition: 0.3s;
-        }
-        .feature-card:hover {
-            transform: translateY(-5px);
-        }
-    </style>
-</head>
-<body>
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'css/index.css' %}">
+{% endblock %}
 
-    <!-- HERO -->
-    <section class="hero">
-        <h1>Bienvenue dans Fintech Automation</h1>
-        <p>
-            Plateforme intelligente pour automatiser la comptabilité, les documents, l’analyse des données et le machine learning.
+{% block content %}
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+    <div class="container text-center">
+        <h1 class="hero-title">
+            La plateforme intelligente de gestion financière
+        </h1>
+
+        <p class="hero-subtitle">
+            Centralisez vos finances, automatisez la comptabilité
+            et pilotez votre activité avec des tableaux de bord inspirés de Power BI.
         </p>
-        <a href="/admin/" class="btn btn-main mt-3">Accéder à l'Admin</a>
-    </section>
 
-    <!-- FEATURES -->
+        <div class="hero-actions">
+            <a href="/dashboard/" class="btn btn-primary btn-lg">
+                <i class="bi bi-speedometer2"></i> Accéder au Dashboard
+            </a>
+
+            <a href="#features" class="btn btn-outline-light btn-lg">
+                Découvrir
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ================= FEATURES ================= -->
+<section id="features" class="features-section">
     <div class="container">
-        <h2 class="section-title">Modules disponibles</h2>
-        <div class="row mt-4">
+        <div class="section-header text-center">
+            <h2>Pourquoi choisir Fintech Automation ?</h2>
+            <p>Une solution conçue pour les entreprises modernes</p>
+        </div>
 
-            <div class="col-md-3">
+        <div class="row g-4">
+            <div class="col-md-4">
                 <div class="feature-card">
-                    <h5>Comptabilité</h5>
-                    <p>Gestion des comptes, transactions, paiements et factures.</p>
+                    <i class="bi bi-graph-up-arrow feature-icon"></i>
+                    <h5>Analyse financière avancée</h5>
+                    <p>
+                        Visualisez vos flux financiers en temps réel
+                        avec des graphiques dynamiques et précis.
+                    </p>
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="feature-card">
-                    <h5>Documents</h5>
-                    <p>Gestion électronique des documents et reçus.</p>
+                    <i class="bi bi-shield-lock feature-icon"></i>
+                    <h5>Sécurité bancaire</h5>
+                    <p>
+                        Protection des données, contrôle d’accès
+                        et conformité aux standards de sécurité.
+                    </p>
                 </div>
             </div>
 
-            <div class="col-md-3">
+            <div class="col-md-4">
                 <div class="feature-card">
-                    <h5>Noyau (Core)</h5>
-                    <p>Entreprise, profils utilisateurs, sécurité.</p>
+                    <i class="bi bi-cpu feature-icon"></i>
+                    <h5>Automatisation intelligente</h5>
+                    <p>
+                        Réduction des tâches manuelles grâce à l’IA
+                        et aux règles comptables automatisées.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= STATS ================= -->
+<section id="stats" class="stats-section">
+    <div class="container">
+        <div class="row text-center g-4">
+
+            <div class="col-md-4">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="clients">120+</div>
+                    <div class="kpi-label">Entreprises accompagnées</div>
                 </div>
             </div>
 
-            <div class="col-md-3">
-                <div class="feature-card">
-                    <h5>Machine Learning</h5>
-                    <p>Datasets, modèles prédictifs, automatisation AI.</p>
+            <div class="col-md-4">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="transactions">5 000+</div>
+                    <div class="kpi-label">Transactions analysées</div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="kpi-card">
+                    <div class="kpi-value" id="growth">+35%</div>
+                    <div class="kpi-label">Amélioration de la performance</div>
                 </div>
             </div>
 
         </div>
     </div>
+</section>
 
-</body>
-</html>
+<!-- ================= CTA ================= -->
+<section id="contact" class="cta-section">
+    <div class="container text-center">
+        <h2>Prêt à transformer votre gestion financière ?</h2>
+        <p>
+            Contactez-nous pour une démonstration personnalisée
+            de notre solution Fintech.
+        </p>
+
+        <a href="{% url 'pages:contact' %}" class="btn btn-warning btn-lg">
+            <i class="bi bi-envelope"></i> Nous contacter
+        </a>
+    </div>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer">
+    <div class="container text-center">
+        <p class="mb-1">
+            © 2026 <strong>Fintech Automation</strong>. Tous droits réservés.
+        </p>
+        <small>
+            Plateforme financière intelligente • Sécurité • Performance • Innovation
+        </small>
+    </div>
+</footer>
+
+{% endblock %}

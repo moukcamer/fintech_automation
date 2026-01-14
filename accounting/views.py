@@ -6,6 +6,8 @@ from .models import Invoice
 from .serializers import InvoiceSerializer
 from tasks.invoice_tasks import process_invoice_ocr
 
+
+
 class InvoiceViewSet(viewsets.ModelViewSet):
     queryset = Invoice.objects.all().order_by('-created_at')
     serializer_class = InvoiceSerializer

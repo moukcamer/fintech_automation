@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+
+<section class="hero-finance text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-5 fw-bold">
+            Pilotez vos finances avec intelligence
+        </h1>
+        <p class="lead mt-3">
+            Analyse financière, automatisation comptable et visualisation de données
+            inspirée de Power BI.
+        </p>
+
+        <div class="mt-4">
+            <a href="{% url 'pages:discover' %}" class="btn btn-light btn-lg me-2">
+                Découvrir
+            </a>
+
+            {% if user.is_authenticated %}
+                <a href="{% url 'dashboard:home' %}" class="btn btn-warning btn-lg">
+                    Accéder au Dashboard
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="btn btn-warning btn-lg">
+                    Accéder au Dashboard
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="py-5">
+    <div class="container">
+        <div class="row text-center">
+
+            <div class="col-md-4">
+                <i class="bi bi-bar-chart-line-fill finance-icon"></i>
+                <h5 class="mt-3">Analyse avancée</h5>
+                <p>
+                    KPIs financiers, tendances mensuelles et performance en temps réel.
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <i class="bi bi-shield-lock-fill finance-icon"></i>
+                <h5 class="mt-3">Sécurité bancaire</h5>
+                <p>
+                    Sécurisation des comptes, des données et des accès utilisateurs.
+                </p>
+            </div>
+
+            <div class="col-md-4">
+                <i class="bi bi-cpu-fill finance-icon"></i>
+                <h5 class="mt-3">IA & Automatisation</h5>
+                <p>
+                    Prévisions financières et scoring intelligent des données.
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+{% endblock %}

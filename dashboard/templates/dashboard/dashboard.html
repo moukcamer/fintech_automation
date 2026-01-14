@@ -1,452 +1,157 @@
 {% extends "base.html" %}
 {% load static %}
 
-{% block title %}Dashboard | Fintech Automation{% endblock %}
+{% block title %}Dashboard Financier | Fintech Automation{% endblock %}
 
 {% block extra_css %}
-<style>
-
-/* ===============================
-   POWER BI THEME
-================================ */
-:root {
-    --bg: #f3f4f7;
-    --card: #ffffff;
-    --primary: #0078d4;
-    --success: #107c10;
-    --danger: #d13438;
-    --text: #1f2937;
-    --muted: #6b7280;
-    --shadow: 0 8px 24px rgba(0,0,0,0.06);
-    --radius: 12px;
-}
-
-body {
-    background: var(--bg);
-    font-family: "Segoe UI", Roboto, sans-serif;
-    color: var(--text);
-}
-
-/* ===============================
-   CANVAS
-================================ */
-.dashboard-container {
-    padding: 16px;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-/* ===============================
-   KPI CARDS
-================================ */
-.kpi-row {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 16px;
-}
-
-.card-kpi {
-    background: var(--card);
-    border-radius: var(--radius);
-    padding: 18px;
-    box-shadow: var(--shadow);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    position: relative;
-}
-
-.card-kpi::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 12px;
-    bottom: 12px;
-    width: 4px;
-    border-radius: 4px;
-    background: var(--primary);
-}
-
-.card-kpi.income::before { background: var(--success); }
-.card-kpi.expense::before { background: var(--danger); }
-
-.kpi-title {
-    font-size: 13px;
-    color: var(--muted);
-    font-weight: 600;
-}
-
-.kpi-value {
-    font-size: 22px;
-    font-weight: 700;
-    margin-top: 6px;
-}
-
-/* ===============================
-   CHARTS
-================================ */
-.chart-row {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    gap: 16px;
-}
-
-.chart-box {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 16px;
-}
-
-.chart-title {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-/* ===============================
-   TABLES
-================================ */
-.table-row {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-}
-
-.table-container {
-    background: var(--card);
-    border-radius: var(--radius);
-    box-shadow: var(--shadow);
-    padding: 16px;
-}
-
-.table-container h5 {
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 10px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 14px;
-}
-
-th {
-    text-align: left;
-    font-size: 13px;
-    color: var(--muted);
-    padding: 10px;
-    border-bottom: 1px solid blue;
-}
-
-td {
-    padding: 10px;
-    border-bottom: 1px solid #f0f1f3;
-}
-
-tr:hover {
-    background: #f9fafb;
-}
-
-/* ===============================
-   RESPONSIVE
-================================ */
-@media (max-width: 992px) {
-    .kpi-row,
-    .chart-row,
-    .table-row {
-        grid-template-columns: 1fr;
-    }
-}
-
-</style>
+<link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
 {% endblock %}
 
 {% block content %}
 
-<div class="dashboard-container">
+<!-- ================= KPI STRIP ================= -->
+<section class="kpi-strip">
+    <div class="container-fluid">
+        <div class="row g-3">
 
-  <!-- FILTRES -->
-    <div class="filter-box">
-        <form method="get" class="d-flex gap-3">
-            <input type="date" name="start_date" class="form-control" value="{{ request.GET.start_date }}">
-            <input type="date" name="end_date" class="form-control" value="{{ request.GET.end_date }}">
-            
-            <select name="t_type" class="form-select">
-                <option value="">Type transaction</option>
-                <option value="deposit">Dépôt</option>
-                <option value="withdrawal">Retrait</option>
-            </select>
+            {% include "dashboard/partials/kpi_card.html" with
+                title="Chiffre d'affaires YTD"
+                value=total_income
+                variance="+12%"
+                status="positive"
+                icon="bi-cash-stack"
+            %}
 
-            <button class="btn btn-primary">
-                <i class="bi bi-funnel"></i> Filtrer
-            </button>
-        </form>
+            {% include "dashboard/partials/kpi_card.html" with
+                title="Marge brute"
+                value="38%"
+                variance="+2 pts"
+                status="positive"
+                icon="bi-pie-chart"
+            %}
+
+            {% include "dashboard/partials/kpi_card.html" with
+                title="EBITDA"
+                value="24 500 000"
+                variance="-4%"
+                status="negative"
+                icon="bi-graph-down"
+            %}
+
+            {% include "dashboard/partials/kpi_card.html" with
+                title="Résultat net"
+                value="18 200 000"
+                variance="+6%"
+                status="positive"
+                icon="bi-bar-chart"
+            %}
+
+            {% include "dashboard/partials/kpi_card.html" with
+                title="Cash disponible"
+                value=total_balance
+                variance="+1.2M"
+                status="positive"
+                icon="bi-bank"
+            %}
+        </div>
     </div>
-<!-- Cartes de statistiques -->
-<div class="row mb-5">
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card stat-card card-balance shadow h-100 py-2">
+</section>
+
+<!-- ================= EVOLUTION MULTI-LIGNES ================= -->
+<section class="section">
+    <div class="container-fluid">
+        <div class="card powerbi-card">
+            <div class="card-header">
+                Évolution financière (24 mois)
+            </div>
             <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-xs fw-bold text-primary text-uppercase mb-1">Solde total</div>
-                        <div class="h5 mb-0 fw-bold text-gray-800">
-                            {{ total_balance|default:0|floatformat:0 }} FCFA
-                        </div>
+                <canvas id="lineEvolutionChart"></canvas>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= WATERFALL + CHARGES ================= -->
+<section class="section">
+    <div class="container-fluid">
+        <div class="row g-4">
+
+            <div class="col-lg-6">
+                <div class="card powerbi-card">
+                    <div class="card-header">
+                        Waterfall – Résultat Net
                     </div>
-                    <div class="col-auto">
-                        <i class="bi bi-wallet2 fs-2 text-primary"></i>
+                    <div class="card-body">
+                        <canvas id="waterfallResultChart"></canvas>
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card stat-card card-income shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-xs fw-bold text-success text-uppercase mb-1">Revenus</div>
-                        <div class="h5 mb-0 fw-bold text-gray-800">{{ total_income|default:0|floatformat:0 }} FCFA</div>
+            <div class="col-lg-6">
+                <div class="card powerbi-card">
+                    <div class="card-header">
+                        Répartition des charges
                     </div>
-                    <div class="col-auto">
-                        <i class="bi bi-arrow-up-circle fs-2 text-success"></i>
+                    <div class="card-body">
+                        <canvas id="expensesStackedChart"></canvas>
                     </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card stat-card card-expense shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-xs fw-bold text-danger text-uppercase mb-1">Dépenses</div>
-                        <div class="h5 mb-0 fw-bold text-gray-800">{{ total_expenses|default:0|floatformat:0 }} FCFA</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="bi bi-arrow-down-circle fs-2 text-danger"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-xl-3 col-md-6 mb-4">
-        <div class="card stat-card card-pending shadow h-100 py-2">
-            <div class="card-body">
-                <div class="row align-items-center">
-                    <div class="col">
-                        <div class="text-xs fw-bold text-warning text-uppercase mb-1">Factures impayées</div>
-                        <div class="h5 mb-0 fw-bold text-gray-800">{{ pending_invoices|default:0 }}</div>
-                    </div>
-                    <div class="col-auto">
-                        <i class="bi bi-receipt fs-2 text-warning"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-   <!-- Graphiques -->
-<div class="row">
-    <div class="col-lg-8 mb-4">
-        <div class="card shadow">
-            <div class="card-header bg-primary text-white">
-                <h5 class="mb-0">Évolution du solde global</h5>
-            </div>
-            <div class="card-body">
-                <canvas id="balanceChart" height="150"></canvas>
-            </div>
-        </div>
-    </div>
-
-    <div class="col-lg-4 mb-4">
-        <div class="card shadow">
-            <div class="card-header bg-info text-white">
-                <h5 class="mb-0">Répartition des comptes</h5>
-            </div>
-            <div class="card-body">
-                <canvas id="accountsChart"></canvas>
-            </div>
-        </div>
-    </div>
-</div>
-
-   <!-- Dernières transactions -->
-<div class="row">
-    <div class="col-12">
-        <div class="card shadow">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">10 dernières transactions</h5>
-            </div>
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Date</th>
-                                <th>Type</th>
-                                <th>Montant</th>
-                                <th>Compte</th>
-                                <th>Description</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for t in recent_transactions %}
-                            <tr>
-                                <td>{{ t.created_at|date:"d/m/Y H:i" }}</td>
-                                <td>
-                                    {% if t.transaction_type == 'CREDIT' %}
-                                        <span class="badge bg-success">Crédit</span>
-                                    {% else %}
-                                        <span class="badge bg-danger">Débit</span>
-                                    {% endif %}
-                                </td>
-                                <td class="fw-bold">{{ t.amount|default:0 }} FCFA</td>
-                                <td>{{ t.account.name|default:"—" }}</td>
-                                <td>{{ t.description|default:"—" }}</td>
-                            </tr>
-                            {% empty %}
-                            <tr><td colspan="5" class="text-center py-4">Aucune transaction</td></tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- Dernières factures -->
-<div class="row mt-4">
-    <div class="col-12">
-        <div class="card shadow">
-            <div class="card-header bg-dark text-white">
-                <h5 class="mb-0">10 dernières factures</h5>
-            </div>
-
-            <div class="card-body p-0">
-                <div class="table-responsive">
-                    <table class="table table-hover mb-0">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Date</th>
-                                <th>Numéro</th>
-                                <th>Client</th>
-                                <th>Montant</th>
-                                <th>Statut</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {% for inv in recent_invoices %}
-                            <tr>
-                                <td>{{ inv.issued_at|date:"d/m/Y" }}</td>
-
-                                <td class="fw-bold">
-                                    {{ inv.invoice_number|default:"—" }}
-                                </td>
-
-                                <td>
-                                    {{ inv.customer|default:"—" }}
-                                </td>
-
-                                <td class="fw-bold">
-                                    {{ inv.amount|default:0 }} FCFA
-                                </td>
-
-                                <td>
-                                    {% if inv.status == "PAID" %}
-                                        <span class="badge bg-success">Payée</span>
-                                    {% elif inv.status == "PENDING" %}
-                                        <span class="badge bg-warning text-dark">En attente</span>
-                                    {% elif inv.status == "CANCELLED" %}
-                                        <span class="badge bg-secondary">Annulée</span>
-                                    {% else %}
-                                        <span class="badge bg-light text-dark">Inconnu</span>
-                                    {% endif %}
-                                </td>
-                            </tr>
-
-                            {% empty %}
-                            <tr>
-                                <td colspan="5" class="text-center py-4">
-                                    Aucune facture disponible
-                                </td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
                 </div>
             </div>
 
         </div>
     </div>
-</div>
+</section>
 
-</div>
+<!-- ================= ZEBRA BI TABLE ================= -->
+<section class="section">
+    <div class="container-fluid">
+        <div class="card powerbi-card">
+            <div class="card-header">
+                Compte de résultat – Réel vs Budget vs N-1
+            </div>
+            <div class="card-body table-responsive">
+                <table class="table zebra-table">
+                    <thead>
+                        <tr>
+                            <th>Poste</th>
+                            <th>Réel</th>
+                            <th>Budget</th>
+                            <th>Var €</th>
+                            <th>Var %</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Chiffre d'affaires</td>
+                            <td>120 000 000</td>
+                            <td>110 000 000</td>
+                            <td class="pos">+10 000 000</td>
+                            <td class="pos">+9%</td>
+                        </tr>
+                        <tr>
+                            <td>Charges</td>
+                            <td>82 000 000</td>
+                            <td>80 000 000</td>
+                            <td class="neg">-2 000 000</td>
+                            <td class="neg">-2.5%</td>
+                        </tr>
+                        <tr class="total-row">
+                            <td>Résultat net</td>
+                            <td>18 000 000</td>
+                            <td>15 000 000</td>
+                            <td class="pos">+3 000 000</td>
+                            <td class="pos">+20%</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
 
 {% endblock %}
 
 {% block extra_js %}
-
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    // Graphique évolution solde
-    const ctx1 = document.getElementById('balanceChart').getContext('2d');
-    const dates = [];
-    const amounts = [];
-    let running = 0;
-
-    {% for date, amount in balance_evolution %}
-        {% if amount > 0 %}
-            running += {{ amount }};
-        {% else %}
-            running -= {{ amount}};
-        {% endif %}
-        dates.push("{{ date|date:'d/m' }}");
-        amounts.push(running);
-    {% endfor %}
-
-    new Chart(ctx1, {
-        type: 'line',
-        data: {
-            labels: dates,
-            datasets: [{
-                label: 'Solde cumulé (FCFA)',
-                data: amounts,
-                borderColor: '#007bff',
-                backgroundColor: 'rgba(0,123,255,0.1)',
-                tension: 0.4,
-                fill: true
-            }]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
-    });
-
-    // Camembert répartition comptes
-    const ctx2 = document.getElementById('accountsChart').getContext('2d');
-    new Chart(ctx2, {
-        type: 'doughnut',
-        data: {
-            labels: [{% for item in accounts_distribution %}'{{ item.account_type }}',{% endfor %}],
-            datasets: [{
-                data: [{% for item in accounts_distribution %}{{ item.total }},{% endfor %}],
-                backgroundColor: ['#007bff', '#28a745', '#dc3545', '#ffc107', '#6f42c1']
-            }]
-        },
-        options: { responsive: true }
-    });
-});
-</script>
+<script src="{% static 'js/dashboard_charts.js' %}"></script>
 {% endblock %}
