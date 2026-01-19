@@ -79,19 +79,37 @@ class Company(models.Model):
 
 
 
-class Transaction(models.Model):
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    transaction_type = models.CharField(
-        max_length=20,
-        choices=[("DEBIT", "Debit"), ("CREDIT", "Credit")]
-    )
-    description = models.TextField(blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    
+
+class Customer(models.Model):
+    name = models.CharField(max_length=150)
+    email = models.EmailField(blank=True, null=True)
 
     def __str__(self):
-        return f"{self.transaction_type} - {self.amount}"
+        return self.name
+
+
+class Transaction(models.Model):
+
+
+    date = models.DateField(default=timezone.now)
+
+    amount = models.DecimalField(max_digits=15, decimal_places=2)
+
+    transaction_type = models.CharField( max_length=50 )
+
+    status = models.CharField(max_length=30)
+
+    description = models.TextField(blank=True)
+
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+
+    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.date} - {self.amount}"
+
 
 
 class Document(models.Model):
