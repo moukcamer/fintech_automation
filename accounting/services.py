@@ -1,3 +1,5 @@
+#accounting/sevices.py
+
 from accounting.models import Account, Journal, Entry, EntryLine, JournalEntry,Transaction, Invoice, Payment, AccountingPeriod
 from decimal import Decimal
 from django.db import transaction

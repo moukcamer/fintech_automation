@@ -33,6 +33,8 @@ urlpatterns = [
     path("api/", include("api.urls")),
     path("", include("pages.urls")),
     path("accounts/", include("django.contrib.auth.urls") ),
+    path("ai/", include("ai.urls")),
+
 ]
 
 

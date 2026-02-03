@@ -1,3 +1,5 @@
+# api/analytics/views.py
+
 from django.db.models import Sum
 from django.http import JsonResponse
 from finance.models import Payment

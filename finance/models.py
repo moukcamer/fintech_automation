@@ -1,25 +1,112 @@
-
 from django.db import models
-from django.contrib.auth import get_user_model
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-from django.utils import timezone
-from django.conf import settings
+from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
 
-class Account(models.Model):
-    name = models.CharField(max_length=100)
-    balance = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+class Customer(models.Model):
+    customer_number = models.CharField(
+        max_length=30,
+        unique=True,
+        db_index=True
+    )
+    first_name = models.CharField(max_length=100)
+    last_name  = models.CharField(max_length=100)
+    email      = models.EmailField(unique=True)
+    country    = models.CharField(max_length=50)
+    city       = models.CharField(max_length=50)
+    zip_code   = models.CharField(max_length=20)
+    birth_date = models.DateField()
+    created_at = models.DateTimeField()
 
     def __str__(self):
-        return self.name
+        return f"{self.customer_number} - {self.first_name} {self.last_name}"
+
+    class Meta:
+        ordering = ["last_name", "first_name"]
+
+
+class Account(models.Model):
+    account_number = models.CharField(
+        max_length=30,
+        unique=True,
+        db_index=True
+    )
+
+    customer = models.ForeignKey(
+        Customer,
+        to_field="customer_number",
+        on_delete=models.CASCADE,
+        related_name="accounts"
+    )
+
+    account_type = models.CharField(max_length=30)
+    currency     = models.CharField(max_length=10)
+    balance      = models.DecimalField(max_digits=15, decimal_places=2)
+    open_date    = models.DateField()
+    status       = models.CharField(max_length=20)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.account_number} ({self.currency})"
+
+    class Meta:
+        ordering = ["account_number"]
+
+
+
+class Transaction(models.Model):
+    TRANSACTION_TYPES = (
+        ("IN", "Crédit"),
+        ("OUT", "Débit"),
+    )
+
+    transaction_ref = models.CharField(
+        max_length=50,
+        unique=True,
+        db_index=True
+    )
+
+    account = models.ForeignKey(
+        Account,
+        to_field="account_number",
+        on_delete=models.CASCADE,
+        related_name="transactions"
+    )
+
+    transaction_date = models.DateTimeField()
+    amount           = models.DecimalField(max_digits=15, decimal_places=2)
+    currency         = models.CharField(max_length=10)
+    transaction_type = models.CharField(max_length=3, choices=TRANSACTION_TYPES)
+    description      = models.TextField(blank=True)
+    channel          = models.CharField(max_length=30)
+    country          = models.CharField(max_length=50)
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        sign = "+" if self.transaction_type == "IN" else "-"
+        return f"{self.transaction_ref} {sign}{self.amount}"
+
+    class Meta:
+        ordering = ["-transaction_date"]
+        indexes = [
+            models.Index(fields=["transaction_date"]),
+            models.Index(fields=["transaction_type"]),
+            models.Index(fields=["account"]),
+        ]
 
 
 class Invoice(models.Model):
-    customer_name = models.CharField(max_length=255)
-    customer_email = models.EmailField(blank=True, null=True)
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True
+    )
     amount = models.DecimalField(max_digits=12, decimal_places=2)
     status = models.CharField(
         max_length=20,
@@ -29,25 +116,24 @@ class Invoice(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Invoice {self.id} - {self.customer_name}"
+        return f"Invoice #{self.id}"
 
 
 class Payment(models.Model):
-
     PAYMENT_TYPE_CHOICES = (
         ("IN", "Income"),
         ("OUT", "Expense"),
     )
 
     invoice = models.ForeignKey(
-        "finance.Invoice",
+        Invoice,
         on_delete=models.SET_NULL,
         null=True,
         blank=True
     )
 
     account = models.ForeignKey(
-        "finance.Account",
+        Account,
         on_delete=models.SET_NULL,
         null=True,
         blank=True
@@ -59,12 +145,10 @@ class Payment(models.Model):
     )
 
     amount = models.DecimalField(max_digits=12, decimal_places=2)
-    date = models.DateTimeField(default = timezone.now)
+    date   = models.DateTimeField(default=timezone.now)
 
     def __str__(self):
         return f"{self.payment_type} - {self.amount}"
-
-
 
 
 class Company(models.Model):
@@ -72,44 +156,10 @@ class Company(models.Model):
     address = models.TextField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     phone = models.CharField(max_length=50, blank=True, null=True)
-    created_at = models.DateTimeField(auto_now_add=True, null=True, blank=True)
-
-    def __str__(self):
-        return self.name
-
-
-
-
-class Customer(models.Model):
-    name = models.CharField(max_length=150)
-    email = models.EmailField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Transaction(models.Model):
-
-
-    date = models.DateField(default=timezone.now)
-
-    amount = models.DecimalField(max_digits=15, decimal_places=2)
-
-    transaction_type = models.CharField( max_length=50 )
-
-    status = models.CharField(max_length=30)
-
-    description = models.TextField(blank=True)
-
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-
-    customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"{self.date} - {self.amount}"
-
+        return self.name
 
 
 class Document(models.Model):
@@ -119,8 +169,7 @@ class Document(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f"Document for {self.invoice.invoice_number}"
-
+        return f"Document invoice #{self.invoice_id}"
 
 
 class DashboardStats(models.Model):
@@ -129,23 +178,7 @@ class DashboardStats(models.Model):
     total_balance = models.DecimalField(max_digits=15, decimal_places=2, default=0)
     updated_at = models.DateTimeField(auto_now=True)
 
-    def __str__(self):
-        return f"Stats au {self.updated_at.strftime('%Y-%m-%d %H:%M:%S')}"
-
     class Meta:
-        verbose_name = "Statistique du Dashboard"
-        verbose_name_plural = "Statistiques du Dashboard"
-        ordering = ['-updated_at']
-
-
-
-def prevent_if_closed():	
-    now = timezone.now()
-    if AccountingPeriod.objects.filter(
-        month=now.month,
-        year=now.year,
-        is_closed=True
-    ).exists():
-        raise ValidationError("Période comptable clôturée")
+        ordering = ["-updated_at"]
 
 

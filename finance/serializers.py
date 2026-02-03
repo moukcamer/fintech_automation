@@ -1,83 +1,132 @@
 from rest_framework import serializers
 from .models import (
-    Company,
+    Customer,
     Account,
     Transaction,
     Invoice,
     Payment,
-    Document
+    Company,
+    Document,
+    DashboardStats
 )
 
-
-class CompanySerializer(serializers.ModelSerializer):
+# ============================
+# CUSTOMER
+# ============================
+class CustomerSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Company
-        fields = "__all__"
+        model = Customer
+        fields = [
+            "id",
+            "name",
+            "email",
+            "phone",
+            "address",
+            "created_at",
+        ]
 
 
+# ============================
+# ACCOUNT
+# ============================
 class AccountSerializer(serializers.ModelSerializer):
+    customer_name = serializers.ReadOnlyField(source="customer.name")
+
     class Meta:
         model = Account
-        fields = "__all__"
+        fields = [
+            "id",
+            "name",
+            "currency",
+            "balance",
+            "customer",
+            "customer_name",
+            "created_at",
+        ]
 
 
-
+# ============================
+# TRANSACTION
+# ============================
 class TransactionSerializer(serializers.ModelSerializer):
     account_name = serializers.ReadOnlyField(source="account.name")
+    customer_name = serializers.ReadOnlyField(source="customer.name")
 
     class Meta:
         model = Transaction
         fields = [
             "id",
-            "account",
-            "account_name",
+            "date",
             "amount",
             "transaction_type",
+            "status",
             "description",
-            "date",
+            "account",
+            "account_name",
+            "customer",
+            "customer_name",
+            "created_at",
         ]
 
 
-
+# ============================
+# INVOICE
+# ============================
 class InvoiceSerializer(serializers.ModelSerializer):
-    company_name = serializers.ReadOnlyField(source="company.name")
-    documents = serializers.SerializerMethodField()
-
     class Meta:
         model = Invoice
         fields = [
             "id",
-            "invoice_number",
-            "company",
-            "company_name",
-            "created_to",
-            "total_amount",
+            "customer_name",
+            "customer_email",
+            "amount",
             "status",
             "created_at",
-            "documents",
         ]
 
-    def get_documents(self, obj):
-        return [doc.file.url for doc in obj.documents.all()]
 
-
+# ============================
+# PAYMENT
+# ============================
 class PaymentSerializer(serializers.ModelSerializer):
-    invoice_number = serializers.ReadOnlyField(source="invoice.invoice_number")
+    account_name = serializers.ReadOnlyField(source="account.name")
+    invoice_id = serializers.ReadOnlyField(source="invoice.id")
 
     class Meta:
         model = Payment
         fields = [
             "id",
-            "invoice",
-            "invoice_number",
+            "payment_type",
             "amount",
-            "payment_method",
             "date",
+            "account",
+            "account_name",
+            "invoice",
+            "invoice_id",
         ]
 
 
+# ============================
+# COMPANY
+# ============================
+class CompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Company
+        fields = [
+            "id",
+            "name",
+            "address",
+            "email",
+            "phone",
+            "created_at",
+        ]
+
+
+# ============================
+# DOCUMENT
+# ============================
 class DocumentSerializer(serializers.ModelSerializer):
-    invoice_number = serializers.ReadOnlyField(source="invoice.invoice_number")
+    invoice_id = serializers.ReadOnlyField(source="invoice.id")
     uploaded_by_username = serializers.ReadOnlyField(source="uploaded_by.username")
 
     class Meta:
@@ -85,9 +134,24 @@ class DocumentSerializer(serializers.ModelSerializer):
         fields = [
             "id",
             "invoice",
-            "invoice_number",
+            "invoice_id",
             "uploaded_by",
             "uploaded_by_username",
             "file",
             "uploaded_at",
         ]
+
+
+# ============================
+# DASHBOARD STATS (lecture seule)
+# ============================
+class DashboardStatsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DashboardStats
+        fields = [
+            "total_customers",
+            "total_transactions",
+            "total_balance",
+            "updated_at",
+        ]
+        read_only_fields = fields

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard Test</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f7fa; color: #1c1f26; }
+        .kpi { display: inline-block; width: 18%; padding: 20px; margin: 1%; background: white; border-radius: 10px; text-align:center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);}
+        .kpi h2 { margin: 0; color: #0077b6; }
+        .table { width: 100%; border-collapse: collapse; margin-top: 20px;}
+        .table th, .table td { border: 1px solid #ddd; padding: 8px; text-align:center; }
+        .table th { background: #0077b6; color:white; }
+    </style>
+</head>
+<body>
+    <h1>Dashboard Test – 500 Transactions</h1>
+
+    <!-- KPI Cards -->
+    <div>
+        <div class="kpi">
+            <h2>{{ total_income }}</h2>
+            <p>Revenus totaux</p>
+        </div>
+        <div class="kpi">
+            <h2>{{ total_expense }}</h2>
+            <p>Dépenses totales</p>
+        </div>
+        <div class="kpi">
+            <h2>{{ total_balance }}</h2>
+            <p>Cash disponible</p>
+        </div>
+        <div class="kpi">
+            <h2>{{ total_transactions }}</h2>
+            <p>Transactions</p>
+        </div>
+        <div class="kpi">
+            <h2>{{ total_customers }}</h2>
+            <p>Clients uniques</p>
+        </div>
+    </div>
+
+    <!-- Line Chart -->
+    <canvas id="lineChart" width="100%" height="40"></canvas>
+
+    <script>
+        const ctx = document.getElementById('lineChart').getContext('2d');
+        const lineChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: {{ chart_labels_json|safe }},
+                datasets: [{
+                    label: 'Transactions totales',
+                    data: {{ chart_data_json|safe }},
+                    borderColor: '#0077b6',
+                    backgroundColor: 'rgba(0, 119, 182, 0.2)',
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+
+    <!-- Tableau transactions récentes -->
+    <h2>Transactions Récentes</h2>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Compte</th>
+                <th>Client</th>
+                <th>Type</th>
+                <th>Montant</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for t in recent_transactions %}
+            <tr>
+                <td>{{ t.date }}</td>
+                <td>{{ t.account.name }}</td>
+                <td>{{ t.customer }}</td>
+                <td>{{ t.transaction_type }}</td>
+                <td>{{ t.amount }}</td>
+                <td>{{ t.status }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

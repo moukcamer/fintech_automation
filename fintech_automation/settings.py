@@ -47,10 +47,13 @@ INSTALLED_APPS = [
     'dashboard',
     'ml',
     'users',
+    
     'finance',
     'rest_framework',
     'corsheaders',
     'data_processing',
+
+    'import_export',
 ]
 
 MIDDLEWARE = [

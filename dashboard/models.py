@@ -1,3 +1,5 @@
+# dashboard/models.py
+
 from django.db import models
 from django.contrib.auth.models import User
 from django.utils import timezone
@@ -56,7 +58,6 @@ class Customer(models.Model):
     def __str__(self):
         return self.user.get_full_name() or self.user.username
 
-# dashboard/models.py
 
 class Account(models.Model):
     ACCOUNT_TYPES = (
@@ -73,6 +74,7 @@ class Account(models.Model):
     account_type = models.CharField(max_length=20, choices=ACCOUNT_TYPES)
     balance = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     issued_at = models.DateTimeField(default=timezone.now)
+    currency = models.CharField(max_length=20, default="FCFA")
 
     def __str__(self):
         return f"{self.customer} - {self.get_account_type_display()}"

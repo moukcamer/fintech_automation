@@ -1,95 +1,304 @@
+
+/* =====================================================
+   GLOBAL
+===================================================== */
+
 body {
-    font-family: "Segoe UI", sans-serif;
-    background: #f5f7fa;
+    background-color: black;
+    color: #e0e0e0;
+    font-family: "Segoe UI", system-ui, sans-serif;
 }
 
-/* TOP BAR */
-.dashboard-nav {
-    background: #0b1f3b;
-    padding: 12px 20px;
+.layout {
+    display: flex;
+    min-height: 100vh;
 }
 
-/* KPI STRIP */
-.kpi-strip {
-    background: #0b1f3b;
-    padding: 20px;
+
+/* =====================================================
+   SIDEBAR
+===================================================== */
+
+.sidebar {
+    width: 240px;
+    background: #050914;
+    padding: 25px 20px;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 1100;
 }
+
+.sidebar .logo {
+    color: #ffffff;
+    font-weight: 700;
+    margin-bottom: 30px;
+}
+
+.sidebar nav a {
+    display: block;
+    padding: 12px 15px;
+    margin-bottom: 8px;
+    color: #b0b6c3;
+    text-decoration: none;
+    border-radius: 8px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.sidebar nav a:hover,
+.sidebar nav a.active {
+    background: #0d6efd;
+    color: #ffffff;
+}
+
+/* =====================================================
+   NAVBAR
+===================================================== */
+
+.navbar {
+    margin-left: 240px;
+    background: #050914 !important;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+}
+
+/* =====================================================
+   MAIN CONTENT
+===================================================== */
+
+main.container-fluid {
+    margin-left: 240px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+/* =====================================================
+   FILTERS (SLICERS)
+===================================================== */
+
+.filters-section label {
+    font-size: 13px;
+    color: #b0b6c3;
+}
+
+/* =====================================================
+   KPI CARDS
+===================================================== */
 
 .kpi-card {
-    background: rgba(255,255,255,0.08);
+    background: linear-gradient(135deg, #111827, #0b1f3a);
     border-radius: 14px;
     padding: 18px;
-    color: white;
-    height: 110px;
+    min-height: 120px;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+
     display: flex;
     flex-direction: column;
     justify-content: center;
 }
 
 .kpi-title {
-    font-size: 0.75rem;
-    opacity: 0.8;
+    font-size: 12px;
     text-transform: uppercase;
+    color: #9ca3af;
+    margin-bottom: 6px;
 }
 
 .kpi-value {
-    font-size: 1.7rem;
+    font-size: 26px;
     font-weight: 700;
-    color: #f5b700;
+    color: #ffffff;
 }
 
 .kpi-variance {
-    font-size: 0.75rem;
+    font-size: 13px;
+    margin-top: 4px;
 }
 
-.kpi-card.positive .kpi-variance {
+.kpi-card.positive {
+    border-left: 4px solid #28a745;
+}
+
+.kpi-card.negative {
+    border-left: 4px solid #dc3545;
+}
+
+/* =====================================================
+   CHART CARDS
+===================================================== */
+
+.card {
+    border-radius: 14px !important;
+}
+
+.card-header {
+    font-weight: 600;
+    font-size: 14px;
+    color: #ffffff;
+}
+
+.card-body canvas {
+    width: 100% !important;
+}
+
+/* Répartition par compte (custom card) */
+.chart-card {
+    background: #111827;
+    border-radius: 14px;
+    padding: 15px;
+    height: 100%;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+
+.chart-card h5 {
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+/* =====================================================
+   AI ANALYSIS
+===================================================== */
+
+.card-body ul li {
+    font-size: 14px;
+    margin-bottom: 6px;
+}
+
+/* =====================================================
+   TABLE
+===================================================== */
+
+.table {
+    font-size: 13px;
+}
+
+.table thead th {
+    color: #9ca3af;
+    font-weight: 600;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.table tbody tr:hover {
+    background-color: rgba(255,255,255,0.04);
+}
+
+/* =====================================================
+   ALIGNEMENT DES SECTIONS VISUELLES
+===================================================== */
+
+/* Graphiques sur la même ligne */
+@media (min-width: 992px) {
+    .col-lg-8 > .card {
+        min-height: 360px;
+    }
+
+    .chart-card,
+    .card.bg-dark {
+        min-height: 360px;
+    }
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 991px) {
+
+    .sidebar {
+        position: relative;
+        width: 100%;
+        height: auto;
+    }
+
+    .navbar {
+        margin-left: 0;
+    }
+
+    main.container-fluid {
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .kpi-value {
+        font-size: 22px;
+    }
+
+    main.container-fluid {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+
+
+/* ===============================
+   AI ANALYSIS CARD
+================================ */
+
+.ai-card {
+    background: linear-gradient(145deg, #0b1220, #050914);
+    border-radius: 16px;
+    color: #e5e7eb;
+}
+
+.ai-header {
+    background: transparent;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-weight: 700;
+    font-size: 15px;
+    color: #ffffff;
+}
+
+/* Metrics */
+.ai-metrics {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.ai-metric {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.ai-metric .label {
+    font-size: 13px;
+    color: #9ca3af;
+}
+
+.ai-metric .value {
+    font-weight: 700;
+    font-size: 15px;
+}
+
+.ai-metric .value.success {
     color: #22c55e;
 }
 
-.kpi-card.negative .kpi-variance {
+.ai-metric .value.warning {
+    color: #facc15;
+}
+
+.ai-metric .value.danger {
     color: #ef4444;
 }
 
-/* CONTENT */
-.dashboard-content {
-    padding: 25px;
+/* Insight */
+.ai-insight h6 {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #93c5fd;
 }
 
-.card-chart,
-.card-table {
-    background: white;
-    border-radius: 14px;
-    padding: 20px;
-    box-shadow: 0 10px 25px rgba(0,0,0,.08);
+.ai-insight p {
+    font-size: 13px;
+    line-height: 1.6;
+    color: #d1d5db;
 }
 
-.card-chart h6,
-.card-table h6 {
-    font-weight: 600;
-    margin-bottom: 15px;
-}
-
-.chart-placeholder,
-.table-placeholder {
-    height: 220px;
-    background: #f1f5f9;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: #64748b;
-    font-size: 0.9rem;
-}
-
-.chart-card {
-    background: white;
-    border-radius: 12px;
-    padding: 15px;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-    margin-bottom: 20px;
-    height: auto;
-}
-
-.chart-card {
-    min-height: 380px; /* pour que le canvas ait assez de place */
+/* Actions */
+.ai-actions .btn {
+    border-radius: 20px;
 }
