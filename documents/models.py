@@ -1,33 +1,27 @@
 #documents/models.py
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
+
 
 
 class Document(models.Model):
-    DOCUMENT_TYPES = [
-        ("CONTRACT", "Contract"),
-        ("RECEIPT", "Receipt"),
-        ("INVOICE", "Invoice"),
-        ("REPORT", "Report"),
-        ("OTHER", "Other"),
-    ]
+    DOCUMENT_TYPES = (
+        ("invoice", "Facture"),
+        ("receipt", "Reçu"),
+        ("contract", "Contrat"),
+        ("other", "Autre"),
+    )
 
-    title = models.CharField(max_length=100)
-    document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPES)
-    uploaded_by = models.ForeignKey(
-    User,
-    on_delete=models.SET_NULL,
-    null=True,
-    related_name="uploaded_documents"
-)
-
+    title = models.CharField(max_length=255)
     file = models.FileField(upload_to="documents/")
-    upload_date = models.DateTimeField(auto_now_add=True)
-    description = models.TextField(blank=True)
+    document_type = models.CharField(max_length=20, choices=DOCUMENT_TYPES)
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="documents_uploaded")
+    uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
+
 
 
 class Receipt(models.Model):

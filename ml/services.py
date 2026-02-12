@@ -34,3 +34,26 @@ def forecast_payments(months_ahead=6):
         })
 
     return future
+
+import joblib
+import pandas as pd
+
+MODEL_PATH = "ml/fraud_model.pkl"
+
+
+def detect_fraud(transaction):
+
+    model = joblib.load(MODEL_PATH)
+
+    data = pd.DataFrame([{
+        "amount": transaction.amount,
+        "transaction_type": 1 if transaction.transaction_type == "IN" else 0,
+        "country": transaction.country
+    }])
+
+    pred = model.predict(data)[0]
+
+    return pred == -1
+
+
+

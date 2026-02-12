@@ -1,28 +1,9 @@
 # core/models.py
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 
 
-class Company(models.Model):
-    name = models.CharField(max_length=100)
-    address = models.TextField()
-    email = models.EmailField()
-    phone = models.CharField(max_length=20)
-    website = models.URLField(blank=True, null=True)
-
-    def __str__(self):
-        return self.name
-
-
-class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    company = models.ForeignKey(Company, on_delete=models.SET_NULL, null=True)
-    job_title = models.CharField(max_length=100, blank=True)
-    phone = models.CharField(max_length=20, blank=True)
-
-    def __str__(self):
-        return f"{self.user.username} Profile"
 
 
 class AuditLog(models.Model):
@@ -34,7 +15,7 @@ class AuditLog(models.Model):
         ("LOGOUT", "Logout"),
     ]
 
-    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
     action = models.CharField(max_length=20, choices=ACTIONS)
     description = models.TextField()
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -47,7 +28,3 @@ class Organization(models.Model):
     name = models.CharField(max_length=255)
     is_active = models.BooleanField(default=True)
 
-class OrganizationUser(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
-    organization = models.ForeignKey(Organization, on_delete=models.CASCADE)
-    role = models.CharField(max_length=50)

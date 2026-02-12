@@ -10,3 +10,13 @@ def payment_accounting(sender, instance, created, **kwargs):
         record_double_entry(instance)
 
 
+
+from .models import Transaction
+from ml.services import detect_fraud
+
+@receiver(post_save, sender=Transaction)
+def check_fraud(sender, instance, created, **kwargs):
+
+    if created:
+        instance.is_fraud = detect_fraud(instance)
+        instance.save(update_fields=["is_fraud"])

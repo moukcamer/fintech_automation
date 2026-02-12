@@ -1,9 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
+from django.conf import settings
 
 
 class Customer(models.Model):
@@ -56,7 +54,7 @@ class Account(models.Model):
     class Meta:
         ordering = ["account_number"]
 
-
+    credit_score = models.IntegerField(default=50)
 
 class Transaction(models.Model):
     TRANSACTION_TYPES = (
@@ -98,6 +96,9 @@ class Transaction(models.Model):
             models.Index(fields=["transaction_type"]),
             models.Index(fields=["account"]),
         ]
+
+    is_fraud = models.BooleanField(default=False)
+    fraud_score = models.FloatField(null=True, blank=True)
 
 
 class Invoice(models.Model):
@@ -164,7 +165,7 @@ class Company(models.Model):
 
 class Document(models.Model):
     invoice = models.ForeignKey(Invoice, on_delete=models.CASCADE, related_name="documents")
-    uploaded_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    uploaded_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True, related_name="finance_documents")
     file = models.FileField(upload_to="finance_documents/")
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -180,5 +181,4 @@ class DashboardStats(models.Model):
 
     class Meta:
         ordering = ["-updated_at"]
-
 

@@ -1,21 +1,24 @@
 
-{% load static %}
-
-</head>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>{% block title %}Dashboard | Fintech Automation{% endblock %}</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
-</head>
-<body>
+    <title>Fintech Automation | Dashboard</title>
 
-<div class="layout">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Dashboard CSS -->
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+
+<body class="dashboard-dark">
 
     <!-- SIDEBAR -->
     <aside class="sidebar">
@@ -29,121 +32,178 @@
         </nav>
     </aside>
 
-<!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-    <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="/"><i class="bi bi-bank"></i> Fintech Automation</a>
-        <div class="collapse navbar-collapse" id="navbarContent">
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link active" href="#"><i class="bi bi-speedometer2"></i> Dashboard</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-person"></i> Profil</a></li>
-                <li class="nav-item"><a class="nav-link" href="#"><i class="bi bi-box-arrow-right"></i> Déconnexion</a></li>
-            </ul>
-        </div>
+
+<!-- ================= TOP BAR ================= -->
+<div class="topbar">
+    <div class="left">
+        <i class="bi bi-bar-chart-fill"></i>
+        <span>KPI | Dashboard Financier</span>
     </div>
-</nav>
-
-<main class="container-fluid pt-5 mt-4" style="background: #0a0e17; color: #e0e0e0; min-height: 100vh;">
-    
-    <!-- Filtres (Power BI slicers style) – sticky top -->
-    <section class="filters-section bg-dark p-3 rounded mb-4 shadow" style="position: sticky; top: 70px; z-index: 1000;">
-        <form method="get" class="row g-3 align-items-end">
-
-   
-            <div class="col-md-3">
-                <label>Date Début</label>
-                <input type="text" name="date_start" class="form-control datepicker" value="{{ request.GET.date_start }}" placeholder="JJ/MM/AAAA">
-            </div>
-            <div class="col-md-3">
-                <label>Date Fin</label>
-                <input type="text" name="date_end" class="form-control datepicker" value="{{ request.GET.date_end }}" placeholder="JJ/MM/AAAA">
-            </div>
-            <div class="col-md-3">
-                <label>Type Transaction</label>
-                <select name="transaction_type" class="form-select">
-                    <option value="">Tous</option>
-                    <option value="IN" {% if request.GET.transaction_type == 'IN' %}selected{% endif %}>Entrant</option>
-                    <option value="OUT" {% if request.GET.transaction_type == 'OUT' %}selected{% endif %}>Sortant</option>
-                </select>
-            </div>
-            <div class="col-md-3">
-                <label>Compte</label>
-                <select name="account" class="form-select">
-                    <option value="">Tous</option>
-                    {% for acc in accounts %}
-                    <option value="{{ acc.id }}" {% if request.GET.account == acc.id|stringformat:"s" %}selected{% endif %}>{{ acc.name }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-            <div class="col-12 text-end">
-                <button type="submit" class="btn btn-primary"><i class="bi bi-filter"></i> Appliquer Filtres</button>
-            </div>
-        </form>
-    </section>
-
-    <!-- KPI Tiles -->
-   
-
-        <div class="kpi-card positive">
-            <div class="kpi-title">Montant Total</div>
-            <div class="kpi-value">{{ kpi.total_amount|floatformat:0 }} FCFA</div>
-        </div>
-        <div class="kpi-card {% if kpi.net_balance >= 0 %}positive{% else %}negative{% endif %}">
-            <div class="kpi-title">Solde Net</div>
-            <div class="kpi-value">{{ kpi.net_balance|floatformat:0 }} FCFA</div>
-        </div>
-        <div class="kpi-card positive">
-            <div class="kpi-title">Clients</div>
-            <div class="kpi-value">{{ kpi.total_customers }}</div>
-        </div>
-        <div class="kpi-card positive"> <!-- Nouveau KPI pour Power BI feel -->
-            <div class="kpi-title">Comptes</div>
-            <div class="kpi-value">{{ kpi.total_accounts }}</div>
-        </div>
+    <div class="right">
+        <button class="btn btn-outline-light btn-sm">Filter</button>
+        <button class="btn btn-outline-light btn-sm">Date</button>
+        <button class="btn btn-primary btn-sm">
+            <i class="bi bi-download"></i> Download Report
+        </button>
     </div>
- 
-  <div class="kpi-card {% if ai.risk_score > 60 %}negative{% else %}positive{% endif %}">
-    <span class="kpi-title">Score de risque</span>
-    <span class="kpi-value">{{ ai.risk_score|default:0 }}/100</span>
-    <span class="kpi-variance">
-        {% if ai.risk_score > 60 %}
-            Risque élevé
-        {% else %}
-            Situation maîtrisée
-        {% endif %}
-    </span>
 </div>
 
-    <!-- Graphiques (Visuals) -->
-    <div class="row g-4">
-        <!-- Gauche : Evolution temporelle (ligne) + Répartition types (doughnut) -->
-        <div class="col-lg-8">
-            <div class="card bg-dark border-0 shadow mb-4">
-                <div class="card-header bg-transparent border-bottom">Évolution des montants</div>
-                <div class="card-body">
-                    <canvas id="evolutionChart" height="120"></canvas>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-md-6">
-                    <div class="card bg-dark border-0 shadow">
-                        <div class="card-header bg-transparent">Répartition par type</div>
-                        <canvas id="typeChart" height="180"></canvas>
+<form method="get" class="filter-bar mb-4">
+    <div class="row g-2 align-items-end">
+
+        <div class="col-md-3">
+            <label class="form-label text-muted">Date début</label>
+            <input type="date" name="date_start" class="form-control"
+                   value="{{ request.GET.date_start }}">
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label text-muted">Date fin</label>
+            <input type="date" name="date_end" class="form-control"
+                   value="{{ request.GET.date_end }}">
+        </div>
+
+        <div class="col-md-3">
+            <label class="form-label text-muted">Compte</label>
+            <select name="account" class="form-select">
+                <option value="">Tous</option>
+                {% for acc in accounts %}
+                    <option value="{{ acc.id }}"
+                        {% if request.GET.account == acc.id|stringformat:"s" %}selected{% endif %}>
+                        {{ acc.account_number }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <label class="form-label text-muted">Type</label>
+            <select name="transaction_type" class="form-select">
+                <option value="">Tous</option>
+                <option value="IN" {% if request.GET.transaction_type == "IN" %}selected{% endif %}>Crédit</option>
+                <option value="OUT" {% if request.GET.transaction_type == "OUT" %}selected{% endif %}>Débit</option>
+            </select>
+        </div>
+
+        <div class="col-md-1 d-grid">
+            <button class="btn btn-primary">
+                <i class="bi bi-funnel"></i>
+            </button>
+        </div>
+
+    </div>
+</form>
+
+
+<!-- ================= KPI CARDS ================= -->
+<section class="kpi-section">
+    <div class="container-fluid">
+        <div class="row g-3">
+
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-title">Transaction Volume</div>
+                    <div class="kpi-value">{{ kpi.total_transactions }}</div>
+                    <div class="kpi-sub positive">
+                        Volume importé
                     </div>
                 </div>
-
-        <div class="col-lg-3">
-            <div class="chart-card"> <!-- Nouveau: Barres pour répartition par compte -->
-                <h5>Répartition par Compte</h5>
-                <canvas id="accountChart"></canvas>
             </div>
+
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-title">Total Amount Processed</div>
+                    <div class="kpi-value">
+                        {{ kpi.total_amount|floatformat:0 }}
+                    </div>
+                    <div class="kpi-sub positive">
+                        Flux total
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-title">Active Clients</div>
+                    <div class="kpi-value">{{ kpi.total_customers }}</div>
+                    <div class="kpi-sub positive">
+                        Clients uniques
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3">
+                <div class="kpi-card">
+                    <div class="kpi-title">Accounts</div>
+                    <div class="kpi-value">{{ kpi.total_accounts }}</div>
+                    <div class="kpi-sub positive">
+                        Comptes actifs
+                    </div>
+                </div>
+            </div>
+
+
+        <div class="kpi-card {% if ai.risk_score > 60 %}negative{% else %}positive{% endif %}">
+            <span class="kpi-title">Score de risque</span>
+            <span class="kpi-value">{{ ai.risk_score|default:0 }}/100</span>
+            <span class="kpi-variance">
+                {% if ai.risk_score > 60 %}
+                  Risque élevé
+                {% else %}
+                  Situation maîtrisée
+                {% endif %}
+           </span>
         </div>
+
+        
+        <div class="ai-score">
+               Score de risque : <strong>{{ ai.score }}/100</strong>
+        </div>
+
+        <pre class="ai-text">
+             {{ ai.text }}
+        </pre>
+    
+      </div>
     </div>
+</section>
 
+<!-- ================= MAIN GRID ================= -->
+<section class="dashboard-grid">
+    <div class="container-fluid">
 
-        <!-- Droite : AI Analysis + Dernières transactions -->
-        <div class="col-lg-4">
-    <div class="card ai-card border-0 shadow mb-4">
+        <div class="row g-4">
+
+            <!-- ===== Line Chart ===== -->
+            <div class="col-lg-8">
+                <div class="card dark-card">
+                    <div class="card-title">Monthly Transaction Trends</div>
+                    <canvas id="lineChart"></canvas>
+                </div>
+            </div>
+
+            <!-- ===== Donut ===== -->
+            <div class="col-lg-4">
+                <div class="card dark-card">
+                    <div class="card-title">Channel / Type Distribution</div>
+                    <canvas id="typeChart"></canvas>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ===== Bar chart accounts ===== -->
+        <div class="row g-4 mt-1">
+            <div class="col-lg-6">
+                <div class="card dark-card">
+                    <div class="card-title">Top Accounts</div>
+                    <canvas id="accountChart"></canvas>
+                </div>
+            </div>
+
+                <!-- Droite : AI Analysis + Dernières transactions -->
+     <div class="col-lg-4">
+        <div class="card ai-card border-0 shadow mb-4">
 
         <!-- Header -->
         <div class="card-header ai-header">
@@ -176,7 +236,7 @@
                 </div>
             </div>
 
-            <hr>
+        
 
             <!-- AI Insight -->
             <div class="ai-insight">
@@ -194,13 +254,16 @@
             </div>
 
         </div>
+      </div>
     </div>
-</div>
+  </div>
+ </div>
+</section>
+
+<section>
 
 
-  
-  
-    <!-- Tableau -->
+                <!-- Tableau -->
    <div class="card bg-dark border-0 shadow">
                 <div class="card-header bg-transparent">Dernières transactions</div>
                 <div class="card-body p-0">
@@ -212,7 +275,8 @@
                         <th>Type</th>
                         <th class="text-end">Montant</th>
                         <th>Compte</th>
-                        <th>Client</th>
+                        <th>Channel</th>
+                        <th>Country</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -221,9 +285,10 @@
                         <td>{{ tx.date|date:"d/m/Y H:i" }}</td>
                         <td>{{ tx.description|default:"—" }}</td>
                         <td>{{ tx.transaction_type }}</td>
-                        <td class="text-end fw-bold {% if tx.amount >= 0 %}text-success{% else %}text-danger{% endif %}">{{ tx.amount|floatformat:0 }} FCFA</td>
+                        <td class="text-end fw-bold {% if tx.amount >= 0 %}text-success{% else %}text-danger{% endif %}">{{ tx.amount|floatformat:0 }} </td>
                         <td>{{ tx.account|default:"—" }}</td>
-                        <td>{{ tx.customer|default:"—" }}</td>
+                        <td>{{ tx.channel|default:"—" }}</td>
+                        <td>{{ tx.country|default:"—" }}</td>
                     </tr>
                     {% empty %}
                     <tr><td colspan="6" class="text-center py-4">Aucune transaction</td></tr>
@@ -233,43 +298,101 @@
         </div>
     </div>
 
-</main>
+</section>
 
 <script>
-    // Initialisation Datepicker
-    $('.datepicker').datepicker({ format: 'dd/mm/yyyy', autoclose: true });
-
-    // Chart Évolution (Ligne)
-    new Chart('evolutionChart', {
-        type: 'line',
-        data: {
-            labels: {{ chart_evolution.labels|safe }},
-            datasets: [{ label: 'Montant', data: {{ chart_evolution.data|safe }}, borderColor: '#001F3F', backgroundColor: 'rgba(0,31,63,0.1)', fill: true }]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
-    });
-
-    // Chart Types (Donut)
-    new Chart('typeChart', {
-        type: 'doughnut',
-        data: {
-            labels: {{ chart_types.labels|safe }},
-            datasets: [{ data: {{ chart_types.data|safe }}, backgroundColor: ['#001F3F', '#28A745', '#DC3545', '#FFC107'] }]
-        },
-        options: { responsive: true, plugins: { legend: { position: 'bottom' } } }
-    });
-
-    // Nouveau Chart Comptes (Barres)
-    new Chart('accountChart', {
-        type: 'bar',
-        data: {
-            labels: {{ chart_accounts.labels|safe }},
-            datasets: [{ label: 'Montant par Compte', data: {{ chart_accounts.data|safe }}, backgroundColor: '#001F3F' }]
-        },
-        options: { responsive: true, scales: { y: { beginAtZero: true } } }
-    });
+if (!"{{ chart_evolution.labels }}") {
+    document.body.innerHTML = `
+        <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif">
+            <div>
+                <h2>Session expirée</h2>
+                <p>Veuillez vous reconnecter.</p>
+                <a href="/login/" style="padding:10px 20px;background:#0d6efd;color:white;text-decoration:none;border-radius:6px">
+                    Se connecter
+                </a>
+            </div>
+        </div>
+    `;
+}
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+<!-- ================= CHARTS JS ================= -->
+
+<script>
+/* ========= LINE CHART (Évolution) ========= */
+const lineCtx = document.getElementById('lineChart').getContext('2d');
+
+const gradientLine = lineCtx.createLinearGradient(0, 0, 0, 300);
+gradientLine.addColorStop(0, 'rgba(59,130,246,0.5)');
+gradientLine.addColorStop(1, 'rgba(59,130,246,0.05)');
+
+const typeLabels = JSON.parse('{{ chart_types.labels|escapejs }}');
+const typeData   = JSON.parse('{{ chart_types.data|escapejs }}');
+
+const accountLabels = JSON.parse('{{ chart_accounts.labels|escapejs }}');
+const accountData   = JSON.parse('{{ chart_accounts.data|escapejs }}');
+
+
+new Chart(lineCtx, {
+    type: 'line',
+    data: {
+        labels: {{ chart_evolution.labels|safe }},
+        datasets: [{
+            label: 'Montant traité',
+            data: {{ chart_evolution.data|safe }},
+            fill: true,
+            backgroundColor: gradientLine,
+            borderColor: '#3b82f6',
+            borderWidth: 2,
+            tension: 0.4,
+            pointRadius: 3,
+            pointHoverRadius: 6
+        }]
+    },
+    options: {
+        responsive: true,
+        animation: {
+            duration: 1200,
+            easing: 'easeOutQuart'
+        },
+        plugins: {
+            legend: { display: false },
+            tooltip: {
+                backgroundColor: '#020617',
+                titleColor: '#fff',
+                bodyColor: '#e5e7eb'
+            }
+        },
+        scales: {
+            x: { ticks: { color: '#94a3b8' } },
+            y: { ticks: { color: '#94a3b8' } }
+        }
+    }
+});
+
+//* ===================== DONUT TYPE ===================== */
+new Chart(document.getElementById("typeChart"), {
+    type: 'doughnut',
+    data: {
+        labels: typeLabels,
+        datasets: [{
+            data: typeData
+        }]
+    }
+});
+
+/* ===================== BAR ACCOUNT ===================== */
+new Chart(document.getElementById("accountChart"), {
+    type: 'bar',
+    data: {
+        labels: accountLabels,
+        datasets: [{
+            label: "Top comptes",
+            data: accountData
+        }]
+    }
+});
+
+</script>
+

@@ -1,318 +1,313 @@
-/* ================= VARIABLES ================= */
-:root {
-    --dark-blue: #0b2540;
-    --dark-blue-2: #0f2e4e;
-    --primary-blue: #0ea5e9;
-    --gold: #facc15;
-    --gold-hover: #eab308;
-    --light-bg: #f8fafc;
-    --card-bg: #ffffff;
-    --text-dark: #0f172a;
-    --text-muted: #64748b;
+
+/* ================= GLOBAL ================= */ 
+body{ 
+    font-family: "Segoe UI", Roboto, sans-serif; 
+    margin:0; 
+    background:#f2f4f8; 
+    color:#1f2937;
+ }
+
+section{
+     padding:80px 0;
+     }
+
+h1,h2,h3,h4{ font-weight:700; }
+
+/* ===== TEXTES BLANCS NAVBAR ===== */
+.navbar,
+.navbar .nav-link,
+.navbar .navbar-brand,
+.navbar .brand-text,
+.navbar .nav-link:focus,
+.navbar .nav-link:hover {
+    color: #ffffff !important;
 }
 
-/* ================= GLOBAL ================= */
-body {
-    margin: 0;
-    font-family: "Segoe UI", system-ui, -apple-system, BlinkMacSystemFont;
-    background: #ffffff;
-    color: var(--text-dark);
+/* Icône menu mobile */
+.navbar-toggler-icon {
+    filter: brightness(0) invert(1);
 }
 
-a {
-    text-decoration: none;
+/* ===== TEXTES BLANCS HERO ===== */
+.hero,
+.hero p,
+.hero h1,
+.hero h2,
+.hero h3,
+.hero h4,
+.hero h5,
+.hero h6,
+.hero .hero-title,
+.hero .hero-subtitle {
+    color: #ffffff !important;
 }
 
-/* ================= NAVBAR ================= */
-
-.navbar {
-    background: #0b2c4d;
-    padding: 15px 0;
+/* Texte bouton outline */
+.hero .btn-outline-light {
+    color: #ffffff !important;
+    border-color: rgba(255,255,255,0.6);
 }
 
-.nav-content {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    color: white;
-}
-
-nav a {
-    color: white;
-    margin-left: 20px;
-    text-decoration: none;
-}
-
-.btn-primary {
-    background: #ffc107;
-    padding: 10px 18px;
-    border-radius: 6px;
-    color: #0b2c4d;
-    font-weight: bold;
-}
-
-.btn-outline {
-    border: 1px solid white;
-    padding: 10px 18px;
-    border-radius: 6px;
-    color: white;
+.hero .btn-outline-light:hover {
+    background: rgba(255,255,255,0.15);
+    color: #ffffff !important;
 }
 
 
+/* =====================================================
+   AMÉLIORATION VISUELLE LOGO (RENDU PROFESSIONNEL)
+   ===================================================== */
 
-/* ================= HERO ================= */
-.hero {
-    background: linear-gradient(180deg, var(--dark-blue), var(--dark-blue-2));
-    padding: 140px 20px 110px;
-    color: #ffffff;
-    text-align: center;
+/* Logo navbar plus premium */
+.logo, .nav-logo{
+    height:125px;
+    width:auto;
+    filter:
+        brightness(1.15)
+        contrast(1.15)
+        drop-shadow(0 2px 4px rgba(0,0,0,0.35));
 }
 
-.hero h1 {
-    font-size: 2.4rem;
-    font-weight: 700;
-    line-height: 1.25;
-    max-width: 900px;
-    margin: 0 auto;
+/* Logo HERO effet premium */
+.hero-logo{
+    width:230px;
+    max-width:75%;
+    padding:14px;
+    background:rgba(255,255,255,0.06);
+    border-radius:18px;
+    backdrop-filter:blur(6px);
+    box-shadow:
+        0 10px 35px rgba(0,0,0,0.35),
+        inset 0 0 0 1px rgba(255,255,255,0.08);
 }
 
-.hero p {
-    max-width: 720px;
-    margin: 20px auto 45px;
-    font-size: 1.05rem;
-    color: #cbd5e1;
+.hero-logo:hover{
+    transform:translateY(-6px) scale(1.04);
+    box-shadow:
+        0 18px 55px rgba(0,0,0,0.45),
+        inset 0 0 0 1px rgba(255,255,255,0.15);
 }
 
-/* ===== HERO BUTTONS (ALIGNÉS + MÊME TAILLE) ===== */
-.hero-actions {
+
+/* =====================================================
+   HERO ACTIONS — ALIGNEMENT + DIMENSIONS IDENTIQUES
+   ===================================================== */
+
+/* ===== ALIGNEMENT DES BOUTONS HERO ===== */
+.hero-actions{
     display: flex;
     justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-}
-
-.hero-actions .btn {
-    min-width: 210px;
-    padding: 13px 26px;
-    border-radius: 30px;
-    font-weight: 600;
-    font-size: 0.95rem;
-    text-align: center;
-}
-
-/* Accéder au dashboard */
-.btn-dashboard {
-    background: var(--gold);
-    color: #1e293b;
-}
-
-.btn-dashboard:hover {
-    background: var(--gold-hover);
-}
-
-/* Découvrir */
-.btn-outline {
-    border: 2px solid #ffffff;
-    color: #ffffff;
-    background: transparent;
-}
-
-.btn-outline:hover {
-    background: rgba(255, 255, 255, 0.12);
-}
-
-/* Générer rapport IA */
-.btn-ai {
-    background: var(--primary-blue);
-    color: #ffffff;
-}
-
-.btn-ai:hover {
-    background: #0284c7;
-}
-
-/* ================= FEATURES ================= */
-.features {
-    background: var(--light-bg);
-    padding: 90px 20px;
-}
-
-.section-title {
-    text-align: center;
-    font-weight: 700;
-    font-size: 1.9rem;
-}
-
-.section-subtitle {
-    text-align: center;
-    color: var(--text-muted);
-    margin: 15px 0 55px;
-}
-
-.feature-card {
-    background: var(--card-bg);
-    border-radius: 16px;
-    padding: 38px 26px;
-    text-align: center;
-    box-shadow: 0 10px 28px rgba(15, 23, 42, 0.08);
-    height: 100%;
-}
-
-.feature-card i {
-    font-size: 2.4rem;
-    color: var(--primary-blue);
-    margin-bottom: 18px;
-}
-
-.feature-card h5 {
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-.feature-card p {
-    color: var(--text-muted);
-    font-size: 0.95rem;
-    line-height: 1.5;
-}
-
-/* ================= STATS / KPI SUMMARY ================= */
-.stats {
-    background: linear-gradient(180deg, #0b2540, #081a2f);
-    padding: 60px 20px;
-}
-
-.stats .row {
     align-items: center;
+    gap: 18px;              /* espace égal entre boutons */
+    flex-wrap: wrap;        /* responsive mobile */
+    margin-top: 35px;
 }
 
-.stats .kpi-card {
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    padding: 28px 20px;
-    text-align: center;
-    color: #ffffff;
-    box-shadow: 0 8px 25px rgba(2, 6, 23, 0.35);
-    height: 100%;
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-
-.stats .kpi-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 12px 30px rgba(2, 6, 23, 0.5);
-}
-
-.stats .kpi-value {
-    font-size: 2.2rem;
+.hero-actions .btn{
+    min-width: 220px;       /* même largeur */
+    height: 55px;           /* même hauteur */
+    display: flex;
+    align-items: center;
+    justify-content: center;
     font-weight: 700;
-    color: #facc15; /* OR */
-    margin-bottom: 6px;
+    border-radius: 10px;
 }
 
-.stats .kpi-label {
-    font-size: 0.9rem;
-    color: #cbd5e1;
-    letter-spacing: 0.3px;
+/* Style OR professionnel */
+.hero-actions .btn-primary,
+.hero-actions .btn-outline-light,
+.hero-actions .btn-outline-primary{
+    background:linear-gradient(135deg,#D4AF37,#C9A227);
+    border:none;
+    color:white !important;
+    box-shadow:0 6px 18px rgba(212,175,55,.35);
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-    .stats {
-        padding: 50px 16px;
-    }
+/* Hover premium */
+.hero-actions .btn:hover{
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(212,175,55,.45);
+    background:linear-gradient(135deg,#E6C35C,#D4AF37);
+    color:white !important;
+}
 
-    .stats .kpi-card {
-        padding: 24px 16px;
-    }
+/* ===== BOUTON DASHBOARD OR ===== */
+.btn-dashboard {
+    background: linear-gradient(135deg, #d4af37, #f5c542);
+    color: #ffffff !important;
+    border: none;
+    padding: 14px 30px;
+    font-weight: 700;
+    border-radius: 8px;
+    letter-spacing: 0.5px;
+    box-shadow: 0 4px 18px rgba(212, 175, 55, 0.35);
+    transition: all 0.3s ease;
+}
 
-    .stats .kpi-value {
-        font-size: 2rem;
+/* hover premium */
+.btn-dashboard:hover {
+    background: linear-gradient(135deg, #f5c542, #d4af37);
+    color: #ffffff !important;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 28px rgba(212, 175, 55, 0.55);
+}
+
+/* clic */
+.btn-dashboard:active {
+    transform: translateY(0);
+    box-shadow: 0 3px 10px rgba(212, 175, 55, 0.3);
+}
+
+/* Mobile : passe en colonne propre */
+@media(max-width:768px){
+    .hero-actions{
+        flex-direction:column;
+    }
+    .hero-actions .btn{
+        width:90%;
     }
 }
 
-/* ================= RESPONSIVE ================= */
-@media (max-width: 768px) {
-    .hero {
-        padding: 110px 16px 90px;
-    }
-
-    .hero h1 {
-        font-size: 1.9rem;
-    }
-
-    .hero-actions .btn {
-        width: 100%;
-        max-width: 300px;
-    }
+/* ================= FEATURES ================= */ 
+.features{ 
+    background:#f3f5f9; 
+    text-align:center; 
 }
+
+.section-title{ 
+    font-size:32px; 
+    margin-bottom:10px; 
+}
+
+.section-subtitle{ 
+    color:#6b7280; 
+    margin-bottom:50px; 
+}
+
+.feature-card{ 
+    background:white; 
+    padding:35px 25px; 
+    border-radius:16px; 
+    box-shadow:0 10px 25px rgba(0,0,0,0.06); 
+    height:100%; 
+    transition:0.3s; 
+}
+
+.feature-card:hover{ 
+    transform:translateY(-6px); 
+}
+
+.feature-card i{ 
+    font-size:40px; 
+    color:#1e88e5; 
+    margin-bottom:15px; 
+}
+
+/* ================= KPI STRIP ================= */ 
+.stats{ 
+    background:#0f2a44; 
+    color:white; 
+    padding:70px 0; 
+}
+
+.kpi-card{ 
+    background:#142f4d; 
+    border-radius:16px; 
+    padding:25px; 
+}
+
+.kpi-value{ 
+    font-size:38px; 
+    font-weight:800; 
+    color:#f5b400; 
+}
+
+.kpi-label{
+     opacity:0.8; 
+    }
 
 /* ================= CTA ================= */
-.cta {
-    background: linear-gradient(135deg, #0284c7, #0ea5e9);
-    padding: 80px 20px;
-    color: #ffffff;
-    text-align: center;
+.cta{ 
+    background:linear-gradient(90deg,#1e88e5,#0ea5e9); 
+    color:white;
+    text-align:center; 
+    padding:90px 0; 
 }
 
-.cta h2 {
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: 12px;
+.btn-contact{ 
+    background:#f5b400; 
+    border:none; 
+    padding:14px 30px; 
+    font-weight:600; }
+
+/* ================= FOOTER ================= */ 
+.footer{ 
+    background:#0b1727; 
+    color:#cbd5e1; 
+    padding:30px 0; 
 }
 
-.cta p {
-    font-size: 1rem;
-    color: #e0f2fe;
-    margin-bottom: 32px;
+/* ================= MOBILE ================= */
+ @media(max-width:768px){
+
+.hero-title{ 
+    font-size:30px; 
 }
 
-.btn-contact {
-    background: #facc15;
-    color: #1e293b;
+section{ 
+    padding:60px 0; 
+}
+
+}
+
+
+/* NAVBAR LOGO */
+.nav-logo {
+    height: 45px;           /* Légèrement augmenté pour meilleure visibilité */
+    width: auto;
+    object-fit: contain;      /* Maintient les proportions sans déformation */
+}
+
+.brand-text {
     font-weight: 600;
-    padding: 14px 34px;
-    border-radius: 30px;
-    border: none;
-    display: inline-flex;
+    font-size: 1.1rem;
+}
+
+/* HERO LOGO */
+.hero-logo-wrapper {
+    margin-bottom: 30px;    /* Un peu plus d'espace pour respirer */
+    display: flex;          /* Centre le logo proprement */
+    justify-content: center;
     align-items: center;
-    gap: 8px;
-    transition: all 0.25s ease;
 }
 
-.btn-contact:hover {
-    background: #eab308;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(2, 6, 23, 0.25);
+.hero-logo {
+    width: 220px;           /* Taille plus raisonnable (ni trop petit ni trop grand) */
+    max-width: 70%;         /* Limite responsive plus conservatrice */
+    height: auto;           /* Maintient le ratio d'aspect */
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.2));  /* Ombre plus subtile */
+    object-fit: contain;
+    transition: transform 0.3s ease;  /* Animation douce au survol */
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-    .cta h2 {
-        font-size: 1.7rem;
-    }
-
-    .cta p {
-        font-size: 0.95rem;
-    }
+.hero-logo:hover {
+    transform: scale(1.05);  /* Effet subtil au survol */
 }
 
-/* ================= FOOTER ================= */
-.footer {
-    background: #020617;
-    color: #94a3b8;
-    padding: 32px 20px;
-    text-align: center;
+.navbar {
+    background: linear-gradient(90deg,#0f2a44,#153a5e,#0f2a44) !important;
 }
 
-.footer p {
-    margin-bottom: 6px;
-    font-size: 0.9rem;
+
+.hero {
+    background: linear-gradient(120deg,#0b1f33,#0f2a44,#163a63,#0f2a44);
 }
 
-.footer small {
-    font-size: 0.8rem;
-    color: #64748b;
-    line-height: 1.6;
+.hero::before{
+    radial-gradient (circle at 20% 80%, rgba(255,255,255,0.06) 0%, transparent 50%),
 }
+
+#header-nav {
+    background:#f5b400; 
+}
+

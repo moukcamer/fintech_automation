@@ -22,7 +22,7 @@ def ai_report_pdf(request):
 
     elements = []
 
-    elements.append(Paragraph("<b>Rapport IA – FinOptiAI</b>", styles["Title"]))
+    elements.append(Paragraph("<b>Rapport IA – Fintech Automation</b>", styles["Title"]))
     elements.append(Paragraph("Analyse financière intelligente", styles["Normal"]))
 
     elements.append(Paragraph(
@@ -88,3 +88,17 @@ def anomaly_detection(request):
     })
 
 
+
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
+
+class AIRiskAPI(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        return Response({
+            "risk_score": 0.32,
+            "level": "LOW",
+            "message": "Client à faible risque"
+        })

@@ -17,15 +17,15 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.shortcuts import render
+from django.conf import settings
+from django.conf.urls.static import static
 
 
-def home(request):
-    return render(request, "index.html")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home, name='home'),  # PAGE D'ACCUEIL
-    path("dashboard/", include("dashboard.urls", namespace="dashboard")),
+    path("", include("core.urls")),  # PAGE D'ACCUEIL
+    path("dashboard/", include("dashboard.urls")),
     path("finance/", include(("finance.urls", "finance"), namespace="finance")),
     path("ml/", include("ml.urls")),
     path("api/analytics/", include("data_processing.api.urls")),
@@ -34,10 +34,17 @@ urlpatterns = [
     path("", include("pages.urls")),
     path("accounts/", include("django.contrib.auth.urls") ),
     path("ai/", include("ai.urls")),
+    path("api/finance/", include("finance.urls_api")),
+    path("api/ai/", include("ai.urls")),
+     # Auth
+    path("", include("accounts.urls")),
+    path("fraud/", include("fraud.urls")),
+    
 
 ]
 
-
+if settings.DEBUG: urlpatterns += static(settings.STATIC_URL, 
+                        document_root=settings.STATICFILES_DIRS[0])
 
 
 

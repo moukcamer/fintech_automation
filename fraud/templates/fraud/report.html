@@ -1,0 +1,81 @@
+
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <h2 class="mb-4">📊 Rapport de Fraude</h2>
+
+    <!-- KPI -->
+    <div class="row">
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3">
+                <h6 class="text-muted">Transactions totales</h6>
+                <h3>{{ total }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3">
+                <h6 class="text-muted">Normales</h6>
+                <h3 class="text-success">{{ normal }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3">
+                <h6 class="text-muted">Suspectes</h6>
+                <h3 class="text-warning">{{ suspect }}</h3>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card shadow-sm border-0 text-center p-3">
+                <h6 class="text-muted">Frauduleuses</h6>
+                <h3 class="text-danger">{{ fraud }}</h3>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- Dernières fraudes -->
+    <div class="card mt-4 shadow-sm border-0">
+        <div class="card-body">
+
+            <h5 class="mb-3">🚨 Transactions à haut risque</h5>
+
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Utilisateur</th>
+                        <th>Montant</th>
+                        <th>Score</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for tx in high_risk %}
+                    <tr>
+                        <td>{{ tx.user.email }}</td>
+                        <td>{{ tx.amount }} FCFA</td>
+                        <td class="text-danger"><strong>{{ tx.risk_score }}</strong></td>
+                        <td>{{ tx.timestamp }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4">Aucune fraude détectée</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

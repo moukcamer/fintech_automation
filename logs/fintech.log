@@ -1,0 +1,1172 @@
+[2026-02-03 22:41:35,739] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-03 22:45:21,229] INFO django.server :: "GET / HTTP/1.1" 200 4309
+[2026-02-03 22:45:25,808] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 3470
+[2026-02-03 22:45:25,809] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 200 1105
+[2026-02-03 22:46:03,423] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 29425
+[2026-02-03 22:46:04,579] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 200 5784
+[2026-02-03 22:46:11,927] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-03 22:46:11,942] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4190
+[2026-02-03 22:46:11,975] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-03 22:46:12,087] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4190
+[2026-02-03 22:47:22,974] INFO django.server :: "GET / HTTP/1.1" 200 4309
+[2026-02-04 07:43:56,606] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-04 07:44:38,880] INFO django.server :: "GET / HTTP/1.1" 200 4309
+[2026-02-04 07:44:39,120] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-04 07:44:39,123] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 304 0
+[2026-02-04 07:44:40,377] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-04 07:44:40,377] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4190
+[2026-02-04 08:16:20,591] INFO django.server :: "GET /dashboard HTTP/1.1" 301 0
+[2026-02-04 08:16:22,185] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 29425
+[2026-02-06 08:12:39,633] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-06 08:17:33,303] INFO django.server :: "GET / HTTP/1.1" 200 4309
+[2026-02-06 08:17:38,420] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 200 1105
+[2026-02-06 08:17:38,514] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 3470
+[2026-02-06 08:17:56,081] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-06 08:17:56,081] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4190
+[2026-02-06 08:18:13,126] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 19372
+[2026-02-06 08:18:13,579] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 200 3972
+[2026-02-06 10:37:03,323] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 19698
+[2026-02-06 10:37:03,617] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 304 0
+[2026-02-06 10:43:58,850] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 27989
+[2026-02-06 10:52:48,683] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 19999
+[2026-02-06 10:52:48,768] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 304 0
+[2026-02-06 10:57:26,718] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 21532
+[2026-02-06 10:57:43,911] INFO django.server :: "GET /api/ai/report/pdf/ HTTP/1.1" 200 1683
+[2026-02-06 11:38:08,993] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 21862
+[2026-02-06 11:38:09,263] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 304 0
+[2026-02-06 11:50:36,102] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 16322
+[2026-02-06 11:58:01,148] INFO django.server :: "GET / HTTP/1.1" 200 4309
+[2026-02-06 11:58:21,007] INFO django.server :: "GET /dashboard HTTP/1.1" 301 0
+[2026-02-06 11:58:21,606] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 16322
+[2026-02-06 11:58:38,872] INFO django.server :: "GET /admin HTTP/1.1" 301 0
+[2026-02-06 11:58:55,107] INFO django.server :: "GET /admin/ HTTP/1.1" 200 16661
+[2026-02-06 11:58:55,841] INFO django.server :: "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2682
+[2026-02-06 11:58:56,107] INFO django.server :: "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[2026-02-06 11:58:56,370] INFO django.server :: "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+[2026-02-06 11:58:56,420] INFO django.server :: "GET /static/admin/css/base.css HTTP/1.1" 200 21544
+[2026-02-06 11:58:56,438] INFO django.server :: "GET /static/admin/css/responsive.css HTTP/1.1" 200 17905
+[2026-02-06 11:58:57,534] INFO django.server :: "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+[2026-02-06 11:58:58,560] INFO django.server :: "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[2026-02-06 11:59:05,210] INFO django.server :: "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[2026-02-06 11:59:05,826] INFO django.server :: "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+[2026-02-06 11:59:18,897] INFO django.server :: "GET /admin/finance/transaction/ HTTP/1.1" 200 81404
+[2026-02-06 11:59:20,075] INFO django.server :: "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[2026-02-06 11:59:20,697] INFO django.server :: "GET /static/admin/css/changelists.css HTTP/1.1" 200 6811
+[2026-02-06 11:59:21,150] INFO django.server :: "GET /static/admin/js/actions.js HTTP/1.1" 200 8067
+[2026-02-06 11:59:21,493] INFO django.server :: "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[2026-02-06 11:59:21,759] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 11:59:21,795] INFO django.server :: "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[2026-02-06 11:59:21,960] INFO django.server :: "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+[2026-02-06 11:59:22,031] INFO django.server :: "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+[2026-02-06 11:59:22,411] INFO django.server :: "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9042
+[2026-02-06 11:59:25,806] INFO django.server :: "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+[2026-02-06 11:59:26,143] INFO django.server :: "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+[2026-02-06 11:59:26,284] INFO django.server :: "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+[2026-02-06 11:59:27,785] INFO django.server :: "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[2026-02-06 11:59:28,176] INFO django.server :: "GET /static/admin/img/sorting-icons.svg HTTP/1.1" 200 1097
+[2026-02-06 11:59:28,512] INFO django.server :: "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+[2026-02-06 12:01:00,525] INFO django.server :: "GET /admin/finance/transaction/?q=ACC0000044 HTTP/1.1" 200 27460
+[2026-02-06 12:01:00,588] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:03:02,893] INFO django.server :: "GET /admin/finance/transaction/?o=2&q=ACC0000044 HTTP/1.1" 200 27771
+[2026-02-06 12:03:02,992] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:01,488] INFO django.server :: "GET /admin/finance/transaction/?o=4.2&q=ACC0000044 HTTP/1.1" 200 28253
+[2026-02-06 12:04:01,536] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:04,700] INFO django.server :: "GET /admin/finance/transaction/?o=-4.2&q=ACC0000044 HTTP/1.1" 200 28297
+[2026-02-06 12:04:04,787] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:06,394] INFO django.server :: "GET /admin/finance/transaction/?o=4.2&q=ACC0000044 HTTP/1.1" 200 28253
+[2026-02-06 12:04:06,483] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:07,689] INFO django.server :: "GET /admin/finance/transaction/?o=-4.2&q=ACC0000044 HTTP/1.1" 200 28297
+[2026-02-06 12:04:07,782] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:09,003] INFO django.server :: "GET /admin/finance/transaction/?o=4.2&q=ACC0000044 HTTP/1.1" 200 28253
+[2026-02-06 12:04:09,110] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:11,026] INFO django.server :: "GET /admin/finance/transaction/?o=-4.2&q=ACC0000044 HTTP/1.1" 200 28297
+[2026-02-06 12:04:11,159] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:14,385] INFO django.server :: "GET /admin/finance/transaction/?o=4.2&q=ACC0000044 HTTP/1.1" 200 28253
+[2026-02-06 12:04:14,515] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:16,570] INFO django.server :: "GET /admin/finance/transaction/?o=-4.2&q=ACC0000044 HTTP/1.1" 200 28297
+[2026-02-06 12:04:16,705] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:17,919] INFO django.server :: "GET /admin/finance/transaction/?o=4.2&q=ACC0000044 HTTP/1.1" 200 28253
+[2026-02-06 12:04:18,023] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:19,140] INFO django.server :: "GET /admin/finance/transaction/?o=-4.2&q=ACC0000044 HTTP/1.1" 200 28297
+[2026-02-06 12:04:19,198] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:28,447] INFO django.server :: "GET /admin/finance/transaction/?o=-4.-2&q=ACC0000044 HTTP/1.1" 200 28341
+[2026-02-06 12:04:28,593] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:29,229] INFO django.server :: "GET /admin/finance/transaction/?o=-4.2&q=ACC0000044 HTTP/1.1" 200 28297
+[2026-02-06 12:04:29,396] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:30,679] INFO django.server :: "GET /admin/finance/transaction/?o=-4.-2&q=ACC0000044 HTTP/1.1" 200 28341
+[2026-02-06 12:04:30,751] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:04:56,084] INFO django.server :: "GET /admin/finance/transaction/?o=-4.-2&q=ACC0000044 HTTP/1.1" 200 28341
+[2026-02-06 12:04:56,175] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:05:22,485] INFO django.server :: "GET /admin/finance/transaction/add/ HTTP/1.1" 200 27954
+[2026-02-06 12:05:22,673] INFO django.server :: "GET /static/admin/css/forms.css HTTP/1.1" 200 9090
+[2026-02-06 12:05:22,680] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-06 12:05:22,890] INFO django.server :: "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+[2026-02-06 12:05:22,890] INFO django.server :: "GET /static/admin/css/widgets.css HTTP/1.1" 200 11800
+[2026-02-06 12:05:22,979] INFO django.server :: "GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+[2026-02-06 12:05:23,039] INFO django.server :: "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+[2026-02-06 12:05:23,053] INFO django.server :: "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+[2026-02-06 12:05:23,641] INFO django.server :: "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+[2026-02-06 12:05:23,679] INFO django.server :: "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+[2026-02-06 15:07:24,123] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 16242
+[2026-02-06 15:07:24,186] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 304 0
+[2026-02-06 15:13:53,849] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 16287
+[2026-02-06 15:17:13,209] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 17186
+[2026-02-06 15:20:11,966] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 122, in dashboard
+    return render(request, 'dashboard/dashboard.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\backends\django.py", line 33, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\engine.py", line 177, in get_template
+    template, origin = self.find_template(template_name)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loaders\cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loaders\base.py", line 28, in get_template
+    return Template(
+           ^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 154, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 196, in compile_nodelist
+    return parser.parse()
+           ^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 510, in parse
+    raise self.error(token, e)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 508, in parse
+    compiled_result = compile_func(self, token)
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\defaulttags.py", line 861, in do_for
+    nodelist_loop = parser.parse(
+                    ^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 481, in parse
+    raise self.error(token, e)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 479, in parse
+    filter_expression = self.compile_filter(token.contents)
+                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 597, in compile_filter
+    return FilterExpression(token, self)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 694, in __init__
+    self.args_check(filter_name, filter_func, args)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 756, in args_check
+    raise TemplateSyntaxError(
+django.template.exceptions.TemplateSyntaxError: default requires 2 arguments, 1 provided
+[2026-02-06 15:20:12,151] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 223117
+[2026-02-06 15:21:52,479] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 17968
+[2026-02-06 15:55:37,275] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 24859
+[2026-02-06 15:55:37,524] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 304 0
+[2026-02-06 15:55:52,420] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 24859
+[2026-02-06 16:00:55,348] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 24893
+[2026-02-06 16:03:03,370] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 24885
+[2026-02-06 16:04:51,687] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 24896
+[2026-02-06 16:09:18,619] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-06 16:09:18,619] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4301
+[2026-02-06 16:14:07,645] INFO django.server :: "GET / HTTP/1.1" 200 4309
+[2026-02-06 16:14:08,184] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-06 16:14:08,378] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 304 0
+[2026-02-06 16:14:09,155] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-06 16:14:09,157] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4190
+[2026-02-06 16:14:35,717] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 24896
+[2026-02-06 16:14:41,207] INFO django.server :: "GET /admin/ HTTP/1.1" 200 16661
+[2026-02-06 16:16:28,663] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-06 16:16:28,952] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4301
+[2026-02-06 16:20:58,794] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 24896
+[2026-02-06 16:20:59,182] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-06 16:20:59,185] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4301
+[2026-02-06 16:25:41,176] INFO django.server :: "GET /api/ai/report/pdf/ HTTP/1.1" 200 1683
+[2026-02-06 17:18:58,028] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 36579
+[2026-02-06 17:18:59,525] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 200 4428
+[2026-02-06 17:19:33,446] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 36579
+[2026-02-06 17:19:33,528] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 304 0
+[2026-02-06 17:21:58,920] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 304 0
+[2026-02-06 17:22:06,304] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-06 17:22:06,325] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4301
+[2026-02-06 17:23:55,733] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 40181
+[2026-02-06 17:23:55,991] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 304 0
+[2026-02-07 10:50:41,190] INFO django.server :: "GET /admin/ HTTP/1.1" 200 16661
+[2026-02-09 12:19:53,451] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-09 12:21:51,525] INFO django.server :: "GET / HTTP/1.1" 200 5915
+[2026-02-09 12:21:53,487] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-09 12:21:54,790] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 304 0
+[2026-02-09 12:22:39,399] WARNING django.server :: "GET /static/images/Fintech_Automation_logo.png HTTP/1.1" 404 1861
+[2026-02-09 12:22:40,156] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-09 12:22:40,156] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4526
+[2026-02-09 12:23:16,413] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-09 12:23:16,738] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-09 12:23:28,558] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 200 730
+[2026-02-09 13:54:55,275] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-09 14:00:06,094] INFO django.server :: "GET / HTTP/1.1" 200 4968
+[2026-02-09 14:12:21,422] INFO django.server :: "GET / HTTP/1.1" 200 4968
+[2026-02-09 14:12:36,582] INFO django.server :: "GET / HTTP/1.1" 200 4967
+[2026-02-09 14:16:49,050] INFO django.server :: "GET / HTTP/1.1" 200 4971
+[2026-02-09 14:31:09,305] INFO django.server :: "GET / HTTP/1.1" 200 4891
+[2026-02-09 14:32:12,712] INFO django.server :: "GET / HTTP/1.1" 200 4710
+[2026-02-09 14:36:52,225] INFO django.server :: "GET / HTTP/1.1" 200 4750
+[2026-02-09 14:39:13,668] INFO django.server :: "GET / HTTP/1.1" 200 4963
+[2026-02-09 14:40:06,910] INFO django.server :: "GET / HTTP/1.1" 200 4967
+[2026-02-09 14:50:18,147] INFO django.server :: "GET / HTTP/1.1" 200 5171
+[2026-02-09 23:18:17,862] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-09 23:19:19,630] INFO django.server :: "GET / HTTP/1.1" 200 5070
+[2026-02-09 23:19:25,721] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 200 0
+[2026-02-09 23:19:25,784] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 200 1105
+[2026-02-09 23:19:25,878] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 2852
+[2026-02-09 23:20:53,083] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-09 23:20:53,097] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4699
+[2026-02-09 23:21:02,237] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-09 23:21:02,241] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4810
+[2026-02-09 23:21:03,892] INFO django.server :: "GET / HTTP/1.1" 200 5070
+[2026-02-09 23:21:26,595] INFO django.server :: "GET / HTTP/1.1" 200 5070
+[2026-02-09 23:21:28,364] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-09 23:21:28,378] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4810
+[2026-02-10 07:20:20,320] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 07:20:34,536] INFO django.server :: "GET / HTTP/1.1" 200 5071
+[2026-02-10 07:20:35,009] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-10 07:20:35,573] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 200 0
+[2026-02-10 07:20:35,606] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 200 1105
+[2026-02-10 07:20:37,491] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-10 07:20:37,500] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4699
+[2026-02-10 07:20:52,792] INFO django.server :: "GET /admin HTTP/1.1" 301 0
+[2026-02-10 07:20:52,901] INFO django.server :: "GET /admin/ HTTP/1.1" 302 0
+[2026-02-10 07:20:54,890] INFO django.server :: "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4155
+[2026-02-10 07:20:55,079] INFO django.server :: "GET /static/admin/css/dark_mode.css HTTP/1.1" 200 2682
+[2026-02-10 07:20:55,152] INFO django.server :: "GET /static/admin/css/login.css HTTP/1.1" 200 958
+[2026-02-10 07:20:55,176] INFO django.server :: "GET /static/admin/css/base.css HTTP/1.1" 200 21544
+[2026-02-10 07:20:55,178] INFO django.server :: "GET /static/admin/css/nav_sidebar.css HTTP/1.1" 200 2810
+[2026-02-10 07:20:55,246] INFO django.server :: "GET /static/admin/css/responsive.css HTTP/1.1" 200 17905
+[2026-02-10 07:20:55,283] INFO django.server :: "GET /static/admin/js/theme.js HTTP/1.1" 200 1943
+[2026-02-10 07:20:55,379] INFO django.server :: "GET /static/admin/js/nav_sidebar.js HTTP/1.1" 200 3063
+[2026-02-10 07:21:21,280] INFO django.server :: "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[2026-02-10 07:21:21,879] INFO django.server :: "GET /admin/ HTTP/1.1" 200 16942
+[2026-02-10 07:21:22,538] INFO django.server :: "GET /static/admin/css/dashboard.css HTTP/1.1" 200 441
+[2026-02-10 07:21:22,871] INFO django.server :: "GET /static/admin/img/icon-changelink.svg HTTP/1.1" 200 380
+[2026-02-10 07:21:22,924] INFO django.server :: "GET /static/admin/img/icon-addlink.svg HTTP/1.1" 200 331
+[2026-02-10 07:22:20,056] INFO django.server :: "GET /admin/finance/transaction/ HTTP/1.1" 200 16761
+[2026-02-10 07:22:20,235] INFO django.server :: "GET /static/admin/css/changelists.css HTTP/1.1" 200 6811
+[2026-02-10 07:22:20,369] INFO django.server :: "GET /static/admin/js/jquery.init.js HTTP/1.1" 200 347
+[2026-02-10 07:22:20,550] INFO django.server :: "GET /static/admin/js/urlify.js HTTP/1.1" 200 7887
+[2026-02-10 07:22:20,558] INFO django.server :: "GET /static/admin/js/core.js HTTP/1.1" 200 6208
+[2026-02-10 07:22:20,860] INFO django.server :: "GET /static/admin/js/admin/RelatedObjectLookups.js HTTP/1.1" 200 9042
+[2026-02-10 07:22:20,990] INFO django.server :: "GET /static/admin/js/prepopulate.js HTTP/1.1" 200 1531
+[2026-02-10 07:22:21,024] INFO django.server :: "GET /static/admin/js/actions.js HTTP/1.1" 200 8067
+[2026-02-10 07:22:21,067] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 07:22:21,197] INFO django.server :: "GET /static/admin/js/vendor/jquery/jquery.js HTTP/1.1" 200 285314
+[2026-02-10 07:22:21,240] INFO django.server :: "GET /static/admin/img/search.svg HTTP/1.1" 200 458
+[2026-02-10 07:22:21,268] INFO django.server :: "GET /static/admin/js/vendor/xregexp/xregexp.js HTTP/1.1" 200 325171
+[2026-02-10 07:22:21,391] INFO django.server :: "GET /static/admin/js/filters.js HTTP/1.1" 200 978
+[2026-02-10 07:22:21,440] INFO django.server :: "GET /static/admin/img/tooltag-add.svg HTTP/1.1" 200 331
+[2026-02-10 07:22:21,445] INFO django.server :: "GET /static/admin/img/icon-viewlink.svg HTTP/1.1" 200 581
+[2026-02-10 07:22:37,960] INFO django.server :: "GET /admin/finance/transaction/add/ HTTP/1.1" 200 22611
+[2026-02-10 07:22:38,091] INFO django.server :: "GET /static/admin/css/forms.css HTTP/1.1" 200 9090
+[2026-02-10 07:22:38,098] INFO django.server :: "GET /static/admin/js/calendar.js HTTP/1.1" 200 9141
+[2026-02-10 07:22:38,189] INFO django.server :: "GET /static/admin/css/widgets.css HTTP/1.1" 200 11800
+[2026-02-10 07:22:38,219] INFO django.server :: "GET /static/admin/js/admin/DateTimeShortcuts.js HTTP/1.1" 200 19319
+[2026-02-10 07:22:38,297] INFO django.server :: "GET /static/admin/js/prepopulate_init.js HTTP/1.1" 200 586
+[2026-02-10 07:22:38,368] INFO django.server :: "GET /static/admin/js/change_form.js HTTP/1.1" 200 606
+[2026-02-10 07:22:38,503] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 07:22:38,788] INFO django.server :: "GET /static/admin/img/icon-clock.svg HTTP/1.1" 200 677
+[2026-02-10 07:22:38,789] INFO django.server :: "GET /static/admin/img/icon-calendar.svg HTTP/1.1" 200 1086
+[2026-02-10 07:22:43,795] INFO django.server :: "GET /admin/accounting/journalentry/ HTTP/1.1" 200 16506
+[2026-02-10 07:22:44,411] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 07:22:59,431] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 52, in dashboard
+    total_customers = queryset.exclude(customer__isnull=True).values('customer').distinct().count()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1484, in exclude
+    return self._filter_or_exclude(True, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1499, in _filter_or_exclude_inplace
+    self._query.add_q(~Q(*args, **kwargs))
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1645, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1495, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1307, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1772, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'customer' into field. Choices are: account, account_id, amount, channel, country, created_at, currency, description, id, transaction_date, transaction_ref, transaction_type
+[2026-02-10 07:22:59,459] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 129775
+[2026-02-10 09:53:10,576] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 09:54:57,670] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 200 0
+[2026-02-10 09:56:55,553] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 304 0
+[2026-02-10 10:01:52,353] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fintech_automation\urls.py changed, reloading.
+[2026-02-10 10:02:07,237] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 10:12:51,854] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\ai\views.py changed, reloading.
+[2026-02-10 10:12:55,513] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 10:27:27,624] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fintech_automation\settings.py changed, reloading.
+[2026-02-10 10:34:43,943] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 10:35:25,445] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fintech_automation\settings.py changed, reloading.
+[2026-02-10 10:35:27,465] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 10:37:59,530] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fintech_automation\settings.py changed, reloading.
+[2026-02-10 10:38:02,353] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 11:31:14,833] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 11:32:42,587] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 304 0
+[2026-02-10 11:38:45,560] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 11:39:54,027] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 304 0
+[2026-02-10 11:40:08,416] INFO django.server :: "GET / HTTP/1.1" 200 5088
+[2026-02-10 11:40:10,367] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 200 1105
+[2026-02-10 11:40:10,367] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 2852
+[2026-02-10 11:40:22,253] WARNING django.request :: Not Found: /{ static 'images/logo.png' %}
+[2026-02-10 11:40:22,259] WARNING django.server :: "GET /%7B%20static%20'images/logo.png'%20%%7D HTTP/1.1" 404 4922
+[2026-02-10 11:41:12,691] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-10 11:41:13,325] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 11:41:23,248] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 11:41:44,768] INFO django.server :: "GET /admin/ HTTP/1.1" 302 0
+[2026-02-10 11:41:50,640] INFO django.server :: "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4155
+[2026-02-10 11:41:59,881] INFO django.server :: "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[2026-02-10 11:42:00,430] INFO django.server :: "GET /admin/ HTTP/1.1" 200 16942
+[2026-02-10 11:42:16,557] INFO django.server :: "GET /admin/accounting/account/ HTTP/1.1" 200 16437
+[2026-02-10 11:42:18,099] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:42:24,292] INFO django.server :: "GET /admin/accounting/payment/ HTTP/1.1" 200 15250
+[2026-02-10 11:42:24,527] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:42:27,678] INFO django.server :: "GET /admin/accounting/journal/ HTTP/1.1" 200 15575
+[2026-02-10 11:42:28,017] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:42:30,663] INFO django.server :: "GET /admin/accounting/journalentry/ HTTP/1.1" 200 16506
+[2026-02-10 11:42:31,014] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:42:32,810] INFO django.server :: "GET /admin/accounting/invoice/ HTTP/1.1" 200 15250
+[2026-02-10 11:42:33,094] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:42:36,617] INFO django.server :: "GET /admin/accounts/company/ HTTP/1.1" 200 16350
+[2026-02-10 11:42:36,992] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:42:40,786] INFO django.server :: "GET /admin/accounts/loginhistory/ HTTP/1.1" 200 16879
+[2026-02-10 11:42:41,492] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:42:43,787] INFO django.server :: "GET /admin/accounts/userprofile/ HTTP/1.1" 200 15600
+[2026-02-10 11:42:43,989] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:42:54,101] INFO django.server :: "GET /admin/core/auditlog/ HTTP/1.1" 200 15238
+[2026-02-10 11:42:54,319] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:43:05,083] INFO django.server :: "GET /admin/finance/account/ HTTP/1.1" 200 16408
+[2026-02-10 11:43:05,297] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:43:12,317] INFO django.server :: "GET /admin/finance/transaction/ HTTP/1.1" 200 16761
+[2026-02-10 11:43:12,649] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-10 11:43:43,139] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 52, in dashboard
+    total_customers = queryset.exclude(customer__isnull=True).values('customer').distinct().count()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1484, in exclude
+    return self._filter_or_exclude(True, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1499, in _filter_or_exclude_inplace
+    self._query.add_q(~Q(*args, **kwargs))
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1645, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1495, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1307, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1772, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'customer' into field. Choices are: account, account_id, amount, channel, country, created_at, currency, description, id, transaction_date, transaction_ref, transaction_type
+[2026-02-10 11:43:43,178] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 129916
+[2026-02-10 11:54:12,114] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 11:54:39,183] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 11:56:43,749] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 52, in dashboard
+    total_customers = queryset.exclude(customer__isnull=True).values('account__customer').distinct().count()
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1484, in exclude
+    return self._filter_or_exclude(True, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1499, in _filter_or_exclude_inplace
+    self._query.add_q(~Q(*args, **kwargs))
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1645, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1495, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1307, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1772, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'customer' into field. Choices are: account, account_id, amount, channel, country, created_at, currency, description, id, transaction_date, transaction_ref, transaction_type
+[2026-02-10 11:56:43,789] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 130071
+[2026-02-10 12:08:48,918] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 12:09:22,196] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 12:11:21,713] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 57, in dashboard
+    daily_data = queryset.annotate(day=TruncDate('date')).values('day').annotate(total=Sum('amount')).order_by('day')
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1630, in annotate
+    return self._annotate(args, kwargs, select=True)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1680, in _annotate
+    clone.query.add_annotation(
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1198, in add_annotation
+    annotation = annotation.resolve_expression(self, allow_joins=True, reuse=None)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\functions\datetime.py", line 287, in resolve_expression
+    copy = super().resolve_expression(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\expressions.py", line 975, in resolve_expression
+    c.source_expressions[pos] = arg.resolve_expression(
+                                ^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\expressions.py", line 854, in resolve_expression
+    return query.resolve_ref(self.name, allow_joins, reuse, summarize)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 2014, in resolve_ref
+    join_info = self.setup_joins(
+                ^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1867, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1772, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'date' into field. Choices are: account, account_id, amount, channel, country, created_at, currency, description, id, transaction_date, transaction_ref, transaction_type
+[2026-02-10 12:11:21,749] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 134908
+[2026-02-10 12:24:13,181] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 12:24:35,088] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 12:25:52,621] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-10 12:25:53,083] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 12:26:12,034] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 12:26:31,084] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-10 12:26:31,164] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 12:26:46,236] INFO django.server :: "GET / HTTP/1.1" 200 5088
+[2026-02-10 12:26:47,166] WARNING django.request :: Not Found: /{ static 'images/logo.png' %}
+[2026-02-10 12:26:47,170] WARNING django.server :: "GET /%7B%20static%20'images/logo.png'%20%%7D HTTP/1.1" 404 4922
+[2026-02-10 12:26:57,335] INFO django.server :: "GET / HTTP/1.1" 200 5088
+[2026-02-10 12:26:57,580] WARNING django.request :: Not Found: /{ static 'images/logo.png' %}
+[2026-02-10 12:26:57,590] WARNING django.server :: "GET /%7B%20static%20'images/logo.png'%20%%7D HTTP/1.1" 404 4922
+[2026-02-10 12:27:12,919] INFO django.server :: "GET /admin/ HTTP/1.1" 302 0
+[2026-02-10 12:27:13,540] INFO django.server :: "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4155
+[2026-02-10 12:27:18,669] INFO django.server :: "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[2026-02-10 12:27:19,310] INFO django.server :: "GET /admin/ HTTP/1.1" 200 16942
+[2026-02-10 12:27:28,620] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1890, in transform
+    return self.try_transform(wrapped, name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1427, in try_transform
+    raise FieldError(
+django.core.exceptions.FieldError: Unsupported lookup 'name' for CharField or join on the field not permitted.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 71, in dashboard
+    account_data = queryset.values('account__name').annotate(total=Sum('amount')).order_by('-total')
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1360, in values
+    clone = self._values(*fields, **expressions)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1355, in _values
+    clone.query.set_values(fields)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 2504, in set_values
+    self.add_fields(field_names, True)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 2208, in add_fields
+    cols.append(join_info.transform_function(target, final_alias))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1894, in transform
+    raise last_field_exception
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1867, in setup_joins
+    path, final_field, targets, rest = self.names_to_path(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1772, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'name' into field. Choices are: account_number, account_type, balance, created_at, currency, customer, customer_id, id, ledgerentry, open_date, payment, status, transactions
+[2026-02-10 12:27:28,652] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 144001
+[2026-02-10 12:40:05,214] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 12:40:52,152] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 12:43:32,435] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 84, in dashboard
+    qs = Transaction.objects.filter(status="completed").values(
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\manager.py", line 87, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1476, in filter
+    return self._filter_or_exclude(False, args, kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1494, in _filter_or_exclude
+    clone._filter_or_exclude_inplace(negate, args, kwargs)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1501, in _filter_or_exclude_inplace
+    self._query.add_q(Q(*args, **kwargs))
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1613, in add_q
+    clause, _ = self._add_q(q_object, self.used_aliases)
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1645, in _add_q
+    child_clause, needed_inner = self.build_filter(
+                                 ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1495, in build_filter
+    lookups, parts, reffed_expression = self.solve_lookup_type(arg, summarize)
+                                        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1307, in solve_lookup_type
+    _, field, _, lookup_parts = self.names_to_path(lookup_splitted, self.get_meta())
+                                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\query.py", line 1772, in names_to_path
+    raise FieldError(
+django.core.exceptions.FieldError: Cannot resolve keyword 'status' into field. Choices are: account, account_id, amount, channel, country, created_at, currency, description, id, transaction_date, transaction_ref, transaction_type
+[2026-02-10 12:43:32,474] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 135698
+[2026-02-10 12:45:44,705] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 12:46:05,631] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 12:48:55,651] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 118, in dashboard
+    }, risk)
+       ^^^^
+UnboundLocalError: cannot access local variable 'risk' where it is not associated with a value
+[2026-02-10 12:48:55,662] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 91845
+[2026-02-10 13:02:06,645] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 13:02:38,426] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 13:15:07,465] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 13:15:10,291] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 13:29:45,662] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 13:29:58,297] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 13:33:35,660] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 13:58:02,512] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 13:58:16,144] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 14:00:01,931] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-10 14:00:04,924] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 14:02:59,502] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-10 14:03:05,416] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 14:03:38,221] INFO django.server :: "GET / HTTP/1.1" 200 5088
+[2026-02-10 14:03:40,918] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-10 14:03:59,689] WARNING django.request :: Not Found: /{ static 'images/logo.png' %}
+[2026-02-10 14:03:59,691] WARNING django.server :: "GET /%7B%20static%20'images/logo.png'%20%%7D HTTP/1.1" 404 4922
+[2026-02-10 14:04:52,734] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-10 14:04:52,812] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 14:05:04,165] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 14:05:08,105] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 14:05:24,661] INFO django.server :: "GET /admin/ HTTP/1.1" 302 0
+[2026-02-10 14:05:29,256] INFO django.server :: "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4155
+[2026-02-10 14:05:35,909] INFO django.server :: "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[2026-02-10 14:05:37,034] INFO django.server :: "GET /admin/ HTTP/1.1" 200 16942
+[2026-02-10 14:05:56,546] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 48, in dashboard
+    total_amount = float(queryset.aggregate(total=Sum('amount'))['total'] or Decimal('0'))
+                                                  ^^^
+UnboundLocalError: cannot access local variable 'Sum' where it is not associated with a value
+[2026-02-10 14:05:56,609] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 89043
+[2026-02-10 14:15:59,110] INFO django.server :: "GET / HTTP/1.1" 200 5068
+[2026-02-10 14:16:00,479] WARNING django.request :: Not Found: /{ static 'images/logo.png' %}
+[2026-02-10 14:16:00,481] WARNING django.server :: "GET /%7B%20static%20'images/logo.png'%20%%7D HTTP/1.1" 404 4922
+[2026-02-10 14:16:04,868] INFO django.server :: "GET / HTTP/1.1" 200 5068
+[2026-02-10 14:16:05,193] WARNING django.request :: Not Found: /{ static 'images/logo.png' %}
+[2026-02-10 14:16:05,194] WARNING django.server :: "GET /%7B%20static%20'images/logo.png'%20%%7D HTTP/1.1" 404 4922
+[2026-02-10 14:16:50,083] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 14:16:50,194] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 304 0
+[2026-02-10 14:16:53,592] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 14:41:55,098] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fintech_automation\urls.py changed, reloading.
+[2026-02-10 14:42:56,767] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 14:44:59,241] ERROR django.request :: Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\fintech_automation\urls.py", line 25, in home
+    return render(request, "index.html")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 1000, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 961, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader_tags.py", line 159, in render
+    return compiled_parent._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 1000, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 961, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader_tags.py", line 65, in render
+    result = block.nodelist.render(context)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 1000, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 961, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\defaulttags.py", line 326, in render
+    return nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 1000, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 961, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\defaulttags.py", line 479, in render
+    url = reverse(view_name, args=args, kwargs=kwargs, current_app=current_app)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\urls\resolvers.py", line 851, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'home' not found. 'home' is not a valid view function or pattern name.
+[2026-02-10 14:44:59,577] ERROR django.server :: "GET / HTTP/1.1" 500 159418
+[2026-02-10 15:20:39,384] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 15:21:15,262] INFO django.server :: "GET / HTTP/1.1" 200 3099
+[2026-02-10 15:21:16,477] INFO django.server :: "GET /static/css/theme.css HTTP/1.1" 200 632
+[2026-02-10 15:24:50,559] INFO django.server :: "GET / HTTP/1.1" 200 3099
+[2026-02-10 15:25:01,015] INFO django.server :: "GET / HTTP/1.1" 200 3099
+[2026-02-10 15:25:02,192] INFO django.server :: "GET / HTTP/1.1" 200 3099
+[2026-02-10 15:25:27,698] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 15:26:53,294] ERROR django.request :: Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\fintech_automation\urls.py", line 25, in home
+    return render(request, "index.html")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: index.html
+[2026-02-10 15:26:53,297] ERROR django.request :: Internal Server Error: /
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\fintech_automation\urls.py", line 25, in home
+    return render(request, "index.html")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader.py", line 19, in get_template
+    raise TemplateDoesNotExist(template_name, chain=chain)
+django.template.exceptions.TemplateDoesNotExist: index.html
+[2026-02-10 15:26:53,319] INFO django.server :: - Broken pipe from ('127.0.0.1', 58277)
+[2026-02-10 15:26:53,319] ERROR django.server :: "GET / HTTP/1.1" 500 83769
+[2026-02-10 15:29:28,576] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fintech_automation\urls.py changed, reloading.
+[2026-02-10 15:29:53,882] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 15:33:39,501] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fintech_automation\urls.py changed, reloading.
+[2026-02-10 15:33:48,251] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 15:34:40,038] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 16:10:26,572] INFO django.server :: "GET / HTTP/1.1" 200 5073
+[2026-02-10 16:10:27,437] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-10 16:10:35,469] INFO django.server :: "GET / HTTP/1.1" 200 5073
+[2026-02-10 16:10:37,915] INFO django.server :: "GET / HTTP/1.1" 200 5073
+[2026-02-10 16:10:39,856] INFO django.server :: "GET / HTTP/1.1" 200 5073
+[2026-02-10 16:11:26,999] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 16:13:10,846] INFO django.server :: "GET / HTTP/1.1" 200 5073
+[2026-02-10 16:13:14,025] INFO django.server :: "GET / HTTP/1.1" 200 5073
+[2026-02-10 16:13:39,661] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-10 16:13:39,677] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4984
+[2026-02-10 16:18:03,311] INFO django.server :: "GET / HTTP/1.1" 200 5073
+[2026-02-10 16:18:03,780] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-10 16:18:03,891] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4984
+[2026-02-10 16:18:19,217] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 16:18:19,469] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-10 16:18:19,517] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4984
+[2026-02-10 17:14:04,602] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-10 17:15:15,014] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 17:15:16,338] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 200 198431
+[2026-02-10 18:44:06,984] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 18:44:09,812] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 3538
+[2026-02-10 18:44:15,963] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 18:44:16,295] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-10 18:55:46,900] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 18:55:47,064] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 7172
+[2026-02-10 18:55:52,938] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 18:55:53,091] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-10 18:56:23,552] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-10 18:56:33,315] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-10 18:56:33,421] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4984
+[2026-02-10 18:59:07,904] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-10 18:59:08,259] INFO django.server :: - Broken pipe from ('127.0.0.1', 61855)
+[2026-02-10 18:59:09,414] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-10 18:59:10,480] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 18:59:10,595] INFO django.server :: - Broken pipe from ('127.0.0.1', 61856)
+[2026-02-10 19:29:27,887] INFO django.server :: "GET / HTTP/1.1" 200 5062
+[2026-02-10 19:29:28,144] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 5008
+[2026-02-10 23:20:11,702] INFO django.server :: "GET / HTTP/1.1" 200 5076
+[2026-02-10 23:20:12,385] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 5301
+[2026-02-10 23:20:13,267] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 304 0
+[2026-02-10 23:24:14,825] INFO django.server :: "GET / HTTP/1.1" 200 5076
+[2026-02-10 23:24:14,945] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 6052
+[2026-02-10 23:24:41,284] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-10 23:24:41,760] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-10 23:30:43,566] INFO django.server :: "GET / HTTP/1.1" 200 5076
+[2026-02-10 23:30:43,798] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 6768
+[2026-02-10 23:38:44,374] INFO django.server :: "GET / HTTP/1.1" 200 5078
+[2026-02-10 23:38:44,566] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 6856
+[2026-02-11 00:11:55,712] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fraud\apps.py changed, reloading.
+[2026-02-11 00:13:06,416] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 00:16:31,422] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fraud\models.py changed, reloading.
+[2026-02-11 00:17:15,105] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 00:21:54,909] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 00:22:36,610] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fraud\apps.py changed, reloading.
+[2026-02-11 00:22:48,882] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 09:21:04,829] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 09:22:02,532] WARNING django.request :: Not Found: /favicon.ico
+[2026-02-11 09:22:02,567] WARNING django.server :: "GET /favicon.ico HTTP/1.1" 404 4979
+[2026-02-11 11:21:16,398] INFO django.server :: "GET / HTTP/1.1" 200 5410
+[2026-02-11 11:21:20,636] INFO django.server :: "GET /static/css/index.js HTTP/1.1" 304 0
+[2026-02-11 11:21:22,764] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 7052
+[2026-02-11 11:22:27,392] INFO django.server :: "GET / HTTP/1.1" 200 5412
+[2026-02-11 11:22:27,498] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-11 11:22:30,867] INFO django.server :: "GET / HTTP/1.1" 200 5412
+[2026-02-11 11:22:32,100] INFO django.server :: "GET / HTTP/1.1" 200 5412
+[2026-02-11 11:22:33,166] INFO django.server :: "GET / HTTP/1.1" 200 5412
+[2026-02-11 11:23:13,656] INFO django.server :: "GET / HTTP/1.1" 200 5412
+[2026-02-11 11:23:13,764] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-11 11:23:14,940] INFO django.server :: "GET / HTTP/1.1" 200 5412
+[2026-02-11 11:23:15,910] INFO django.server :: "GET / HTTP/1.1" 200 5412
+[2026-02-11 11:25:14,725] INFO django.server :: "GET / HTTP/1.1" 200 5412
+[2026-02-11 11:25:15,377] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 7046
+[2026-02-11 11:28:21,984] INFO django.server :: "GET / HTTP/1.1" 200 5431
+[2026-02-11 11:28:22,174] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 6902
+[2026-02-11 11:28:22,189] INFO django.server :: "GET /static/images/logo.png HTTP/1.1" 304 0
+[2026-02-11 11:33:24,651] INFO django.server :: "GET / HTTP/1.1" 200 5431
+[2026-02-11 11:33:24,732] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 6903
+[2026-02-11 11:35:45,799] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-11 11:35:50,721] WARNING django.request :: Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[2026-02-11 11:35:50,721] WARNING django.server :: "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 5090
+[2026-02-11 11:37:30,468] INFO django.server :: "GET / HTTP/1.1" 200 5431
+[2026-02-11 11:37:30,599] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 6903
+[2026-02-11 11:38:25,026] INFO django.server :: "GET / HTTP/1.1" 200 5431
+[2026-02-11 11:38:25,150] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 200 6903
+[2026-02-11 11:39:08,601] INFO django.server :: "GET /admin/ HTTP/1.1" 302 0
+[2026-02-11 11:39:21,974] INFO django.server :: "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4155
+[2026-02-11 11:39:30,757] INFO django.server :: "POST /admin/login/?next=/admin/ HTTP/1.1" 200 4331
+[2026-02-11 11:46:33,107] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 11:47:10,475] INFO django.server :: "GET /admin/ HTTP/1.1" 302 0
+[2026-02-11 11:47:14,217] INFO django.server :: "GET /admin/login/?next=/admin/ HTTP/1.1" 200 4155
+[2026-02-11 11:47:22,532] INFO django.server :: "POST /admin/login/?next=/admin/ HTTP/1.1" 302 0
+[2026-02-11 11:47:30,344] INFO django.server :: "GET /admin/ HTTP/1.1" 200 17608
+[2026-02-11 11:48:24,439] INFO django.server :: "GET /admin/accounting/transaction/ HTTP/1.1" 200 15810
+[2026-02-11 11:48:30,763] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-11 11:48:37,279] INFO django.server :: "GET /admin/ HTTP/1.1" 200 17608
+[2026-02-11 11:48:47,344] INFO django.server :: "GET /admin/fraud/transaction/ HTTP/1.1" 200 17568
+[2026-02-11 11:48:47,610] INFO django.server :: "GET /admin/jsi18n/ HTTP/1.1" 200 3342
+[2026-02-11 11:48:52,151] INFO django.server :: "GET /admin/ HTTP/1.1" 200 17608
+[2026-02-11 12:01:55,838] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 48, in dashboard
+    total_amount = float(queryset.aggregate(total=Sum('amount'))['total'] or Decimal('0'))
+                                                  ^^^
+UnboundLocalError: cannot access local variable 'Sum' where it is not associated with a value
+[2026-02-11 12:01:55,954] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 89382
+[2026-02-11 12:17:50,595] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-11 12:19:32,892] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 12:20:02,389] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-11 12:20:02,706] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 12:20:07,893] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 12:20:11,039] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 12:20:45,036] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-11 12:20:45,063] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 12:25:29,252] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 12:52:27,792] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\accounts\views.py changed, reloading.
+[2026-02-11 12:54:25,502] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 12:54:55,359] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-11 12:54:56,961] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 12:55:01,065] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-11 12:55:01,065] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 12:55:17,403] ERROR django.request :: Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\accounts\views.py", line 16, in login_view
+    return redirect("dashboard")   # redirection automatique
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 49, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 180, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\urls\resolvers.py", line 851, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashboard' is not a valid view function or pattern name.
+[2026-02-11 12:55:17,434] ERROR django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 500 87478
+[2026-02-11 13:09:37,257] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\fintech_automation\urls.py changed, reloading.
+[2026-02-11 13:10:16,386] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 13:10:53,069] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-11 13:10:53,152] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 13:11:10,638] ERROR django.request :: Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\accounts\views.py", line 16, in login_view
+    return redirect("dashboard")   # redirection automatique
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 49, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 180, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\urls\resolvers.py", line 851, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashboard' is not a valid view function or pattern name.
+[2026-02-11 13:11:10,770] ERROR django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 500 87478
+[2026-02-11 13:17:54,041] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\urls.py changed, reloading.
+[2026-02-11 13:18:26,566] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 13:19:04,475] INFO django.server :: "GET / HTTP/1.1" 200 5431
+[2026-02-11 13:19:04,811] INFO django.server :: "GET /static/css/index.css HTTP/1.1" 304 0
+[2026-02-11 13:19:15,787] INFO django.server :: "GET /dashboard HTTP/1.1" 301 0
+[2026-02-11 13:19:15,805] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-11 13:19:15,837] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 13:19:20,159] ERROR django.request :: Internal Server Error: /login/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\accounts\views.py", line 16, in login_view
+    return redirect("dashboard")   # redirection automatique
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 49, in redirect
+    return redirect_class(resolve_url(to, *args, **kwargs))
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 180, in resolve_url
+    return reverse(to, args=args, kwargs=kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\urls\base.py", line 88, in reverse
+    return resolver._reverse_with_prefix(view, prefix, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\urls\resolvers.py", line 851, in _reverse_with_prefix
+    raise NoReverseMatch(msg)
+django.urls.exceptions.NoReverseMatch: Reverse for 'dashboard' not found. 'dashboard' is not a valid view function or pattern name.
+[2026-02-11 13:19:20,225] ERROR django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 500 87478
+[2026-02-11 13:25:46,389] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\accounts\views.py changed, reloading.
+[2026-02-11 13:26:29,631] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 13:27:36,001] INFO django.server :: "GET / HTTP/1.1" 200 5431
+[2026-02-11 13:27:46,106] INFO django.server :: "GET /dashboard/ HTTP/1.1" 302 0
+[2026-02-11 13:27:46,170] INFO django.server :: "GET /login/?next=/dashboard/ HTTP/1.1" 200 624
+[2026-02-11 13:27:51,030] INFO django.server :: "POST /login/?next=/dashboard/ HTTP/1.1" 302 0
+[2026-02-11 13:27:59,263] ERROR django.request :: Internal Server Error: /dashboard/
+Traceback (most recent call last):
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\exception.py", line 55, in inner
+    response = get_response(request)
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\core\handlers\base.py", line 197, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 188, in _view_wrapper
+    result = _process_exception(request, e)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\utils\decorators.py", line 186, in _view_wrapper
+    response = view_func(request, *args, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\contrib\auth\decorators.py", line 23, in _wrapper_view
+    return view_func(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\fintech_automation\dashboard\views.py", line 166, in dashboard
+    return render(request, 'dashboard/dashboard.html', context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\loader.py", line 62, in render_to_string
+    return template.render(context, request)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\backends\django.py", line 61, in render
+    return self.template.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 171, in render
+    return self._render(context)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 163, in _render
+    return self.nodelist.render(context)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 1000, in render
+    return SafeString("".join([node.render_annotated(context) for node in self]))
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\base.py", line 961, in render_annotated
+    return self.render(context)
+           ^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\template\defaulttags.py", line 198, in render
+    len_values = len(values)
+                 ^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 382, in __len__
+    self._fetch_all()
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 1928, in _fetch_all
+    self._result_cache = list(self._iterable_class(self))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\query.py", line 91, in __iter__
+    results = compiler.execute_sql(
+              ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1549, in execute_sql
+    sql, params = self.as_sql()
+                  ^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 736, in as_sql
+    extra_select, order_by, group_by = self.pre_sql_setup(
+                                       ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 84, in pre_sql_setup
+    self.setup_query(with_col_aliases=with_col_aliases)
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 73, in setup_query
+    self.select, self.klass_info, self.annotation_col_map = self.get_select(
+                                                            ^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 279, in get_select
+    related_klass_infos = self.get_related_selections(select, select_mask)
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\monkam\venv\Lib\site-packages\django\db\models\sql\compiler.py", line 1367, in get_related_selections
+    raise FieldError(
+django.core.exceptions.FieldError: Invalid field name(s) given in select_related: 'account_customer'. Choices are: account
+[2026-02-11 13:27:59,288] ERROR django.server :: "GET /dashboard/ HTTP/1.1" 500 178770
+[2026-02-11 13:45:38,242] INFO django.utils.autoreload :: C:\Users\monkam\fintech_automation\dashboard\views.py changed, reloading.
+[2026-02-11 13:46:19,429] INFO django.utils.autoreload :: Watching for file changes with StatReloader
+[2026-02-11 13:48:01,831] INFO django.server :: "GET /dashboard/ HTTP/1.1" 200 10911
+[2026-02-11 13:48:03,715] INFO django.server :: "GET /static/css/dashboard.css HTTP/1.1" 200 4428

@@ -1,0 +1,76 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+<div class="container-fluid mt-4">
+
+    <h2 class="mb-4">🔎 Analyse de Transaction</h2>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <div class="row">
+
+                <!-- Informations -->
+                <div class="col-md-6">
+                    <h5 class="text-muted">Informations générales</h5>
+                    <hr>
+
+                    <p><strong>Utilisateur :</strong> {{ tx.user.email }}</p>
+                    <p><strong>Montant :</strong> {{ tx.amount }} FCFA</p>
+                    <p><strong>Date :</strong> {{ tx.timestamp }}</p>
+                    <p><strong>Localisation :</strong> {{ tx.location }}</p>
+                    <p><strong>Appareil :</strong> {{ tx.device }}</p>
+                    <p><strong>IP :</strong> {{ tx.ip_address }}</p>
+                </div>
+
+                <!-- Analyse IA -->
+                <div class="col-md-6">
+                    <h5 class="text-muted">Analyse IA</h5>
+                    <hr>
+
+                    <div class="alert 
+                        {% if tx.status == 'normal' %}
+                            alert-success
+                        {% elif tx.status == 'suspect' %}
+                            alert-warning
+                        {% else %}
+                            alert-danger
+                        {% endif %}
+                    ">
+
+                        <h4 class="mb-2">Statut : {{ tx.get_status_display }}</h4>
+                        <h5>Score de risque : {{ tx.risk_score }} / 100</h5>
+
+                    </div>
+
+                    <!-- Barre de risque -->
+                    <div class="progress mt-4" style="height:25px;">
+                        <div class="progress-bar 
+                            {% if tx.risk_score &lt; 30 %}
+                                bg-success
+                            {% elif tx.risk_score &lt; 70 %}
+                                bg-warning
+                            {% else %}
+                                bg-danger
+                            {% endif %}
+                        "
+                        role="progressbar"
+                        style="width: {{ tx.risk_score }}%;">
+                            {{ tx.risk_score }}%
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <a href="{% url 'fraud:list' %}" class="btn btn-secondary mt-3">
+        ← Retour
+    </a>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "dashboard/base.html" %}
+{% block content %}
+
+<h2>Détection de fraude</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Utilisateur</th>
+            <th>Montant</th>
+            <th>Score</th>
+            <th>Status</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for tx in transactions %}
+        <tr>
+            <td>{{ tx.user.email }}</td>
+            <td>{{ tx.amount }} FCFA</td>
+            <td>{{ tx.risk_score }}</td>
+            <td>{{ tx.status }}</td>
+            <td>{{ tx.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

@@ -1,10 +1,22 @@
 # accounting/models.py
 
 from django.db import models
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.core.exceptions import ValidationError
 from decimal import Decimal
+from finance.models import Account
+from accounts.models import User
 
+
+class LedgerEntry(models.Model):
+    account = models.ForeignKey(Account, on_delete=models.CASCADE)
+    debit = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    credit = models.DecimalField(max_digits=14, decimal_places=2, default=0)
+    description = models.TextField(blank=True)
+    date = models.DateField()
+
+    def __str__(self):
+        return f"{self.account} {self.date}"
 
 class Account(models.Model):
     ACCOUNT_TYPES = [
@@ -24,8 +36,6 @@ class Account(models.Model):
 
     def __str__(self):
         return f"{self.code} - {self.name}"
-
-
 
 class Journal(models.Model):
     """
@@ -93,12 +103,6 @@ class JournalEntry(models.Model):
         if self.debit == 0 and self.credit == 0:
             raise ValueError("Une ligne doit avoir un débit ou un crédit")
 
-
-
-
-
-
-
 class Entry(models.Model):
     """
     Écriture comptable
@@ -152,7 +156,6 @@ class EntryLine(models.Model):
         return f"{self.account} | D:{self.debit} C:{self.credit}"
 
 
-
 class Transaction(models.Model):
     TRANSACTION_TYPES = [
         ("DEBIT", "Debit"),
@@ -164,12 +167,11 @@ class Transaction(models.Model):
     transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
     description = models.TextField(blank=True)
     reference = models.CharField(max_length=50, unique=True)
-    created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey(User, on_delete= models.CASCADE, related_name="accounting_transactions")
     created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.reference} - {self.amount}"
-
 
 class Invoice(models.Model):
     customer_name = models.CharField(max_length=100)
@@ -182,9 +184,6 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"Invoice {self.invoice_number}"
-
-
-
 
 class Payment(models.Model):
     PAYMENT_TYPE_CHOICES = (
@@ -220,10 +219,6 @@ class Meta:
         ("post_entries", "Peut enregistrer des écritures"),
         ("audit_accounting", "Peut auditer la comptabilité"),
     ]
-
-
-
-
 
 class AccountingPeriod(models.Model):
     """

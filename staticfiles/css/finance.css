@@ -1,0 +1,30 @@
+/* finance.css — styles pour les pages factures, paiements, documents */
+
+.invoice-header {
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  margin-bottom:16px;
+}
+
+.badge-paid { background:#28a745; color:#fff; padding:6px 10px; border-radius:999px; font-weight:700; }
+.badge-unpaid { background:#ffc107; color:#222; padding:6px 10px; border-radius:999px; font-weight:700; }
+.badge-overdue { background:#dc3545; color:#fff; padding:6px 10px; border-radius:999px; font-weight:700; }
+
+.table-actions { display:flex; gap:8px; align-items:center; }
+.card-small { padding:12px; border-radius:10px; box-shadow: var(--shadow); background:var(--card-bg); }
+
+/* File upload style */
+.file-input {
+  display:flex; gap:10px; align-items:center;
+}
+.file-input input[type="file"] {
+  border:1px dashed #e3e6ea; padding:8px; border-radius:8px; background:#fafbfc;
+}
+
+/* Print friendly */
+@media print {
+  nav, .no-print { display:none !important; }
+  .container { padding: 0; }
+}
