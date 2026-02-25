@@ -1,11 +1,23 @@
 # ai/risk_engine.py
 import numpy as np
+from ai.anomaly_detection import detect_anomalies, detect_frequency_fraud
+
 
 def compute_risk(df):
+
+    alerts = []
+
+    anomaly_alerts = detect_anomalies(df)
+    freq_alerts = detect_frequency_fraud(df)
+
+    alerts.extend(anomaly_alerts)
+    alerts.extend(freq_alerts)
+
+    risk_score = min(100, len(alerts)*12)
+
     if df.empty:
         return {"risk_score": 0, "alerts": []}
 
-    alerts = []
 
     # transactions très élevées
     high_amount = df["amount"].mean() * 5

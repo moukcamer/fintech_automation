@@ -1,166 +1,201 @@
 # dashboard/views.py
 from django.shortcuts import render
-from django.db.models import Sum, Count
-from django.db.models.functions import TruncDate
-from finance.models import Transaction, Account
+from django.db.models import Sum, Count, Avg
+from django.db.models.functions import TruncDate, TruncMonth
+from accounting.models import Payment
 from datetime import datetime
 import json
 from decimal import Decimal
 import pandas as pd
-from django.http import HttpResponse
 from django.views.decorators.cache import cache_page
-
+from django.http import JsonResponse
 from ai.features import build_features
 from ai.risk_engine import compute_risk
 from ai.insights import generate_insight
 from django.contrib.auth.decorators import login_required
 
-@login_required
-@cache_page(60)  # 60 secondes
+from django.utils import timezone
+from datetime import timedelta
+
+from finance.models import Transaction, Account, Customer
+from accounting.models import JournalEntry
+from fraud.models import FraudAlert
+from ai.models import AITransactionScore
+
+
 @login_required(login_url="/login/")
+@cache_page(60)
+
+
+# ================= AI ENGINE =================
+def compute_ai_analysis(transactions):
+
+    if not transactions.exists():
+        return {
+            "score": 0,
+            "text": "Aucune donnée disponible pour analyse."
+        }
+
+    total = transactions.count()
+    high_amount = transactions.filter(amount__gt=500000).count()
+    foreign = transactions.exclude(country="CM").count()
+
+    risk_score = min(100, int((high_amount/total)*60 + (foreign/total)*40))
+
+    if risk_score > 70:
+        insight = "Risque élevé : activité inhabituelle détectée."
+    elif risk_score > 40:
+        insight = "Activité modérément atypique."
+    else:
+        insight = "Activité financière normale."
+
+    return {
+        "score": risk_score,
+        "text": insight
+    }
+
 
 
 
 def dashboard(request):
-    # =============================
-    # Filtres (Slicers)
-    # =============================
-    queryset = Transaction.objects.all()
-    date_start = request.GET.get('date_start')
-    date_end = request.GET.get('date_end')
-    transaction_type = request.GET.get('transaction_type')
-    account_id = request.GET.get('account')
 
-    if date_start:
-        queryset = queryset.filter(date__gte=datetime.strptime(date_start, '%d/%m/%Y'))
-    if date_end:
-        queryset = queryset.filter(date__lte=datetime.strptime(date_end, '%d/%m/%Y'))
-    if transaction_type:
-        queryset = queryset.filter(transaction_type=transaction_type)
-    if account_id:
-        queryset = queryset.filter(account_id=account_id)
-    
+    today = timezone.now()
+    last_30_days = today - timedelta(days=30)
 
-    # =============================
-    # KPIs (sur queryset filtré)
-    # =============================
-    total_transactions = queryset.count()
-    total_amount = float(queryset.aggregate(total=Sum('amount'))['total'] or Decimal('0'))
-    total_income = float(queryset.filter(transaction_type='IN').aggregate(total=Sum('amount'))['total'] or Decimal('0'))
-    total_expenses = float(queryset.filter(transaction_type='OUT').aggregate(total=Sum('amount'))['total'] or Decimal('0'))
-    net_balance = total_income - total_expenses
-    total_customers = (queryset.filter(account__customer__isnull=False).values('account__customer').distinct().count())
-    total_accounts = Account.objects.count()  # Global, pas filtré
+    transactions = Transaction.objects.select_related(
+        "account__customer"
+    )
 
-    # =============================
-    # Chart Évolution
-    # =============================
-    daily_data = queryset.annotate(day=TruncDate('transaction_date')).values('day').annotate(total=Sum('amount')).order_by('day')
-    chart_dates = [entry['day'].strftime('%d/%m/%Y') for entry in daily_data]
-    chart_amounts = [float(entry['total'] or 0) for entry in daily_data]
+    # ==========================
+    # KPI CORE
+    # ==========================
 
-    # =============================
-    # Chart Types
-    # =============================
-    type_data = queryset.values('transaction_type').annotate(total=Sum('amount')).order_by('-total')
-    type_labels = [entry['transaction_type'] or 'Inconnu' for entry in type_data]
-    type_amounts = [float(entry['total'] or 0) for entry in type_data]
+    total_transactions = transactions.count()
 
-    # =============================
-    # Nouveau Chart Comptes (Barres)
-    # =============================
-    account_data = queryset.values('account__account_number').annotate(total=Sum('amount')).order_by('-total')
-    account_labels = [entry['account__account_number'] or 'Compte Inconnu' for entry in account_data]
-    account_amounts = [float(entry['total'] or 0) for entry in account_data]
+    total_volume = transactions.aggregate(
+        total=Sum("amount")
+    )["total"] or 0
 
-    # =============================
-    # Dernières Transactions
-    # =============================
-    latest_transactions = queryset.select_related('account', 'account__customer').order_by('-transaction_date')[:20]
+    total_customers = Customer.objects.count()
+    total_accounts = Account.objects.count()
 
+    # ==========================
+    # FRAUD & AI
+    # ==========================
 
+    fraud_count = FraudAlert.objects.count()
 
-   # =============================
-   # IA ANALYSIS
-   # =============================
+    high_risk_transactions = AITransactionScore.objects.filter(
+        risk_score__gte=75
+    ).count()
 
+    avg_risk_score = AITransactionScore.objects.aggregate(
+        avg=Avg("risk_score")
+    )["avg"] or 0
 
-# Préparation des données pour l'IA
-    qs = queryset.values(
-        "amount",
-        "transaction_type",
-        "account__account_number"   # ← correction : account__account_number (pas account_id seul)
-        ).order_by("transaction_date")
+    fraud_rate = (
+        (fraud_count / total_transactions) * 100
+        if total_transactions > 0 else 0
+    )
 
-    df = pd.DataFrame(list(qs))
+    # ==========================
+    # CASHFLOW
+    # ==========================
 
-    ai_result = {
-        "score": 50,               # valeur par défaut en cas d'échec
-        "alerts": [],
-        "text": "Aucune donnée suffisante pour analyse"
-        }
+    inflow = transactions.filter(
+        transaction_type="credit"
+    ).aggregate(total=Sum("amount"))["total"] or 0
 
-    if not df.empty:
-        try:
-        # Ajout des features (supposé que cette fonction existe)
-            df = build_features(df)
+    outflow = transactions.filter(
+        transaction_type="debit"
+    ).aggregate(total=Sum("amount"))["total"] or 0
 
-        # Calcul du risque (supposé que cette fonction existe)
-            risk = compute_risk(df)
+    net_cashflow = inflow - outflow
 
-        # Génération du texte d'insight
-            ai_text = generate_insight(
-                context={
-                    "net_balance": net_balance,
-                    "total_transactions": total_transactions,
-                    "total_amount": df['amount'].sum() if 'amount' in df else 0,
-                },
-                risk=risk
-            )
+    # ==========================
+    # 30 DAYS TREND
+    # ==========================
 
-            ai_result = {
-                "score": risk.get("risk_score", 50),
-                "alerts": risk.get("alerts", []),
-                "text": ai_text or "Analyse terminée sans recommandation particulière.",
-                "model_used": "Analyse basique 2025",  # optionnel
-            }
+    monthly_trend = (
+        transactions
+        .filter(created_at__gte=last_30_days)
+        .values("created_at__date")
+        .annotate(total=Sum("amount"))
+        .order_by("created_at__date")
+    )
 
-        except Exception as e:
-        # En cas d'erreur dans les fonctions IA
-            ai_result["text"] = f"Erreur lors de l'analyse IA : {str(e)}"
-            ai_result["alerts"] = ["Analyse impossible - données insuffisantes ou erreur technique"]
+    # ==========================
+    # BY TYPE
+    # ==========================
 
+    transactions_by_type = (
+        transactions
+        .values("transaction_type")
+        .annotate(total=Sum("amount"), count=Count("id"))
+        .order_by("-total")
+    )
 
+    # ==========================
+    # TOP ACCOUNTS
+    # ==========================
 
+    top_accounts = (
+        Account.objects
+        .annotate(total_volume=Sum("transactions__amount"))
+        .order_by("-total_volume")[:10]
+    )
 
-    # =============================
-    # Contexte
-    # =============================
     context = {
-        'kpi': {
-            'total_transactions': total_transactions,
-            'total_amount': round(total_amount, 2),
-            'net_balance': round(net_balance, 2),
-            'total_customers': total_customers,
-            'total_accounts': total_accounts,
-        },
-        'chart_evolution': {
-            'labels': json.dumps(chart_dates),
-            'data': json.dumps(chart_amounts),
-        },
-        'chart_types': {
-            'labels': json.dumps(type_labels),
-            'data': json.dumps(type_amounts),
-        },
-        'chart_accounts': {  # Nouveau
-            'labels': json.dumps(account_labels),
-            'data': json.dumps(account_amounts),
-        },
-        'latest_transactions': latest_transactions,
-        'accounts': Account.objects.all(),  # Pour select filtre
-
-        'ai':ai_result,
+        "total_transactions": total_transactions,
+        "total_volume": total_volume,
+        "total_customers": total_customers,
+        "total_accounts": total_accounts,
+        "fraud_count": fraud_count,
+        "high_risk_transactions": high_risk_transactions,
+        "avg_risk_score": round(avg_risk_score, 2),
+        "fraud_rate": round(fraud_rate, 2),
+        "inflow": inflow,
+        "outflow": outflow,
+        "net_cashflow": net_cashflow,
+        "monthly_trend": list(monthly_trend),
+        "transactions_by_type": list(transactions_by_type),
+        "top_accounts": top_accounts,
     }
 
+    return render(request, "dashboard/dashboard.html", context)
 
-    return render(request, 'dashboard/dashboard.html', context)
+
+
+
+# ================= API CHARTS =================
+
+def monthly_transactions(request):
+    qs = (
+        Transaction.objects
+        .annotate(month=TruncMonth("transaction_date"))
+        .values("month")
+        .annotate(total=Sum("amount"))
+        .order_by("month")
+    )
+    labels = [m["month"].strftime("%b %Y") if m["month"] else "" for m in qs]
+    data = [float(m["total"]) for m in qs]
+    return JsonResponse({"labels": labels, "data": data})
+
+
+def transaction_types(request):
+    qs = Transaction.objects.values("transaction_type").annotate(total=Count("id"))
+    labels = [x["transaction_type"] for x in qs]
+    data = [x["total"] for x in qs]
+    return JsonResponse({"labels": labels, "data": data})
+
+
+def top_accounts(request):
+    qs = (
+        Transaction.objects
+        .values("account__account_number")
+        .annotate(total=Sum("amount"))
+        .order_by("-total")[:5]
+    )
+    labels = [x["account__account_number"] for x in qs]
+    data = [float(x["total"]) for x in qs]
+    return JsonResponse({"labels": labels, "data": data})

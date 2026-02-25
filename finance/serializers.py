@@ -4,7 +4,6 @@ from .models import (
     Account,
     Transaction,
     Invoice,
-    Payment,
     Company,
     Document,
     DashboardStats
@@ -85,25 +84,7 @@ class InvoiceSerializer(serializers.ModelSerializer):
         ]
 
 
-# ============================
-# PAYMENT
-# ============================
-class PaymentSerializer(serializers.ModelSerializer):
-    account_name = serializers.ReadOnlyField(source="account.name")
-    invoice_id = serializers.ReadOnlyField(source="invoice.id")
 
-    class Meta:
-        model = Payment
-        fields = [
-            "id",
-            "payment_type",
-            "amount",
-            "date",
-            "account",
-            "account_name",
-            "invoice",
-            "invoice_id",
-        ]
 
 
 # ============================

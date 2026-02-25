@@ -2,7 +2,8 @@ from django.contrib import admin
 from django.urls import path
 from django.template.response import TemplateResponse
 
-from finance.models import Invoice, Payment, Account
+from finance.models import Invoice, Account
+from accounting.models import Payment
 
 
 def admin_dashboard_view(request):

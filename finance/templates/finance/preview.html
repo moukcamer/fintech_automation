@@ -1,0 +1,71 @@
+{% load custom_tags %}
+
+<div style="padding:15px;border-radius:10px;background:#f3f6fb;margin-bottom:20px">
+    <h2>Score qualité des données : {{ quality.score }}%</h2>
+
+    {% if quality.score < 60 %}
+        <p style="color:red">⚠ Fichier dangereux - import déconseillé</p>
+    {% elif quality.score < 85 %}
+        <p style="color:orange">⚠ Données partiellement fiables</p>
+    {% else %}
+        <p style="color:green">✔ Données propres</p>
+    {% endif %}
+</div>
+
+<h2>Aperçu avant import</h2>
+
+<table border="1">
+    <thead>
+        <tr>
+            {% for col in columns %}
+                <th>{{ col }}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for row in preview %}
+        <tr>
+            {% for col in columns %}
+                <td>{{ row|get_item:col }}</td>
+            {% endfor %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<form method="post" action="{% url 'confirm_import' %}">
+    {% csrf_token %}
+    <button type="submit">Confirmer l'import</button>
+</form>
+
+
+<h3>{{ duplicates }} doublons détectés</h3>
+
+<table border="1">
+    <thead>
+        <tr>
+            {% for col in columns %}
+                <th>{{ col }}</th>
+            {% endfor %}
+            <th>Status</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        {% for row in preview %}
+        <tr {% if row.duplicate %} style="background:#ffe5e5" {% endif %}>
+            {% for col in columns %}
+                <td>{{ row|get_item:col }}</td>
+            {% endfor %}
+            <td>
+                {% if row.duplicate %}
+                    ❌ Doublon
+                {% else %}
+                    ✔ Nouveau
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>

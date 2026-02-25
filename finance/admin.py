@@ -4,7 +4,6 @@ from .models import (
     Account,
     Transaction,
     Invoice,
-    Payment,
     Company,
     Document,
     DashboardStats,
@@ -40,94 +39,57 @@ class CustomerAdmin(admin.ModelAdmin):
 class AccountAdmin(admin.ModelAdmin):
     list_display = (
         "account_number",
-        "customer",
+        "name",
         "account_type",
         "currency",
         "balance",
-        "status",
-        "created_at",
+        
     )
     search_fields = (
         "account_number",
-        "customer__customer_number",
+        "name",
     )
     list_filter = ("account_type", "currency", "status")
-    ordering = ("account_number",)
 
 
-# ==========================
-# TRANSACTION
-# ==========================
+
 @admin.register(Transaction)
 class TransactionAdmin(admin.ModelAdmin):
+
+    # Colonnes affichées dans la liste
     list_display = (
         "transaction_ref",
-        "transaction_date",
         "account",
-        "transaction_type",
         "amount",
-        "currency",
-        "channel",
-        "country",
+        "transaction_type",
+        "status",
+        "is_fraud",
+        "fraud_probability",
+        "created_at",
+        "is_posted",
     )
-    search_fields = (
-        "transaction_ref",
-        "account__account_number",
-    )
+
+    # Filtres à droite
     list_filter = (
         "transaction_type",
-        "currency",
         "channel",
-        "country",
-    )
-    ordering = ("-transaction_date",)
-
-
-# ==========================
-# INVOICE
-# ==========================
-@admin.register(Invoice)
-class InvoiceAdmin(admin.ModelAdmin):
-    list_display = (
-        "id",
-        "customer",
-        "amount",
         "status",
+        "is_fraud",
+        "is_posted",
+        
+    )
+
+    # Champs non modifiables
+    readonly_fields = (
+        "transaction_ref",
+        "created_at",
+        "fraud_probability",
+        "risk_fraud",
+        "ai_status",
         "created_at",
     )
-    list_filter = ("status",)
-    ordering = ("-created_at",)
 
-
-# ==========================
-# PAYMENT
-# ==========================
-@admin.register(Payment)
-class PaymentAdmin(admin.ModelAdmin):
-    list_display = (
-        "payment_type",
-        "amount",
-        "account",
-        "invoice",
-        "date",
-    )
-    list_filter = ("payment_type",)
-    ordering = ("-date",)
-
-
-# ==========================
-# COMPANY
-# ==========================
-@admin.register(Company)
-class CompanyAdmin(admin.ModelAdmin):
-    list_display = (
-        "name",
-        "email",
-        "phone",
-        "created_at",
-    )
-    search_fields = ("name",)
-
+ 
 
 # ==========================
 # DOCUMENT

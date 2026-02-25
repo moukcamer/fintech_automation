@@ -2,7 +2,8 @@
 
 import numpy as np
 from sklearn.linear_model import LinearRegression
-
+from django.conf import settings
+import os
 from .utils import get_monthly_payments_df
 
 
@@ -35,25 +36,37 @@ def forecast_payments(months_ahead=6):
 
     return future
 
-import joblib
-import pandas as pd
-
-MODEL_PATH = "ml/fraud_model.pkl"
-
-
 def detect_fraud(transaction):
+    try:
+        # simulation modèle IA
+        result = {
+            "fraud_probability": 0.12,
+            "is_fraud": False,
+            "status": "OK"
+        }
 
-    model = joblib.load(MODEL_PATH)
+        return result
 
-    data = pd.DataFrame([{
-        "amount": transaction.amount,
-        "transaction_type": 1 if transaction.transaction_type == "IN" else 0,
-        "country": transaction.country
-    }])
-
-    pred = model.predict(data)[0]
-
-    return pred == -1
+    except Exception as e:
+        return {
+            "fraud_probability": 0.0,
+            "is_fraud": False,
+            "status": f"ERROR: {str(e)}"
+        }
 
 
 
+
+def apply_fraud_result(transaction, result):
+
+    # sécurité : enlever espaces dans clés
+    result = {k.strip(): v for k, v in result.items()}
+
+    transaction.is_fraud = bool(result.get("is_fraud", False))
+    transaction.fraud_probability = float(result.get("fraud_probability", 0.0))
+    transaction.ai_status = result.get("status", "OK")
+
+    # stocker tout le rapport IA
+    transaction.fraud_analysis = result
+
+    transaction.save()

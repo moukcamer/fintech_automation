@@ -26,7 +26,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("core.urls")),  # PAGE D'ACCUEIL
     path("dashboard/", include("dashboard.urls")),
-    path("finance/", include(("finance.urls", "finance"), namespace="finance")),
+    path("finance/", include(("finance.urls", "finance"))),
     path("ml/", include("ml.urls")),
     path("api/analytics/", include("data_processing.api.urls")),
     path("api/analytics/", include("data_processing.analytics.urls")),

@@ -1,7 +1,118 @@
+# finance/models.py
+
 from django.db import models
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.conf import settings
+import uuid
+
+
+def generate_tx_ref():
+    return "TX-" + uuid.uuid4().hex[:12].upper()
+
+
+
+class Transaction(models.Model):
+
+    TRANSACTION_TYPES = [
+        ("IN", "Credit"),
+        ("OUT", "Debit"),
+    ]
+
+    CHANNELS = [
+        ("BANK", "Bank Transfer"),
+        ("MOBILE", "Mobile Money"),
+        ("CARD", "Card Payment"),
+        ("CASH", "Cash"),
+        ("OTHER", "Other"),
+    ]
+
+    STATUS_CHOICES = [
+        ("PENDING", "Pending"),
+        ("APPROVED", "Approved"),
+        ("REJECTED", "Rejected"),
+        ("FLAGGED", "Flagged"),
+    ]
+
+    # ========================
+    # CORE FIELDS
+    # ========================
+
+    transaction_ref = models.CharField(
+        max_length=50,
+        unique=True,
+        default=generate_tx_ref,
+        editable=False
+    )
+
+    account = models.ForeignKey(
+        "finance.Account",
+        on_delete=models.PROTECT,
+        related_name="transactions"
+    )
+
+    amount = models.DecimalField(max_digits=14, decimal_places=2)
+
+    transaction_type = models.CharField(
+        max_length=3,
+        choices=TRANSACTION_TYPES
+    )
+
+    description = models.TextField(blank=True, null=True)
+
+    channel = models.CharField(
+        max_length=10,
+        choices=CHANNELS,
+        default="OTHER"
+    )
+
+    country = models.CharField(max_length=50, blank=True, null=True)
+
+    # ========================
+    # AI / FRAUD FIELDS
+    # ========================
+
+    fraud_probability = models.FloatField(default=0)
+    risk_fraud = models.FloatField(default=0)
+    is_fraud = models.BooleanField(default=False)
+    ai_comment = models.TextField(blank=True, null=True)
+    ai_status = models.CharField(max_length=20, default="PENDING")
+
+    # ========================
+    # ACCOUNTING FIELDS
+    # ========================
+
+    is_posted = models.BooleanField(default=False)
+    posted_at = models.DateTimeField(blank=True, null=True)
+
+    # ========================
+    # STATUS / META
+    # ========================
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="PENDING"
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # ========================
+    # SAVE OVERRIDE (SAFE)
+    # ========================
+
+    def save(self, *args, **kwargs):
+
+        # Si transaction postée → on met date
+        if self.is_posted and not self.posted_at:
+            self.posted_at = timezone.now()
+
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return f"{self.transaction_ref} - {self.amount} XAF"
+
 
 
 class Customer(models.Model):
@@ -27,79 +138,76 @@ class Customer(models.Model):
 
 
 class Account(models.Model):
+
+    ACCOUNT_TYPES = [
+        ("ASSET", "Asset"),
+        ("LIABILITY", "Liability"),
+        ("EQUITY", "Equity"),
+        ("REVENUE", "Revenue"),
+        ("EXPENSE", "Expense"),
+        ("CUSTOMER", "Customer Account"),
+    ]
+
+    STATUS_CHOICES = [
+        ("ACTIVE", "Active"),
+        ("SUSPENDED", "Suspended"),
+        ("CLOSED", "Closed"),
+    ]
+
+    # =========================
+    # IDENTIFICATION
+    # =========================
+
     account_number = models.CharField(
-        max_length=30,
+        max_length=20,
         unique=True,
-        db_index=True
     )
 
-    customer = models.ForeignKey(
-        Customer,
-        to_field="customer_number",
-        on_delete=models.CASCADE,
-        related_name="accounts"
+    name = models.CharField(max_length=100)
+
+    account_type = models.CharField(
+        max_length=20,
+        choices=ACCOUNT_TYPES,
     )
 
-    account_type = models.CharField(max_length=30)
-    currency     = models.CharField(max_length=10)
-    balance      = models.DecimalField(max_digits=15, decimal_places=2)
-    open_date    = models.DateField()
-    status       = models.CharField(max_length=20)
+    currency = models.CharField(
+        max_length=5,
+        default="XAF"
+    )
+
+    # =========================
+    # FINANCIAL
+    # =========================
+
+    balance = models.DecimalField(
+        max_digits=15,
+        decimal_places=2,
+        default=0
+    )
+
+    credit_score = models.FloatField(default=0)
+
+    # =========================
+    # STATUS & META
+    # =========================
+
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="ACTIVE"
+    )
+
+    open_date = models.DateTimeField(default=timezone.now)
 
     created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # =========================
+    # UTILS
+    # =========================
 
     def __str__(self):
-        return f"{self.account_number} ({self.currency})"
-
-    class Meta:
-        ordering = ["account_number"]
-
-    credit_score = models.IntegerField(default=50)
-
-class Transaction(models.Model):
-    TRANSACTION_TYPES = (
-        ("IN", "Crédit"),
-        ("OUT", "Débit"),
-    )
-
-    transaction_ref = models.CharField(
-        max_length=50,
-        unique=True,
-        db_index=True
-    )
-
-    account = models.ForeignKey(
-        Account,
-        to_field="account_number",
-        on_delete=models.CASCADE,
-        related_name="transactions"
-    )
-
-    transaction_date = models.DateTimeField()
-    amount           = models.DecimalField(max_digits=15, decimal_places=2)
-    currency         = models.CharField(max_length=10)
-    transaction_type = models.CharField(max_length=3, choices=TRANSACTION_TYPES)
-    description      = models.TextField(blank=True)
-    channel          = models.CharField(max_length=30)
-    country          = models.CharField(max_length=50)
-
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        sign = "+" if self.transaction_type == "IN" else "-"
-        return f"{self.transaction_ref} {sign}{self.amount}"
-
-    class Meta:
-        ordering = ["-transaction_date"]
-        indexes = [
-            models.Index(fields=["transaction_date"]),
-            models.Index(fields=["transaction_type"]),
-            models.Index(fields=["account"]),
-        ]
-
-    is_fraud = models.BooleanField(default=False)
-    fraud_score = models.FloatField(null=True, blank=True)
-
+        return f"{self.account_number} - {self.name}"
 
 class Invoice(models.Model):
     customer = models.ForeignKey(
@@ -118,38 +226,6 @@ class Invoice(models.Model):
 
     def __str__(self):
         return f"Invoice #{self.id}"
-
-
-class Payment(models.Model):
-    PAYMENT_TYPE_CHOICES = (
-        ("IN", "Income"),
-        ("OUT", "Expense"),
-    )
-
-    invoice = models.ForeignKey(
-        Invoice,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-
-    account = models.ForeignKey(
-        Account,
-        on_delete=models.SET_NULL,
-        null=True,
-        blank=True
-    )
-
-    payment_type = models.CharField(
-        max_length=10,
-        choices=PAYMENT_TYPE_CHOICES
-    )
-
-    amount = models.DecimalField(max_digits=12, decimal_places=2)
-    date   = models.DateTimeField(default=timezone.now)
-
-    def __str__(self):
-        return f"{self.payment_type} - {self.amount}"
 
 
 class Company(models.Model):

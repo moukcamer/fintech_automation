@@ -7,14 +7,14 @@ from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from django.shortcuts import redirect
 from .models import Document
 from .forms import DocumentForm
+from ai.data_quality import clean_dataframe, quality_score
 
-from .models import Company, Account, Transaction, Invoice, Payment, Document
+from .models import Company, Account, Transaction, Invoice, Document
 from .serializers import (
     CompanySerializer,
     AccountSerializer,
     TransactionSerializer,
     InvoiceSerializer,
-    PaymentSerializer,
     DocumentSerializer,
 )
 
@@ -97,10 +97,6 @@ class InvoiceViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
-class PaymentViewSet(viewsets.ModelViewSet):
-    queryset = Payment.objects.all()
-    serializer_class = PaymentSerializer
-    permission_classes = [IsAuthenticatedOrReadOnly]
 
 
 class DocumentViewSet(viewsets.ModelViewSet):

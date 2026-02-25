@@ -2,9 +2,8 @@
 
 from django.http import JsonResponse
 from finance.models import Transaction
-from ai.services.features import build_features
-from ai.services.anomaly import detect_anomalies
-from ai.services.forecast import build_cashflow_dataframe, forecast_cashflow
+from ai.services import compute_transaction_ai
+
 import pandas as pd
 from ai.pipeline import run_ai_pipeline
 from django.db.models import Sum

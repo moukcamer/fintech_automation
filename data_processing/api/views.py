@@ -1,5 +1,5 @@
 from django.http import JsonResponse
-from finance.models import Payment
+from accounting.models import Payment
 from django.db.models import Sum, Q
 from django.db.models.functions import TruncMonth
 from django.db import models

@@ -1,5 +1,5 @@
 import pandas as pd
-from finance.models import Payment
+from accounting.models import Payment
 
 
 def get_monthly_payments_df():

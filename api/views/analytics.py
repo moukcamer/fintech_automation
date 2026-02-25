@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.db.models import Sum
 from django.db.models.functions import TruncMonth
-from finance.models import Payment
+from accounting.models import Payment
 
 
 def monthly_performance(request):

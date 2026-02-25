@@ -1,70 +1,77 @@
 from django.utils import timezone
-from accounting.models import Entry, EntryLine, Account, Journal
 from decimal import Decimal
 from django.db import transaction
 from finance.models import Payment
+from django.core.exceptions import ValidationError
+from finance.models import Account
+from accounting.models import JournalEntry, JournalLine, Entry, Journal
 
 
 class AccountingService:
-    """
-    Service central de génération comptable
-    """
 
     @staticmethod
-    def get_or_create_journal(code, name, journal_type):
-        journal, _ = Journal.objects.get_or_create(
-            code=code,
-            defaults={
-                "name": name,
-                "journal_type": journal_type
-            }
-        )
-        return journal
-
-    @staticmethod
+    @transaction.atomic
     def post_entry(
-        reference,
-        description,
-        debit_account_code,
-        credit_account_code,
-        amount,
-        journal_code="BNK"
+        debit_account_number: str,
+        credit_account_number: str,
+        amount: float,
+        description: str = "",
+        reference: str = None
     ):
-        journal = AccountingService.get_or_create_journal(
-            journal_code, "Banque", "BANK"
-        )
+        """
+        Crée une écriture comptable équilibrée.
+        """
 
-        debit_account = Account.objects.get(code=debit_account_code)
-        credit_account = Account.objects.get(code=credit_account_code)
+        if amount <= 0:
+            raise ValidationError("Amount must be greater than zero.")
 
-        entry = Entry.objects.create(
-            journal=journal,
-            date=timezone.now().date(),
+        # 🔎 Récupération des comptes
+        try:
+            debit_account = Account.objects.get(
+                account_number=debit_account_number
+            )
+        except Account.DoesNotExist:
+            raise ValidationError(
+                f"Debit account {debit_account_number} not found."
+            )
+
+        try:
+            credit_account = Account.objects.get(
+                account_number=credit_account_number
+            )
+        except Account.DoesNotExist:
+            raise ValidationError(
+                f"Credit account {credit_account_number} not found."
+            )
+
+        # 🧾 Création Journal Entry
+        entry = JournalEntry.objects.create(
             reference=reference,
             description=description,
+            is_posted=False
         )
 
-        EntryLine.objects.create(
-            entry=entry,
+        # ➕ Ligne Débit
+        JournalLine.objects.create(
+            journal_entry=entry,
             account=debit_account,
-            debit=amount
+            debit=amount,
+            credit=0
         )
 
-        EntryLine.objects.create(
-            entry=entry,
+        # ➖ Ligne Crédit
+        JournalLine.objects.create(
+            journal_entry=entry,
             account=credit_account,
+            debit=0,
             credit=amount
         )
 
-        # Mise à jour des soldes
-        debit_account.balance += amount
-        credit_account.balance -= amount
-
-        debit_account.save()
-        credit_account.save()
+        # ✅ Marquer comme posté
+        entry.is_posted = True
+        entry.save()
 
         return entry
-
 
 
 

@@ -17,6 +17,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+ML_MODELS_DIR= os.path.join(BASE_DIR, "ml", "models_store")
+FRAUD_MODEL_PATH = os.path.join(ML_MODELS_DIR, "fraud_model.pkl")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.2/howto/deployment/checklist/
@@ -44,7 +46,7 @@ INSTALLED_APPS = [
 
     'accounts.apps.AccountsConfig',
     'core',
-    'finance',
+    'finance.apps.FinanceConfig',
     'dashboard',
     'documents',
     'ai',
@@ -109,9 +111,6 @@ REST_FRAMEWORK = {
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
-
-import os
-from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -271,3 +270,5 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 
 ]
+
+DISABLE_ML = False

@@ -23,10 +23,35 @@ def calculate_risk(transaction):
 
     return min(score, 100)
 
-
 def classify(score):
     if score < 30:
         return "normal"
     elif score < 70:
         return "suspect"
     return "fraud"
+
+
+def check_fraud(transaction=None, amount=None):
+
+    if transaction:
+        amount = transaction.amount
+
+    if amount is None:
+        return {
+            "risk_score": 0,
+            "is_fraud": False,
+            "status": "ERROR"
+        }
+
+    if amount > 1000000:
+        risk_score = 85
+    elif amount > 500000:
+        risk_score = 60
+    else:
+        risk_score = 10
+
+    return {
+        "risk_score": risk_score,
+        "is_fraud": risk_score >= 80,
+        "status": "OK"
+    }
