@@ -5,6 +5,7 @@ from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.conf import settings
 import uuid
+from datetime import date
 
 
 def generate_tx_ref():
@@ -55,10 +56,15 @@ class Transaction(models.Model):
 
     transaction_type = models.CharField(
         max_length=3,
-        choices=TRANSACTION_TYPES
+        choices=TRANSACTION_TYPES,
+        default="IN"
     )
 
     description = models.TextField(blank=True, null=True)
+
+    currency =models.CharField(max_length=10, default="XAF")
+
+    transaction_date = models.DateTimeField(default=timezone.now)
 
     channel = models.CharField(
         max_length=10,
@@ -121,20 +127,52 @@ class Customer(models.Model):
         unique=True,
         db_index=True
     )
+
     first_name = models.CharField(max_length=100)
     last_name  = models.CharField(max_length=100)
-    email      = models.EmailField(unique=True)
-    country    = models.CharField(max_length=50)
-    city       = models.CharField(max_length=50)
-    zip_code   = models.CharField(max_length=20)
+
+    email = models.EmailField(
+        unique=True,
+        db_index=True
+    )
+
+    country = models.CharField(max_length=50)
+    city    = models.CharField(max_length=50)
+    zip_code = models.CharField(max_length=20)
+
     birth_date = models.DateField()
-    created_at = models.DateTimeField()
+
+    # ✅ automatique à la création
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    # ✅ mis à jour à chaque save
+    updated_at = models.DateTimeField(auto_now=True)
+
+    # -------------------------
+    # Business Logic
+    # -------------------------
+
+    def get_full_name(self):
+        return f"{self.first_name} {self.last_name}"
+
+    def age(self):
+        today = date.today()
+        return today.year - self.birth_date.year - (
+            (today.month, today.day) < (self.birth_date.month, self.birth_date.day)
+        )
 
     def __str__(self):
-        return f"{self.customer_number} - {self.first_name} {self.last_name}"
+        return f"{self.customer_number} - {self.get_full_name()}"
 
     class Meta:
         ordering = ["last_name", "first_name"]
+        indexes = [
+            models.Index(fields=["customer_number"]),
+            models.Index(fields=["email"]),
+        ]
+        verbose_name = "Customer"
+        verbose_name_plural = "Customers"
+
 
 
 class Account(models.Model):
@@ -164,6 +202,15 @@ class Account(models.Model):
     )
 
     name = models.CharField(max_length=100)
+
+    # ✅ RELATION PROFESSIONNELLE
+    customer = models.ForeignKey(
+        Customer,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="accounts"
+    )
 
     account_type = models.CharField(
         max_length=20,
@@ -198,13 +245,8 @@ class Account(models.Model):
     )
 
     open_date = models.DateTimeField(default=timezone.now)
-
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
-
-    # =========================
-    # UTILS
-    # =========================
 
     def __str__(self):
         return f"{self.account_number} - {self.name}"

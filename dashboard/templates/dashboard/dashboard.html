@@ -1,389 +1,276 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Fintech Automation | Dashboard</title>
 
-    <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+{% block title %}Dashboard Financier{% endblock %}
 
-    <!-- Icons -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+{% block extra_css %}
+<style>
+    .kpi-card {
+        background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+        color: white;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .kpi-value { font-size: 2.5rem; font-weight: bold; }
+    .chart-container { position: relative; height: 320px; width: 100%; }
+</style>
+{% endblock %}
 
-   
-</head>
+{% block content %}
 
-<body class="dashboard-dark">
+<div class="container-fluid mt-4">
 
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-        <h2 class="logo">Fintech</h2>
-        <nav>
-            <a class="active">📊 Dashboard</a>
-            <a>💳 Transactions</a>
-            <a>📈 Analytics</a>
-            <a>🤖 IA & Alertes</a>
-            <a>⚙️ Paramètres</a>
-        </nav>
-    </aside>
-
-
-<!-- ================= TOP BAR ================= -->
-<div class="topbar">
-    <div class="left">
-        <i class="bi bi-bar-chart-fill"></i>
-        <span>KPI | Dashboard Financier</span>
-    </div>
-    <div class="right">
-        <button class="btn btn-outline-light btn-sm">Filter</button>
-        <button class="btn btn-outline-light btn-sm">Date</button>
-        <button class="btn btn-primary btn-sm">
-            <i class="bi bi-download"></i> Download Report
-        </button>
-    </div>
-</div>
-
-<form method="get" class="filter-bar mb-4">
-    <div class="row g-2 align-items-end">
-
-        <div class="col-md-3">
-            <label class="form-label text-muted">Date début</label>
-            <input type="date" name="date_start" class="form-control"
-                   value="{{ request.GET.date_start }}">
+    <!-- Filtres -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <form method="get" class="row g-3">
+                <div class="col-md-3">
+                    <label class="form-label">Date début</label>
+                    <input type="date" name="date_start" class="form-control" value="{{ filters.date_start }}">
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label">Date fin</label>
+                    <input type="date" name="date_end" class="form-control" value="{{ filters.date_end }}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Type</label>
+                    <select name="transaction_type" class="form-select">
+                        <option value="">Tous</option>
+                        <option value="IN" {% if filters.transaction_type == "IN" %}selected{% endif %}>Crédit</option>
+                        <option value="OUT" {% if filters.transaction_type == "OUT" %}selected{% endif %}>Débit</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label">Compte</label>
+                    <select name="account" class="form-select">
+                        <option value="">Tous</option>
+                        {% for acc in accounts %}
+                        <option value="{{ acc.id }}" {% if filters.account_id == acc.id|stringformat:"s" %}selected{% endif %}>
+                            {{ acc.account_number }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-2 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Filtrer</button>
+                </div>
+            </form>
         </div>
+    </div>
 
-        <div class="col-md-3">
-            <label class="form-label text-muted">Date fin</label>
-            <input type="date" name="date_end" class="form-control"
-                   value="{{ request.GET.date_end }}">
+    <!-- KPIs -->
+    <div class="row g-4 mb-4">
+        <div class="col-md-3 col-sm-6">
+            <div class="kpi-card">
+                <div class="kpi-value">{{ total_transactions }}</div>
+                <div>Transactions</div>
+            </div>
         </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="kpi-card">
+                <div class="kpi-value">{{ total_amount|floatformat:0 }} XAF</div>
+                <div>Montant total</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="kpi-card">
+                <div class="kpi-value">{{ net_balance|floatformat:0 }} XAF</div>
+                <div>Solde net</div>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6">
+            <div class="kpi-card">
+                <div class="kpi-value">{{ ai.score }}/100</div>
+                <div>Score de risque</div>
+            </div>
+        </div>
+    </div>
 
-        <div class="col-md-3">
-            <label class="form-label text-muted">Compte</label>
-            <select name="account" class="form-select">
-                <option value="">Tous</option>
-                {% for acc in accounts %}
-                    <option value="{{ acc.id }}"
-                        {% if request.GET.account == acc.id|stringformat:"s" %}selected{% endif %}>
-                        {{ acc.account_number }}
-                    </option>
+    <!-- Analyse IA -->
+    <div class="card mb-4 shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h5 class="mb-0">Analyse IA</h5>
+        </div>
+        <div class="card-body">
+            <p><strong>Score de risque :</strong> <span class="badge bg-{% if ai.score > 70 %}danger{% elif ai.score > 40 %}warning{% else %}success{% endif %}">{{ ai.score }}/100</span></p>
+            <p><strong>Interprétation :</strong> {{ ai.text }}</p>
+            {% if ai.alerts %}
+            <ul class="list-unstyled">
+                {% for alert in ai.alerts %}
+                <li class="text-danger">⚠ {{ alert }}</li>
                 {% endfor %}
-            </select>
+            </ul>
+            {% endif %}
+            <small class="text-muted">Modèle : {{ ai.model_used|default:"—" }}</small>
+        </div>
+    </div>
+
+    <div class="card mt-4">
+        <div class="card-body">
+            <h5>📊 Analyse Narrative</h5>
+            <p>{{ narrative_text }}</p>
+        </div>
+    </div>
+
+    <!-- Graphiques -->
+    <div class="row g-4">
+
+        <!-- 1. Évolution journalière -->
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header">Évolution quotidienne</div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="evolutionChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-2">
-            <label class="form-label text-muted">Type</label>
-            <select name="transaction_type" class="form-select">
-                <option value="">Tous</option>
-                <option value="IN" {% if request.GET.transaction_type == "IN" %}selected{% endif %}>Crédit</option>
-                <option value="OUT" {% if request.GET.transaction_type == "OUT" %}selected{% endif %}>Débit</option>
-            </select>
+        <!-- 2. Répartition mensuelle -->
+        <div class="col-lg-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-header">Par mois</div>
+                <div class="card-body">
+                    <div class="chart-container">
+                        <canvas id="monthlyChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <div class="col-md-1 d-grid">
-            <button class="btn btn-primary">
-                <i class="bi bi-funnel"></i>
-            </button>
+        <!-- 3. Répartition par type -->
+        <div class="col-12">
+            <div class="card shadow-sm">
+                <div class="card-header">Répartition par type</div>
+                <div class="card-body">
+                    <div class="chart-container" style="height: 320px;">
+                        <canvas id="typeChart"></canvas>
+                    </div>
+                </div>
+            </div>
         </div>
 
-    </div>
-</form>
-
-
-<!-- ================= KPI CARDS ================= -->
-<div class="kpi-container">
-
-    <div class="kpi-card">
-        <div class="kpi-title">Total Transactions</div>
-        <div class="kpi-value">{{ total_transactions }}</div>
-    </div>
-
-    <div class="kpi-card">
-        <div class="kpi-title">Total Revenue</div>
-        <div class="kpi-value">{{ total_revenue }} FCFA</div>
-    </div>
-
-    <div class="kpi-card">
-        <div class="kpi-title">Fraud Alerts</div>
-        <div class="kpi-value">{{ fraud_count }}</div>
-    </div>
-
-    <div class="kpi-card">
-        <div class="kpi-title">Average Risk</div>
-        <div class="kpi-value">{{ avg_risk }}</div>
     </div>
 
 </div>
 
-<!-- ================= MAIN GRID ================= -->
-<section class="dashboard-grid">
-    <div class="container-fluid">
 
-        <div class="row g-4">
-
-            <!-- ===== Line Chart ===== -->
-            <div class="col-lg-8">
-                <div class="card dark-card">
-                    <div class="card-title">Monthly Transaction Trends</div>
-                    <canvas id="evolutionChart"></canvas>
-                </div>
-            </div>
-
-            <!-- ===== Donut ===== -->
-            <div class="col-lg-4">
-                <div class="card dark-card">
-                    <div class="card-title">Channel / Type Distribution</div>
-                    <canvas id="typeChart"></canvas>
-                </div>
-            </div>
-
-        </div>
-
-        <!-- ===== Bar chart accounts ===== -->
+        <!-- ROW 2 -->
         <div class="row g-4 mt-1">
-            <div class="col-lg-6">
-                <div class="card dark-card">
-                    <div class="card-title">Top Accounts</div>
-                    <canvas id="accountChart"></canvas>
+            <div class="col-lg-12">
+                <div class="card table-card">
+                    <h6 class="mb-3">Dernières transactions</h6>
+
+                    <div class="table-responsive">
+                        <table class="table table-sm table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Client</th>
+                                    <th>Compte</th>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                    <th class="text-end">Montant</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for t in transactions %}
+                                <tr>
+                                    <td>{{ t.date }}</td>
+                                    <td>{{ t.customer }}</td>
+                                    <td>{{ t.account }}</td>
+                                    <td>{{ t.transaction_type }}</td>
+                                    <td>{{ t.status }}</td>
+                                    <td class="text-end">{{ t.amount|floatformat:0 }}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+
                 </div>
             </div>
-
-                <!-- Droite : AI Analysis + Dernières transactions -->
-     <div class="col-lg-4">
-    <div class="card ai-card border-0 shadow mb-4">
-        <!-- Header -->
-        <div class="card-header ai-header text-white">
-            🤖 Analyse IA Financière
         </div>
 
-        <!-- Body -->
-        <div class="card-body ai-body text-white">
-
-            <!-- KPI IA -->
-            <div class="ai-metrics d-flex flex-column gap-2 mb-3">
-                <div class="ai-metric d-flex justify-content-between">
-                    <span class="label">Modèle</span>
-                    <span class="value">{{ ai.model }}</span>
-                </div>
-
-                <div class="ai-metric d-flex justify-content-between">
-                    <span class="label">Score de risque</span>
-                    <span class="value
-                        {% if ai.risk_score > 70 %}text-danger
-                        {% elif ai.risk_score > 40 %}text-warning
-                        {% else %}text-success{% endif %}">
-                        {{ ai.risk_score }} /100
-                    </span>
-                </div>
-
-                <div class="ai-metric d-flex justify-content-between">
-                    <span class="label">Tendance</span>
-                    <span class="badge
-                        {% if ai.risk_score > 70 %}bg-danger
-                        {% else %}bg-success{% endif %}">
-                        {% if ai.risk_score > 70 %}Negative{% else %}Positive{% endif %}
-                    </span>
-                </div>
-            </div>
-
-            <!-- AI Insight -->
-            <div class="ai-insight mb-3">
-                <h6>🧠 Insight IA</h6>
-                <p>{{ ai.recommendation }}</p>
-            </div>
-
-            <!-- AI Actions -->
-            <div class="ai-actions text-end mt-3">
-                <a href="{% url 'ai_report_pdf' %}" class="btn btn-danger btn-sm">
-                    📄 Générer le rapport IA
-                </a>
-            </div>
-         </div>
-         </div>
-        </div>
-    </div>
-</div>
 
 
-</section>
-
-
-<section>
-
-
-                <!-- Tableau -->
-   <div class="card bg-dark border-0 shadow">
-                <div class="card-header bg-transparent">Dernières transactions</div>
-                <div class="card-body p-0">
-                    <table class="table table-dark table-hover table-sm mb-0">
-                <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Description</th>
-                        <th>Type</th>
-                        <th class="text-end">Montant</th>
-                        <th>Compte</th>
-                        <th>Channel</th>
-                        <th>Country</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for tx in latest_transactions %}
-                    <tr>
-                        <td>{{ tx.date|date:"d/m/Y H:i" }}</td>
-                        <td>{{ tx.description|default:"—" }}</td>
-                        <td>{{ tx.transaction_type }}</td>
-                        <td class="text-end fw-bold {% if tx.amount >= 0 %}text-success{% else %}text-danger{% endif %}">{{ tx.amount|floatformat:0 }} </td>
-                        <td>{{ tx.account|default:"—" }}</td>
-                        <td>{{ tx.channel|default:"—" }}</td>
-                        <td>{{ tx.country|default:"—" }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr><td colspan="6" class="text-center py-4">Aucune transaction</td></tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-</section>
+<!-- Chart.js -->
+ <script src="{% static 'js/chart.js'%}"></script>
 
 <script>
-
-/* ========= SAFE JSON PARSER ========= */
-function safeParse(value, fallback=[]) {
-    try {
-        if (!value || value === "None") return fallback;
-        return JSON.parse(value);
-    } catch {
-        return fallback;
-    }
-}
-
-
-
-/* ========= SESSION EXPIRE / PAS DE DATA ========= */
-if (evolutionLabels.length === 0) {
-    document.body.innerHTML = `
-        <div style="display:flex;align-items:center;justify-content:center;height:100vh;font-family:sans-serif">
-            <div>
-                <h2>Session expirée</h2>
-                <p>Veuillez vous reconnecter.</p>
-                <a href="/login/" style="padding:10px 20px;background:#0d6efd;color:white;text-decoration:none;border-radius:6px">
-                    Se connecter
-                </a>
-            </div>
-        </div>
-    `;
-}
-
+const evolutionLabels = {{ chart_evolution.labels|safe }};
+const evolutionData   = {{ chart_evolution.data|safe }};
 </script>
 
+
 <script>
-const evolutionChart = new Chart(document.getElementById('evolutionChart'), {
+// Évolution journalière
+
+new Chart(document.getElementById('evolutionChart'), {
     type: 'line',
     data: {
-        labels: {{ chart_evolution.labels|safe }},
+        labels: evolutionLabels,
         datasets: [{
-            label: "Transactions",
-            data: {{ chart_evolution.data|safe }},
-            borderWidth: 3,
-            tension: 0.4
+            label: 'Montant net (XAF)',
+            data: evolutionData,
+            borderColor: 'rgba(75, 192, 192, 1)',
+            backgroundColor: 'rgba(59, 130, 246, 0.15)',
+            tension: 0.3,
+            fill: false,
+            tension: 0.3
         }]
+    },
+    options: {
+        responsive: true,
+        plugins: {
+            legend: { display: true },
+        },
+        scales: {
+            y: { beginAtZero: true, title: { display: true, text: 'Montant (XAF)' } },
+            x: { title: { display: true, text: 'Date' } }
+        }
     }
 });
-</script>
 
 
+// Mensuel (bar)
+new Chart(document.getElementById('monthlyChart'), {
+    type: 'bar',
+    data: {
+        labels: {{ chart_monthly.labels|safe }},
+        datasets: [{
+            label: 'Montant mensuel',
+            data: {{ chart_monthly.data|safe }},
+            backgroundColor: '#10b981'
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'top' } },
+        scales: { y: { beginAtZero: true } }
+    }
+});
 
-<script>
-const typeChart = new Chart(document.getElementById('typeChart'), {
+// Types (doughnut)
+new Chart(document.getElementById('typeChart'), {
     type: 'doughnut',
     data: {
         labels: {{ chart_types.labels|safe }},
         datasets: [{
             data: {{ chart_types.data|safe }},
+            backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b']
         }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { position: 'right' } }
     }
 });
 </script>
 
-
-<script>
-const accChart = new Chart(document.getElementById('accountChart'), {
-    type: 'bar',
-    data: {
-        labels: {{ chart_accounts.labels|safe }},
-        datasets: [{
-            data: {{ chart_accounts.data|safe }},
-        }]
-    }
-});
-</script>
-
-
-
-<!-- Dashboard CSS -->
-    <link rel="stylesheet" href="/static/css/dashboard.css">
-
-
-<!-- 1️⃣ Chart.js d'abord -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-
-
-<canvas id="cashflowChart"></canvas>
-
-<script>
-const ctx = document.getElementById('cashflowChart');
-
-new Chart(ctx, {
-    type: 'bar',
-    data: {
-        labels: ['Inflow', 'Outflow'],
-        datasets: [{
-            label: 'Cashflow',
-            data: [{{ inflow }}, {{ outflow }}]
-        }]
-    }
-});
-</script>
-
-<!-- 2️⃣ Parser JSON Django -->
-<script>
-function safeJSON(v){
-    try { return JSON.parse(v); }
-    catch { return []; }
-}
-
-const evolutionLabels = safeJSON('{{ chart_evolution.labels|default:"[]"|escapejs }}');
-const evolutionData   = safeJSON('{{ chart_evolution.data|default:"[]"|escapejs }}');
-
-const typeLabels = safeJSON('{{ chart_types.labels|default:"[]"|escapejs }}');
-const typeData   = safeJSON('{{ chart_types.data|default:"[]"|escapejs }}');
-
-const accountLabels = safeJSON('{{ chart_accounts.labels|default:"[]"|escapejs }}');
-const accountData   = safeJSON('{{ chart_accounts.data|default:"[]"|escapejs }}');
-</script>
-
-<!-- 3️⃣ Dessiner les graphiques -->
-<script>
-document.addEventListener("DOMContentLoaded", function(){
-
-function draw(id,type,labels,data){
-    if(!labels.length) return;
-    new Chart(document.getElementById(id),{
-        type:type,
-        data:{labels:labels,datasets:[{data:data,borderWidth:2,tension:.4}]}
-    });
-}
-
-draw("evolutionChart","line",evolutionLabels,evolutionData);
-draw("typeChart","doughnut",typeLabels,typeData);
-draw("accountChart","bar",accountLabels,accountData);
-
-});
-</script>
-</body>
-</html>
+{% endblock %}

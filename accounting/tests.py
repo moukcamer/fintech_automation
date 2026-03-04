@@ -50,3 +50,62 @@ class AccountingFlowTestCase(TestCase):
         # Vérifie que l’écriture est marquée postée
         entry.refresh_from_db()
         self.assertTrue(entry.is_posted)
+
+
+class ConcurrentTransactionTestCase(TransactionTestCase):
+
+    reset_sequences = True  # important pour tests concurrence
+
+    def setUp(self):
+        self.account = Account.objects.create(
+            name="Concurrent Account",
+            account_number="7777",
+            balance=0
+        )
+
+    def process_transaction(self, amount):
+
+        with db_transaction.atomic():
+
+            account = Account.objects.select_for_update.get(id=self.accout.id)
+
+            tx = Transaction.objects.create(
+                account=account,
+                amount=amount,
+                status="PENDING"
+            )
+
+            payment = Payment.objects.create(
+                debit_account=self.account,
+                credit_account=self.account,
+                amount=amount,
+                status="COMPLETED"
+            )
+
+            if hasattr(payment, "post"):
+                payment.post()
+
+    def test_concurrent_transactions(self):
+
+        threads = []
+        total_threads = 10
+        transactions_per_thread = 50
+
+        for _ in range(total_threads):
+            t = threading.Thread(
+                target=lambda: [
+                    self.process_transaction(1000)
+                    for _ in range(transactions_per_thread)
+                ]
+            )
+            threads.append(t)
+            t.start()
+
+        for t in threads:
+            t.join()
+
+        expected = total_threads * transactions_per_thread
+
+        self.assertEqual(Transaction.objects.count(), expected)
+        self.assertEqual(Payment.objects.count(), expected)
+        self.assertEqual(JournalEntry.objects.count(), expected)        

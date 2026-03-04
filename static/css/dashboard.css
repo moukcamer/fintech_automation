@@ -45,7 +45,6 @@ a {
 }
 
 
-
 /* =============================
    DASHBOARD GRID
 ============================= */
@@ -114,7 +113,6 @@ ai-card {
     min-width: 100%;
 }
 
-
 /* =============================
    CHARTS
 ============================= */
@@ -173,7 +171,6 @@ canvas {
 
 
 
-
 /* =============================
    FILTER BAR
 ============================= */
@@ -195,7 +192,6 @@ canvas {
     font-size: 0.75rem;
 }
 
-
 .chart-empty{
     height:280px;
     display:flex;
@@ -205,7 +201,6 @@ canvas {
     font-size:14px;
     opacity:.8;
 }
-
 
 .dark-card{
     background:#111827;
@@ -267,7 +262,6 @@ canvas{
     color: #1e293b;
 }
 
-
 @media (max-width: 1024px) {
     .kpi-container {
         grid-template-columns: repeat(2, 1fr);
@@ -280,7 +274,7 @@ canvas{
     }
 }
 
-
 .kpi-card {
     border-left: 5px solid #2563eb;
 }
+

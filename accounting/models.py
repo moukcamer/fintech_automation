@@ -7,6 +7,7 @@ from finance.models import Account
 from accounts.models import User
 from django.utils import timezone
 from django.db import models, transaction
+from django.utils import timezone
 
 
 class Payment(models.Model):
@@ -56,29 +57,54 @@ class Payment(models.Model):
     def __str__(self):
         return f"PAY-{self.pk} | {self.amount}"
 
-    # ✅ LA MÉTHODE POST DOIT ÊTRE ICI
+    # ✅ MÉTHODE POST CORRECTEMENT INDENTÉE
+    @transaction.atomic
     def post(self):
 
         if self.status == "POSTED":
             raise ValidationError("Payment already posted.")
 
-        from accounting.services.posting_engine import post_transaction
+        if not self.pk:
+            self.full_clean()
+            self.save()
 
+        # Import local (évite circular import)
+        from accounting.services.posting_engine import post_transaction
+        from finance.models import Transaction
+        from django.utils import timezone
+
+        # 1️⃣ Écriture comptable
         entry = post_transaction(
             debit_account_number=self.debit_account.account_number,
             credit_account_number=self.credit_account.account_number,
             amount=self.amount,
-            description=self.description,
+            description=self.description or f"Payment {self.pk}",
             reference=f"PAY-{self.pk}"
         )
 
-        from django.utils import timezone
+        # 2️⃣ Transactions métier (finance)
+        Transaction.objects.create(
+            account=self.debit_account,
+            amount=-self.amount,
+            description=self.description or f"Payment {self.pk}",
+            currency=self.debit_account.currency
+        )
+
+        Transaction.objects.create(
+            account=self.credit_account,
+            amount=self.amount,
+            description=self.description or f"Payment {self.pk}",
+            currency=self.credit_account.currency
+        )
+
+        # 3️⃣ Mise à jour statut
         self.status = "POSTED"
         self.posted_at = timezone.now()
         self.save(update_fields=["status", "posted_at"])
 
         return entry
-
+    
+   
 
 class JournalEntry(models.Model):
     """
@@ -234,22 +260,7 @@ class EntryLine(models.Model):
         return f"{self.account} | D:{self.debit} C:{self.credit}"
 
 
-class Transaction(models.Model):
-    TRANSACTION_TYPES = [
-        ("DEBIT", "Debit"),
-        ("CREDIT", "Credit"),
-    ]
 
-    account = models.ForeignKey(Account, on_delete=models.CASCADE)
-    amount = models.DecimalField(max_digits=15, decimal_places=2)
-    transaction_type = models.CharField(max_length=10, choices=TRANSACTION_TYPES)
-    description = models.TextField(blank=True)
-    reference = models.CharField(max_length=50, unique=True)
-    created_by = models.ForeignKey(User, on_delete= models.CASCADE, related_name="accounting_transactions")
-    created_at = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return f"{self.reference} - {self.amount}"
 
 class Invoice(models.Model):
     customer_name = models.CharField(max_length=100)
