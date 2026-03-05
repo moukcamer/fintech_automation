@@ -1,4 +1,7 @@
+
 {% extends "base.html" %}
+
+{% load humanize %}
 {% load static %}
 
 {% block title %}Dashboard Financier{% endblock %}
@@ -15,150 +18,214 @@
     }
     .kpi-value { font-size: 2.5rem; font-weight: bold; }
     .chart-container { position: relative; height: 320px; width: 100%; }
+
+.chart-container{
+    position: relative;
+    height: 260px;
+    width: 100%;
+}
+
+.chart-small{
+    position: relative;
+    height: 180px;
+    width: 100%;
+}
+
+.chart-large{
+    position: relative;
+    height:260px;
+}
+
 </style>
 {% endblock %}
 
 {% block content %}
 
-<div class="container-fluid mt-4">
 
-    <!-- Filtres -->
-    <div class="card mb-4 shadow-sm">
-        <div class="card-body">
-            <form method="get" class="row g-3">
-                <div class="col-md-3">
-                    <label class="form-label">Date début</label>
-                    <input type="date" name="date_start" class="form-control" value="{{ filters.date_start }}">
-                </div>
-                <div class="col-md-3">
-                    <label class="form-label">Date fin</label>
-                    <input type="date" name="date_end" class="form-control" value="{{ filters.date_end }}">
-                </div>
+<div class="container-fluid">
+
+    <!-- ========================= -->
+    <!-- 🔹 FILTRES -->
+    <!-- ========================= -->
+    <div class="card p-3 mb-4 shadow-sm">
+        <form method="GET">
+            <div class="row">
+
                 <div class="col-md-2">
-                    <label class="form-label">Type</label>
-                    <select name="transaction_type" class="form-select">
+                    <label>Date début</label>
+                    <input type="date" name="date_start" value="{{ filters.date_start }}" class="form-control">
+                </div>
+
+                <div class="col-md-2">
+                    <label>Date fin</label>
+                    <input type="date" name="date_end" value="{{ filters.date_end }}" class="form-control">
+                </div>
+
+                <div class="col-md-2">
+                    <label>Type</label>
+                    <select name="transaction_type" class="form-control">
                         <option value="">Tous</option>
-                        <option value="IN" {% if filters.transaction_type == "IN" %}selected{% endif %}>Crédit</option>
-                        <option value="OUT" {% if filters.transaction_type == "OUT" %}selected{% endif %}>Débit</option>
+                        <option value="IN" {% if filters.transaction_type == "IN" %}selected{% endif %}>IN</option>
+                        <option value="OUT" {% if filters.transaction_type == "OUT" %}selected{% endif %}>OUT</option>
                     </select>
                 </div>
+
                 <div class="col-md-2">
-                    <label class="form-label">Compte</label>
-                    <select name="account" class="form-select">
-                        <option value="">Tous</option>
-                        {% for acc in accounts %}
-                        <option value="{{ acc.id }}" {% if filters.account_id == acc.id|stringformat:"s" %}selected{% endif %}>
-                            {{ acc.account_number }}
-                        </option>
-                        {% endfor %}
-                    </select>
+                    <label>ID Compte</label>
+                    <input type="text" name="account" value="{{ filters.account_id }}" class="form-control">
                 </div>
+
                 <div class="col-md-2 d-flex align-items-end">
-                    <button type="submit" class="btn btn-primary w-100">Filtrer</button>
+                    <button class="btn btn-success w-100">Filtrer</button>
                 </div>
-            </form>
+
+                <div class="col-md-2 d-flex align-items-end">
+                    <a href="{% url 'dashboard' %}" class="btn btn-secondary w-100">Reset</a>
+                </div>
+
+            </div>
+        </form>
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 🔹 BOUTON RAPPORT -->
+    <!-- ========================= -->
+    <div class="row mb-3">
+        <div class="col text-end">
+            <a href="{% url 'export_report' %}?date_start={{ filters.date_start }}&date_end={{ filters.date_end }}&transaction_type={{ filters.transaction_type }}&account={{ filters.account_id }}"
+               class="btn btn-primary">
+                📄 Télécharger Rapport Mensuel
+            </a>
         </div>
     </div>
 
-    <!-- KPIs -->
-    <div class="row g-4 mb-4">
-        <div class="col-md-3 col-sm-6">
-            <div class="kpi-card">
-                <div class="kpi-value">{{ total_transactions }}</div>
-                <div>Transactions</div>
+
+    <!-- ========================= -->
+    <!-- 🔹 KPIs -->
+    <!-- ========================= -->
+    <div class="row mb-4">
+
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h6>Total Transactions</h6>
+                <h4>{{ total_transactions }}</h4>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="kpi-card">
-                <div class="kpi-value">{{ total_amount|floatformat:0 }} XAF</div>
-                <div>Montant total</div>
+
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h6>Total Revenus</h6>
+                <h4 class="text-success">{{ total_income|intcomma }} XAF</h4>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="kpi-card">
-                <div class="kpi-value">{{ net_balance|floatformat:0 }} XAF</div>
-                <div>Solde net</div>
+
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h6>Total Dépenses</h6>
+                <h4 class="text-danger">{{ total_expenses|intcomma }} XAF</h4>
             </div>
         </div>
-        <div class="col-md-3 col-sm-6">
-            <div class="kpi-card">
-                <div class="kpi-value">{{ ai.score }}/100</div>
-                <div>Score de risque</div>
+
+        <div class="col-md-3">
+            <div class="card p-3 shadow-sm">
+                <h6>Solde Net</h6>
+                <h4>{{ net_balance|intcomma }} XAF</h4>
+            </div>
+        </div>
+
+    </div>
+
+
+<!-- ===== GRAPHIQUES ===== -->
+
+<!-- Ligne 1 : Evolution -->
+<div class="row mt-4">
+
+    <!-- Evolution Quotidienne -->
+    <div class="col-md-6">
+        <div class="card p-3 shadow-sm">
+            <h5>Évolution Quotidienne</h5>
+            <div class="chart-large">
+                <canvas id="chartEvolution"></canvas>
             </div>
         </div>
     </div>
 
-    <!-- Analyse IA -->
-    <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-info text-white">
-            <h5 class="mb-0">Analyse IA</h5>
-        </div>
-        <div class="card-body">
-            <p><strong>Score de risque :</strong> <span class="badge bg-{% if ai.score > 70 %}danger{% elif ai.score > 40 %}warning{% else %}success{% endif %}">{{ ai.score }}/100</span></p>
-            <p><strong>Interprétation :</strong> {{ ai.text }}</p>
-            {% if ai.alerts %}
-            <ul class="list-unstyled">
-                {% for alert in ai.alerts %}
-                <li class="text-danger">⚠ {{ alert }}</li>
-                {% endfor %}
-            </ul>
-            {% endif %}
-            <small class="text-muted">Modèle : {{ ai.model_used|default:"—" }}</small>
-        </div>
-    </div>
-
-    <div class="card mt-4">
-        <div class="card-body">
-            <h5>📊 Analyse Narrative</h5>
-            <p>{{ narrative_text }}</p>
-        </div>
-    </div>
-
-    <!-- Graphiques -->
-    <div class="row g-4">
-
-        <!-- 1. Évolution journalière -->
-        <div class="col-lg-8">
-            <div class="card shadow-sm">
-                <div class="card-header">Évolution quotidienne</div>
-                <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="evolutionChart"></canvas>
-                    </div>
-                </div>
+    <!-- Evolution Mensuelle -->
+    <div class="col-md-6">
+        <div class="card p-3 shadow-sm">
+            <h5>Évolution Mensuelle</h5>
+            <div class="chart-large">
+                <canvas id="chartMonthly"></canvas>
             </div>
         </div>
-
-        <!-- 2. Répartition mensuelle -->
-        <div class="col-lg-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-header">Par mois</div>
-                <div class="card-body">
-                    <div class="chart-container">
-                        <canvas id="monthlyChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. Répartition par type -->
-        <div class="col-12">
-            <div class="card shadow-sm">
-                <div class="card-header">Répartition par type</div>
-                <div class="card-body">
-                    <div class="chart-container" style="height: 320px;">
-                        <canvas id="typeChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
     </div>
 
 </div>
 
 
-        <!-- ROW 2 -->
+<!-- Ligne 2 : Répartition + Top comptes -->
+<div class="row mt-4">
+
+    <!-- Répartition -->
+    <div class="col-md-6">
+        <div class="card p-3 shadow-sm">
+            <h5>Répartition Crédit / Débit</h5>
+            <div class="chart-small">
+                <canvas id="chartTypes"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <!-- Top comptes -->
+    <div class="col-md-6">
+        <div class="card p-3 shadow-sm">
+            <h5>Top Comptes Actifs</h5>
+            <div class="chart-small">
+                <canvas id="chartAccounts"></canvas>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+    <!-- ========================= -->
+    <!-- 🔹 ANALYSE IA + NARRATION -->
+    <!-- ========================= -->
+    <div class="row mb-4">
+
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <h5>Analyse IA</h5>
+                <p><strong>Score :</strong> {{ ai.score }}/100</p>
+                <p>{{ ai.text }}</p>
+
+                {% if ai.alerts %}
+                    <ul>
+                        {% for alert in ai.alerts %}
+                            <li class="text-danger">{{ alert }}</li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <h5>Narration Automatique</h5>
+                <p>{{ narrative_text }}</p>
+            </div>
+        </div>
+
+    </div>
+
+
+    <!-- ========================= -->
+    <!-- 🔹 TABLE TRANSACTIONS -->
+    <!-- ========================= -->
+
         <div class="row g-4 mt-1">
             <div class="col-lg-12">
                 <div class="card table-card">
@@ -195,82 +262,81 @@
             </div>
         </div>
 
-
-
 <!-- Chart.js -->
+
  <script src="{% static 'js/chart.js'%}"></script>
 
 <script>
-const evolutionLabels = {{ chart_evolution.labels|safe }};
-const evolutionData   = {{ chart_evolution.data|safe }};
-</script>
 
-
-<script>
-// Évolution journalière
-
-new Chart(document.getElementById('evolutionChart'), {
+new Chart(document.getElementById('chartEvolution'), {
     type: 'line',
     data: {
-        labels: evolutionLabels,
+        labels: {{ chart_evolution.labels|safe }},
         datasets: [{
-            label: 'Montant net (XAF)',
-            data: evolutionData,
-            borderColor: 'rgba(75, 192, 192, 1)',
-            backgroundColor: 'rgba(59, 130, 246, 0.15)',
-            tension: 0.3,
-            fill: false,
-            tension: 0.3
+            label: 'Montant',
+            data: {{ chart_evolution.data|safe }},
+            borderWidth: 2
         }]
     },
     options: {
         responsive: true,
-        plugins: {
-            legend: { display: true },
-        },
-        scales: {
-            y: { beginAtZero: true, title: { display: true, text: 'Montant (XAF)' } },
-            x: { title: { display: true, text: 'Date' } }
-        }
+        maintainAspectRatio: false
     }
 });
 
 
-// Mensuel (bar)
-new Chart(document.getElementById('monthlyChart'), {
+
+new Chart(document.getElementById('chartMonthly'), {
     type: 'bar',
     data: {
         labels: {{ chart_monthly.labels|safe }},
         datasets: [{
-            label: 'Montant mensuel',
+            label: 'Montant',
             data: {{ chart_monthly.data|safe }},
-            backgroundColor: '#10b981'
+            borderWidth: 1
         }]
     },
     options: {
         responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'top' } },
-        scales: { y: { beginAtZero: true } }
+        maintainAspectRatio: false
     }
 });
 
-// Types (doughnut)
-new Chart(document.getElementById('typeChart'), {
-    type: 'doughnut',
+
+
+new Chart(document.getElementById('chartTypes'), {
+    type: 'pie',
     data: {
         labels: {{ chart_types.labels|safe }},
         datasets: [{
-            data: {{ chart_types.data|safe }},
-            backgroundColor: ['#3b82f6', '#ef4444', '#10b981', '#f59e0b']
+            data: {{ chart_types.data|safe }}
         }]
     },
     options: {
         responsive: true,
-        maintainAspectRatio: false,
-        plugins: { legend: { position: 'right' } }
+        maintainAspectRatio: false
     }
 });
+
+
+const accLabels = {{ chart_accounts.labels|safe }};
+const accData   = {{ chart_accounts.data|safe }};
+
+new Chart(document.getElementById("chartAccounts"), {
+    type: "bar",
+    data: {
+        labels: accLabels,
+        datasets: [{
+            label: "Montant total",
+            data: accData
+        }]
+    },
+    options:{
+        responsive:true,
+        maintainAspectRatio:false
+    }
+});
+
 </script>
 
 {% endblock %}
