@@ -1,12 +1,19 @@
-function onMonthClick(month) {
-    setFilter("month", month);
-}
 
-options: {
-    onClick: (evt, elements) => {
-        if (elements.length > 0) {
-            const index = elements[0].index;
-            onMonthClick(chart.data.labels[index]);
-        }
+document.addEventListener("DOMContentLoaded", function () {
+
+    const evolutionCtx = document.getElementById("evolutionChart");
+    if (evolutionCtx) {
+        new Chart(evolutionCtx, {
+            type: 'line',
+            data: {
+                labels: chartEvolutionLabels,
+                datasets: [{
+                    label: 'Transactions',
+                    data: chartEvolutionData,
+                    borderWidth: 2
+                }]
+            }
+        });
     }
-}
+
+});

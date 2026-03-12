@@ -1,0 +1,1 @@
+web: gunicorn fintech_automation.wsgi

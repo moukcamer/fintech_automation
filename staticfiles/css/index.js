@@ -1,9 +1,17 @@
 // Smooth scroll pour le bouton "Découvrir"
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener("click", function(e) {
-        e.preventDefault();
-        document.querySelector(this.getAttribute("href")).scrollIntoView({behavior:"smooth"});
+  anchor.addEventListener("click", function (e) {
+
+    const target = this.getAttribute("href");
+
+    if (target === "#") return; // évite l'erreur
+
+    e.preventDefault();
+    document.querySelector(target).scrollIntoView({
+      behavior: "smooth"
     });
+
+  });
 });
 
 // Animation des KPI (compteurs)
