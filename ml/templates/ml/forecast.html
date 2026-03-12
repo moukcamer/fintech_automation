@@ -26,24 +26,41 @@
     </tbody>
 </table>
 
+
 <canvas id="forecastChart"></canvas>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <script>
-const labels = [{% for f in forecast %}"M+{{ f.month }}",{% endfor %}];
-const data = [{% for f in forecast %}{{ f.predicted_amount }},{% endfor %}];
 
-new Chart(document.getElementById("forecastChart"), {
+const labels = {{ labels|safe }};
+const data = {{ data|safe }};
+const forecast = {{ forecast|safe }};
+
+const ctx = document.getElementById("forecastChart");
+
+new Chart(ctx, {
+
     type: "line",
-    data: {
-        labels: labels,
-        datasets: [{
-            label: "Prévision trésorerie",
-            data: data,
-            tension: 0.4
-        }]
-    }
-});
-</script>
 
+    data: {
+
+        labels: labels,
+
+        datasets: [
+        {
+            label: "Historical Data",
+            data: data
+        },
+        {
+            label: "Forecast",
+            data: forecast
+        }
+        ]
+
+    }
+
+});
+
+</script>
 {% endblock %}

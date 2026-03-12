@@ -19,3 +19,6 @@ boto3
 pytesseract
 Pillow
 pdf2image    # optionnel si tu veux supporter les PDF (requires poppler)
+guicorn
+whitenoise
+psycopg2-binary

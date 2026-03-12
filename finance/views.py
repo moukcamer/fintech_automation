@@ -8,7 +8,7 @@ from django.shortcuts import redirect
 from .models import Document
 from .forms import DocumentForm
 from ai.data_quality import clean_dataframe, quality_score
-
+from django.shortcuts import render, get_object_or_404
 from .models import Company, Account, Transaction, Invoice, Document
 from .serializers import (
     CompanySerializer,
@@ -105,3 +105,13 @@ class DocumentViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticatedOrReadOnly]
 
 
+
+def transaction_investigate(request, transaction_id):
+
+    transaction = get_object_or_404(Transaction, id=transaction_id)
+
+    context = {
+        "transaction": transaction
+    }
+
+    return render(request, "finance/investigate.html", context)

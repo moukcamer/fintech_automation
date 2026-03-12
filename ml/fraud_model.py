@@ -20,7 +20,20 @@ def train_fraud_model():
 
     df["transaction_type"] = df["transaction_type"].map({"IN": 1, "OUT": 0})
 
-    model = IsolationForest(contamination=0.02)
+    model = IsolationForest(
+        contamination=0.02,
+        random_state=42
+    )
     model.fit(df)
 
     joblib.dump(model, MODEL_PATH)
+
+
+def predict_fraud(model, transaction):
+
+    prediction = model.predict([transaction])
+
+    if prediction[0] == -1:
+        return True
+
+    return False

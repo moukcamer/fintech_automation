@@ -12,6 +12,34 @@ from django.http import HttpResponse
 from reportlab.platypus import SimpleDocTemplate, Paragraph
 from reportlab.lib.styles import getSampleStyleSheet
 
+import json
+from django.views.decorators.csrf import csrf_exempt
+from accounting.models import Payment
+
+
+@csrf_exempt
+def financial_assistant(request):
+
+    data = json.loads(request.body)
+    question = data.get("question","")
+
+    income = Payment.objects.filter(payment_type="IN").aggregate(Sum("amount"))["amount__sum"] or 0
+    expense = Payment.objects.filter(payment_type="OUT").aggregate(Sum("amount"))["amount__sum"] or 0
+
+    if "revenu" in question.lower():
+        answer = f"Vos revenus totaux sont de {income} FCFA."
+
+    elif "dépense" in question.lower():
+        answer = f"Vos dépenses totales sont de {expense} FCFA."
+
+    elif "résultat" in question.lower():
+        answer = f"Votre résultat net est de {income-expense} FCFA."
+
+    else:
+        answer = "Je peux analyser vos revenus, dépenses ou résultats financiers."
+
+    return JsonResponse({"answer":answer})
+
 def ai_report_pdf(request):
     response = HttpResponse(content_type="application/pdf")
     response["Content-Disposition"] = 'attachment; filename="finoptiai_report.pdf"'

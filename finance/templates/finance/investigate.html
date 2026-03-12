@@ -1,0 +1,30 @@
+<h2>Transaction Investigation</h2>
+
+<div class="card">
+<div class="card-body">
+
+<p><strong>ID :</strong> {{ transaction.id }}</p>
+
+<p><strong>Date :</strong> {{ transaction.transaction_date }}</p>
+
+<p><strong>Compte :</strong> {{ transaction.account.account_number }}</p>
+
+<p><strong>Montant :</strong> {{ transaction.amount }}</p>
+
+<p><strong>Type :</strong> {{ transaction.transaction_type }}</p>
+
+<p><strong>Probabilité fraude :</strong>
+{{ transaction.fraud_probability|floatformat:2 }}
+</p>
+
+<p><strong>Description :</strong>
+{{ transaction.description }}
+</p>
+
+</div>
+</div>
+
+<a href="/dashboard/" class="btn btn-secondary mt-3">
+Retour Dashboard
+</a>
+

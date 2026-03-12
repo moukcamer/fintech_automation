@@ -26,4 +26,9 @@ urlpatterns = [
     path("documents/", views.document_list, name="documents-list"),
     path("import/", import_transactions, name="import_transactions"),
     path("import/confirm/", confirm_import, name="confirm_import"),
+    path(
+        "transaction/<int:transaction_id>/investigate/",
+        views.transaction_investigate,
+        name="transaction_investigate"
+    ),
 ]

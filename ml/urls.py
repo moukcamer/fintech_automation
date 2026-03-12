@@ -1,8 +1,13 @@
-from django.urls import path
-from .views import financial_forecast_view
 
-app_name = "ml"
+from django.urls import path
+from .views import forecast_view
 
 urlpatterns = [
-    path("forecast/", financial_forecast_view, name="forecast"),
+
+    path(
+        "forecast/",
+        forecast_view,
+        name="financial-forecast"
+    ),
+
 ]

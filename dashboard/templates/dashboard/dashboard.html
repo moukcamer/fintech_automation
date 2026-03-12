@@ -1,6 +1,4 @@
-
 {% extends "base.html" %}
-
 {% load humanize %}
 {% load static %}
 
@@ -17,31 +15,48 @@
         box-shadow: 0 4px 15px rgba(0,0,0,0.2);
     }
     .kpi-value { font-size: 2.5rem; font-weight: bold; }
-    .chart-container { position: relative; height: 320px; width: 100%; }
 
-.chart-container{
-    position: relative;
-    height: 260px;
-    width: 100%;
-}
+    .chart-container {
+        position: relative;
+        width: 100%;
+        height: 260px; /* taille standard pour tous les graphiques */
+    }
+    .chart-small { height: 180px; }
+    .chart-large { height: 260px; }
+    .chart-forecast { height: 240px; }
 
-.chart-small{
-    position: relative;
-    height: 180px;
-    width: 100%;
-}
+    .card p { margin-bottom: 0.5rem; }
 
-.chart-large{
-    position: relative;
-    height:260px;
-}
+    .table-container{
+        max-height:350px;
+        overflow-y:auto;
+    }
 
+    thead th{
+        position: sticky;
+        top: 0;
+        background: #212529;
+        color: white;
+    }
+
+    .fraud-table-container{
+        margin-top:20px;
+    }
+
+    .table-scroll{
+        max-height:350px;
+        overflow-y:auto;
+        border:1px solid #ddd;
+        border-radius:6px;
+    }
+
+    .table{
+        margin-bottom: 0;
+    }
 </style>
 {% endblock %}
 
 {% block content %}
-
-
 <div class="container-fluid">
 
     <!-- ========================= -->
@@ -50,17 +65,14 @@
     <div class="card p-3 mb-4 shadow-sm">
         <form method="GET">
             <div class="row">
-
                 <div class="col-md-2">
                     <label>Date début</label>
                     <input type="date" name="date_start" value="{{ filters.date_start }}" class="form-control">
                 </div>
-
                 <div class="col-md-2">
                     <label>Date fin</label>
                     <input type="date" name="date_end" value="{{ filters.date_end }}" class="form-control">
                 </div>
-
                 <div class="col-md-2">
                     <label>Type</label>
                     <select name="transaction_type" class="form-control">
@@ -69,24 +81,19 @@
                         <option value="OUT" {% if filters.transaction_type == "OUT" %}selected{% endif %}>OUT</option>
                     </select>
                 </div>
-
                 <div class="col-md-2">
                     <label>ID Compte</label>
                     <input type="text" name="account" value="{{ filters.account_id }}" class="form-control">
                 </div>
-
                 <div class="col-md-2 d-flex align-items-end">
                     <button class="btn btn-success w-100">Filtrer</button>
                 </div>
-
                 <div class="col-md-2 d-flex align-items-end">
                     <a href="{% url 'dashboard' %}" class="btn btn-secondary w-100">Reset</a>
                 </div>
-
             </div>
         </form>
     </div>
-
 
     <!-- ========================= -->
     <!-- 🔹 BOUTON RAPPORT -->
@@ -105,59 +112,62 @@
     <!-- 🔹 KPIs -->
     <!-- ========================= -->
     <div class="row mb-4">
-
-        <div class="col-md-3">
-            <div class="card p-3 shadow-sm">
-                <h6>Total Transactions</h6>
-                <h4>{{ total_transactions }}</h4>
+        <div class="col-md-3"><div class="card p-3 shadow-sm"><h6>Total Transactions</h6><h4>{{ total_transactions }}</h4></div></div>
+        <div class="col-md-3"><div class="card p-3 shadow-sm"><h6>Total Revenus</h6><h4 class="text-success">{{ total_income|intcomma }} XAF</h4></div></div>
+        <div class="col-md-3"><div class="card p-3 shadow-sm"><h6>Total Dépenses</h6><h4 class="text-danger">{{ total_expenses|intcomma }} XAF</h4></div></div>
+        <div class="col-md-3"><div class="card p-3 shadow-sm"><h6>Solde Net</h6><h4>{{ net_balance|intcomma }} XAF</h4></div></div>
+        <div class="col-md-3 mt-3">
+            <div class="card shadow-sm border-danger">
+                <div class="card-body">
+                    <h6>🚨 Transactions suspectes</h6>
+                    <h3>{{ fraud_transactions }}</h3>
+                    <p>{{ fraud_rate }} % du volume total</p>
+                </div>
             </div>
         </div>
-
-        <div class="col-md-3">
-            <div class="card p-3 shadow-sm">
-                <h6>Total Revenus</h6>
-                <h4 class="text-success">{{ total_income|intcomma }} XAF</h4>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card p-3 shadow-sm">
-                <h6>Total Dépenses</h6>
-                <h4 class="text-danger">{{ total_expenses|intcomma }} XAF</h4>
-            </div>
-        </div>
-
-        <div class="col-md-3">
-            <div class="card p-3 shadow-sm">
-                <h6>Solde Net</h6>
-                <h4>{{ net_balance|intcomma }} XAF</h4>
-            </div>
-        </div>
-
     </div>
 
+    <!-- ========================= -->
+    <!-- 🔹 GRAPHIQUES -->
+    <!-- ========================= -->
 
-<!-- ===== GRAPHIQUES ===== -->
+    <!-- Ligne 1 : Evolution Quotidienne + Mensuelle -->
+    <div class="row mt-4">
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <h5>Évolution Quotidienne</h5>
+                <div class="chart-large">
+                    <canvas id="chartEvolution"></canvas>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="card p-3 shadow-sm">
+                <h5>Évolution Mensuelle</h5>
+                <div class="chart-large">
+                    <canvas id="chartMonthly"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
 
-<!-- Ligne 1 : Evolution -->
+    <!-- Ligne 2 : Répartition + Top Comptes -->
 <div class="row mt-4">
 
-    <!-- Evolution Quotidienne -->
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card p-3 shadow-sm">
-            <h5>Évolution Quotidienne</h5>
-            <div class="chart-large">
-                <canvas id="chartEvolution"></canvas>
+            <h5>🥧 Répartition Crédit / Débit</h5>
+            <div class="chart-container">
+                <canvas id="typeChart"></canvas>
             </div>
         </div>
     </div>
 
-    <!-- Evolution Mensuelle -->
-    <div class="col-md-6">
+    <div class="col-md-4">
         <div class="card p-3 shadow-sm">
-            <h5>Évolution Mensuelle</h5>
-            <div class="chart-large">
-                <canvas id="chartMonthly"></canvas>
+            <h5>🏦 Top Comptes</h5>
+            <div class="chart-container">
+                <canvas id="topAccountsChart"></canvas>
             </div>
         </div>
     </div>
@@ -165,43 +175,59 @@
 </div>
 
 
-<!-- Ligne 2 : Répartition + Top comptes -->
+<!-- Ligne 3 : Prévisions -->
 <div class="row mt-4">
 
-    <!-- Répartition -->
     <div class="col-md-6">
         <div class="card p-3 shadow-sm">
-            <h5>Répartition Crédit / Débit</h5>
-            <div class="chart-small">
-                <canvas id="chartTypes"></canvas>
+            <h5>📈 Prévision Financière ML</h5>
+            <div class="chart-container">
+                <canvas id="forecastMLChart"></canvas>
             </div>
         </div>
     </div>
 
-    <!-- Top comptes -->
     <div class="col-md-6">
         <div class="card p-3 shadow-sm">
-            <h5>Top Comptes Actifs</h5>
-            <div class="chart-small">
-                <canvas id="chartAccounts"></canvas>
+            <h5>📊 Prévision Financière IA</h5>
+            <div class="chart-container">
+                <canvas id="forecastAIChart"></canvas>
             </div>
         </div>
     </div>
 
 </div>
 
+
+<!-- ========================= -->
+<!-- 🔹 ANALYSE FRAUDE -->
+<!-- ========================= -->
+
+<div class="row mt-4">
+
+    <div class="col-md-12">
+        <div class="card p-3 shadow-sm">
+
+            <h5>🚨 Analyse des Fraudes</h5>
+
+            <div class="chart-container">
+                <canvas id="fraudChart"></canvas>
+            </div>
+
+        </div>
+    </div>
+
+</div>
 
     <!-- ========================= -->
     <!-- 🔹 ANALYSE IA + NARRATION -->
     <!-- ========================= -->
-    <div class="row mb-4">
-
+    <div class="row mb-4 mt-4">
         <div class="col-md-6">
             <div class="card p-3 shadow-sm">
                 <h5>Analyse IA</h5>
                 <p><strong>Score :</strong> {{ ai.score }}/100</p>
                 <p>{{ ai.text }}</p>
-
                 {% if ai.alerts %}
                     <ul>
                         {% for alert in ai.alerts %}
@@ -211,7 +237,6 @@
                 {% endif %}
             </div>
         </div>
-
         <div class="col-md-6">
             <div class="card p-3 shadow-sm">
                 <h5>Narration Automatique</h5>
@@ -219,63 +244,206 @@
             </div>
         </div>
 
-    </div>
-
-
-    <!-- ========================= -->
-    <!-- 🔹 TABLE TRANSACTIONS -->
-    <!-- ========================= -->
-
-        <div class="row g-4 mt-1">
-            <div class="col-lg-12">
-                <div class="card table-card">
-                    <h6 class="mb-3">Dernières transactions</h6>
-
-                    <div class="table-responsive">
-                        <table class="table table-sm table-hover">
-                            <thead class="table-light">
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Client</th>
-                                    <th>Compte</th>
-                                    <th>Type</th>
-                                    <th>Status</th>
-                                    <th class="text-end">Montant</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for t in transactions %}
-                                <tr>
-                                    <td>{{ t.date }}</td>
-                                    <td>{{ t.customer }}</td>
-                                    <td>{{ t.account }}</td>
-                                    <td>{{ t.transaction_type }}</td>
-                                    <td>{{ t.status }}</td>
-                                    <td class="text-end">{{ t.amount|floatformat:0 }}</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-
-                </div>
-            </div>
+        <div class="col-md-3">
+            <div class="card shadow-sm text-center">
+                <div class="card-body">
+                    <h6>Score Client</h6>
+                    <h2>{{ client_score.score }}/100</h2>
+                    <p>{{ client_score.level }}</p>
+               </div>
+           </div>
         </div>
 
-<!-- Chart.js -->
+<hr>
 
- <script src="{% static 'js/chart.js'%}"></script>
+
+<h4>🧠 Analyse Automatique IA</h4>
+
+<div class="alert alert-warning">
+
+<ul>
+
+{% for insight in auto_insights %}
+
+<li>{{ insight }}</li>
+
+{% endfor %}
+
+</ul>
+
+</div>
+
+</div>
+
+    <!-- ========================= -->
+<!-- 🔹 TABLE TRANSACTIONS -->
+<!-- ========================= -->
+<div class="row g-4 mt-1">
+    <div class="col-lg-12">
+        <div class="card table-card">
+            <h6 class="mb-3">Dernières transactions</h6>
+            <div class="table-responsive" style="max-height:350px; overflow-y:auto;">
+                <table class="table table-sm table-hover mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Date</th>
+                            <th>Client</th>
+                            <th>Compte</th>
+                            <th>Type</th>
+                            <th>Status</th>
+                            <th class="text-end">Montant</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for t in transactions %}
+                        <tr>
+                            <td>{{ t.date }}</td>
+                            <td>{{ t.customer }}</td>
+                            <td>{{ t.account }}</td>
+                            <td>{{ t.transaction_type }}</td>
+                            <td>{{ t.status }}</td>
+                            <td class="text-end">{{ t.amount|floatformat:0 }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================= -->
+<!-- 🔹 TRANSACTIONS SUSPECTES -->
+<!-- ========================= -->
+<div class="fraud-table-container mt-3">
+    <h4 class="mb-3">🚨 Transactions suspectes</h4>
+    <div class="table-scroll" style="max-height:350px; overflow-y:auto; border:1px solid #ddd; border-radius:6px;">
+        <table class="table table-sm table-striped table-hover mb-0">
+            <thead class="table-dark">
+                <tr>
+                    <th>ID</th>
+                    <th>Date</th>
+                    <th>Compte</th>
+                    <th>Type</th>
+                    <th>Montant</th>
+                    <th>Probabilité fraude</th>
+                    <th>Risque</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for t in fraud_list|slice:":10" %}
+                <tr>
+                    <td>{{ t.id }}</td>
+                    <td>{{ t.transaction_date|date:"d/m/Y H:i" }}</td>
+                    <td>{{ t.account.account_number }}</td>
+                    <td>{{ t.transaction_type }}</td>
+                    <td>{{ t.amount|intcomma }}</td>
+                    <td>{{ t.fraud_probability|floatformat:2 }}</td>
+                    <td>
+                        {% if t.fraud_probability > 0.7 %}
+                            <span class="badge bg-danger">High Risk</span>
+                        {% elif t.fraud_probability > 0.4 %}
+                            <span class="badge bg-warning text-dark">Medium Risk</span>
+                        {% else %}
+                            <span class="badge bg-success">Low Risk</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <a href="{% url 'transaction_investigate' t.id %}" class="btn btn-sm btn-primary">
+                            Investigate
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="8" class="text-center text-muted">Aucune transaction suspecte détectée</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- ========================= -->
+<!-- 🔹 CHART FRAUDE -->
+<!-- ========================= -->
+<div class="row mt-4">
+    <div class="col-md-12">
+        <div class="card p-3 shadow-sm">
+            <h5>🚨 Analyse des Fraudes</h5>
+            <div class="chart-container">
+                <canvas id="fraudChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ========================= -->
+<!-- 🔹 ASSISTANT FINANCIER IA -->
+<!-- ========================= -->
+<div class="card mt-4 p-3">
+    <h5>🤖 Assistant Financier IA</h5>
+
+    <div id="ai-chat-box" style="height:200px; overflow-y:auto; border:1px solid #eee; padding:10px;">
+        {% if context_assistant %}
+            <div>{{ context_assistant }}</div>
+        {% endif %}
+    </div>
+
+    <form method="get" class="mt-2 d-flex">
+        <input type="text" name="question" class="form-control me-2" placeholder="Posez une question financière..." value="{{ question }}">
+        <button class="btn btn-primary">Envoyer</button>
+    </form>
+</div>
+
+<!-- ========================= -->
+<!-- 🔹 SCRIPT ASSISTANT IA -->
+<!-- ========================= -->
+<script>
+function askAI() {
+    const question = document.getElementById('ai-question').value.trim();
+    if(!question) return;
+
+    fetch(`/dashboard/?question=${encodeURIComponent(question)}`)
+        .then(response => response.text())
+        .then(data => {
+            const chatBox = document.getElementById('ai-chat-box');
+            const message = document.createElement('div');
+            message.innerHTML = `<strong>Vous :</strong> ${question}<br><strong>IA :</strong> ${data}`;
+            chatBox.appendChild(message);
+            chatBox.scrollTop = chatBox.scrollHeight;
+            document.getElementById('ai-question').value = '';
+        })
+        .catch(err => console.error(err));
+}
+</script>
+
+
+<!-- ========================= -->
+<!-- 🔹 CHART.JS SCRIPT -->
+<!-- ========================= -->
+<!-- Chart.js -->
+<script src="{% static 'js/chart.js' %}"></script>
 
 <script>
+// ------------------------
+// 1️⃣ Evolution quotidienne
+// ------------------------
+const evolutionLabels = {{ chart_evolution.labels|safe }};
+const evolutionData   = {{ chart_evolution.data|safe }};
 
 new Chart(document.getElementById('chartEvolution'), {
     type: 'line',
     data: {
-        labels: {{ chart_evolution.labels|safe }},
+        labels: evolutionLabels,
         datasets: [{
             label: 'Montant',
-            data: {{ chart_evolution.data|safe }},
-            borderWidth: 2
+            data: evolutionData,
+            borderColor: '#1e3a8a',
+            backgroundColor: 'rgba(59,130,246,0.2)',
+            borderWidth: 2,
+            tension: 0.3
         }]
     },
     options: {
@@ -284,16 +452,20 @@ new Chart(document.getElementById('chartEvolution'), {
     }
 });
 
-
+// ------------------------
+// 2️⃣ Evolution mensuelle
+// ------------------------
+const monthlyLabels = {{ chart_monthly.labels|safe }};
+const monthlyData   = {{ chart_monthly.data|safe }};
 
 new Chart(document.getElementById('chartMonthly'), {
     type: 'bar',
     data: {
-        labels: {{ chart_monthly.labels|safe }},
+        labels: monthlyLabels,
         datasets: [{
             label: 'Montant',
-            data: {{ chart_monthly.data|safe }},
-            borderWidth: 1
+            data: monthlyData,
+            backgroundColor: '#3b82f6'
         }]
     },
     options: {
@@ -302,14 +474,19 @@ new Chart(document.getElementById('chartMonthly'), {
     }
 });
 
+// ------------------------
+// 3️⃣ Répartition Crédit / Débit
+// ------------------------
+const typeLabels = {{ chart_types.labels|safe }};
+const typeData   = {{ chart_types.data|safe }};
 
-
-new Chart(document.getElementById('chartTypes'), {
+new Chart(document.getElementById('typeChart'), {
     type: 'pie',
     data: {
-        labels: {{ chart_types.labels|safe }},
+        labels: typeLabels,
         datasets: [{
-            data: {{ chart_types.data|safe }}
+            data: typeData,
+            backgroundColor: ['#10b981', '#ef4444'] // vert = Crédit, rouge = Débit
         }]
     },
     options: {
@@ -318,24 +495,118 @@ new Chart(document.getElementById('chartTypes'), {
     }
 });
 
-
+// ------------------------
+// 4️⃣ Top comptes
+// ------------------------
 const accLabels = {{ chart_accounts.labels|safe }};
 const accData   = {{ chart_accounts.data|safe }};
 
-new Chart(document.getElementById("chartAccounts"), {
-    type: "bar",
+new Chart(document.getElementById('topAccountsChart'), {
+    type: 'bar',
     data: {
         labels: accLabels,
         datasets: [{
-            label: "Montant total",
-            data: accData
+            label: 'Montant total',
+            data: accData,
+            backgroundColor: '#3b82f6'
         }]
     },
-    options:{
-        responsive:true,
-        maintainAspectRatio:false
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
     }
 });
+
+// ------------------------
+// 5️⃣ Prévisions financières
+// ------------------------
+const forecastLabels = {{ chart_forecast.labels|safe }};
+const forecastData   = {{ chart_forecast.data|safe }};
+
+new Chart(document.getElementById('forecastChart'), {
+    type: 'line',
+    data: {
+        labels: forecastLabels,
+        datasets: [{
+            label: 'Prévision financière',
+            data: forecastData,
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99,102,241,0.2)',
+            borderWidth: 2,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+// ------------------------
+// 6️⃣ Transactions frauduleuses
+// ------------------------
+const fraudLabels = {{ chart_fraud.labels|safe }};
+const fraudData   = {{ chart_fraud.data|safe }};
+
+new Chart(document.getElementById('fraudChart'), {
+    type: 'doughnut',
+    data: {
+        labels: fraudLabels,
+        datasets: [{
+            data: fraudData,
+            backgroundColor: ['#3b82f6', '#ef4444']
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+// Prévision ML
+const forecastMLLabels = {{ chart_forecast_ml.labels|safe }};
+const forecastMLData   = {{ chart_forecast_ml.data|safe }};
+new Chart(document.getElementById('forecastMLChart'), {
+    type: 'line',
+    data: {
+        labels: forecastMLLabels,
+        datasets: [{
+            label: 'Prévision ML',
+            data: forecastMLData,
+            borderColor: '#6366f1',
+            backgroundColor: 'rgba(99,102,241,0.2)',
+            borderWidth: 2,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
+// Prévision IA
+const forecastAILabels = {{ chart_forecast_ai.labels|safe }};
+const forecastAIData   = {{ chart_forecast_ai.data|safe }};
+new Chart(document.getElementById('forecastAIChart'), {
+    type: 'line',
+    data: {
+        labels: forecastAILabels,
+        datasets: [{
+            label: 'Prévision IA',
+            data: forecastAIData,
+            borderColor: '#10b981',
+            backgroundColor: 'rgba(16,185,129,0.2)',
+            borderWidth: 2,
+            tension: 0.4
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false
+    }
+});
+
 
 </script>
 

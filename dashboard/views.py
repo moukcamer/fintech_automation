@@ -10,14 +10,19 @@ import json
 import matplotlib.pyplot as plt
 import io
 import os
-
+from ai.copilot import financial_copilot
+from ai.copilot_insights import auto_financial_insight
+from ai.assistant import financial_copilot
 from ai.features import build_features
 from ai.risk_engine import compute_risk
 from ai.insights import generate_insight
-
+from ai.scoring import compute_client_score
 from ai.narration import generate_narrative
 
 from finance.models import Account, Transaction
+
+from ml.forecast import financial_forecast as ml_forecast
+from ai.forecast import financial_forecast as ai_forecast
 
 
 # =============================================
@@ -66,6 +71,18 @@ def dashboard(request):
     total_expenses = float(queryset.filter(amount__lt=0).aggregate(total=Sum("amount"))["total"] or 0)
     net_balance = total_income + total_expenses
     total_accounts = Account.objects.count()
+    fraud_transactions = queryset.filter(is_fraud=True).count()
+
+    fraud_rate = 0
+    if total_transactions > 0:
+        fraud_rate = round((fraud_transactions / total_transactions) * 100, 2)
+
+    kpis_ia = {
+        "net_balance": net_balance,
+        "total_transactions": total_transactions,
+        "fraud_transactions": fraud_transactions,
+    }
+
 
     # ------------------------
     # 3️⃣ Graphiques
@@ -95,6 +112,8 @@ def dashboard(request):
     )
     monthly_labels = [e["month"].strftime("%b %Y") for e in monthly_qs if e["month"]]
     monthly_data = [float((e["total_credit"] or 0) + (e["total_debit"] or 0)) for e in monthly_qs if e["month"]]
+    forecast_values = ai_forecast(monthly_data, periods=3)
+    forecast_labels = ["Prévision 1", "Prévision 2", "Prévision 3"]
 
     # Répartition par type
     type_qs = queryset.values("transaction_type").annotate(total=Sum("amount")).order_by("-total")
@@ -112,6 +131,18 @@ def dashboard(request):
 
     top_accounts_labels = [e["account__account_number"] for e in top_accounts_qs]
     top_accounts_data = [float(e["total"] or 0) for e in top_accounts_qs]
+
+
+    # ------------------------
+    # Graphiques prévision
+    # ------------------------
+    # Prévision ML
+    ml_forecast_values = ml_forecast(monthly_data, periods=3)
+    ml_forecast_labels = ["Prévision ML 1", "Prévision ML 2", "Prévision ML 3"]
+
+    # Prévision IA
+    ai_forecast_values = ai_forecast(monthly_data, periods=3)
+    ai_forecast_labels = ["Prévision IA 1", "Prévision IA 2", "Prévision IA 3"]
 
 
     # ------------------------
@@ -146,7 +177,12 @@ def dashboard(request):
 
             kpis_ia = {"net_balance": net_balance, "total_transactions": total_transactions, "total_amount": total_amount}
             insight_text = generate_insight(kpis=kpis_ia, risk=risk)
-            narrative_text = generate_narrative(kpis=kpis_ia, risk=risk, monthly_data=monthly_data, evolution_data=evolution_data)
+            narrative_text = generate_narrative(kpis=kpis_ia, 
+                                                risk=risk,
+                                                 monthly_data=monthly_data, 
+                                                 evolution_data=evolution_data,
+                                                 fraud_transactions=fraud_transactions
+                                                 )
 
             ai_result.update({
                 "score": risk.get("risk_score",50),
@@ -164,28 +200,165 @@ def dashboard(request):
     transactions = queryset.select_related("account").order_by("-transaction_date")[:20]
 
     # ------------------------
-    # 6️⃣ Contexte
+    # 6 Fraud v Normal
     # ------------------------
-    context = {
-        "total_transactions": total_transactions,
-        "total_amount": total_amount,
-        "total_income": total_income,
-        "total_expenses": total_expenses,
-        "net_balance": net_balance,
-        "total_accounts": total_accounts,
-        "ai": ai_result,
-        "narrative_text": narrative_text,
-        "chart_evolution": {"labels": json.dumps(evolution_labels), "data": json.dumps(evolution_data)},
-        "chart_monthly": {"labels": json.dumps(monthly_labels), "data": json.dumps(monthly_data)},
-        "chart_types": {"labels": json.dumps(type_labels), "data": json.dumps(type_data)},
-        "filters": {"date_start": date_start, "date_end": date_end, "transaction_type": trans_type, "account_id": account_id},
-        "transactions": transactions,
-        "chart_accounts": {
-            "labels": json.dumps(top_accounts_labels),
-            "data": json.dumps(top_accounts_data),
-},
-    }
 
+    fraud_labels = ["Normal", "Fraude"]
+
+    fraud_data = [
+        queryset.filter(is_fraud=False).count(),
+        queryset.filter(is_fraud=True).count(),
+    ]
+    
+    # ------------------------
+    # 7 Fraud v Normal
+    # -----------------------
+
+    fraud_transactions = queryset.filter(is_fraud=True).count()
+
+    # ------------------------
+    #  Table des transactions suspectes
+    # ------------------------
+
+    fraud_list = queryset.filter(is_fraud=True).order_by("-fraud_probability")[:10]
+   
+
+    # ------------------------
+    # Gestion de l'Assistant IA
+    # ------------------------
+    question = request.GET.get('question', '').strip()
+    context_assistant = None
+
+    if question:
+        q = question.lower()
+        # Résultat net
+        if "résultat net" in q or "solde net" in q:
+            total_income = Transaction.objects.filter(transaction_type="IN").aggregate(total=Sum('amount'))['total'] or 0
+            total_expenses = Transaction.objects.filter(transaction_type="OUT").aggregate(total=Sum('amount'))['total'] or 0
+            net_balance = total_income - total_expenses
+            context_assistant = f"✅ Votre résultat net est de {net_balance:,} XAF"
+
+        # Total revenus
+        elif "revenus" in q or "total revenus" in q:
+            total_income = Transaction.objects.filter(transaction_type="IN").aggregate(total=Sum('amount'))['total'] or 0
+            context_assistant = f"💰 Le total des revenus est de {total_income:,} XAF"
+
+        # Total dépenses
+        elif "dépenses" in q or "total dépenses" in q:
+            total_expenses = Transaction.objects.filter(transaction_type="OUT").aggregate(total=Sum('amount'))['total'] or 0
+            context_assistant = f"📉 Le total des dépenses est de {total_expenses:,} XAF"
+
+        # Transactions suspectes
+        elif "transactions suspectes" in q or "fraude" in q:
+            fraud_count = Transaction.objects.filter(is_fraud=True).count()
+            context_assistant = f"🚨 Il y a actuellement {fraud_count} transactions suspectes."
+
+        # Solde d’un compte précis
+        elif "solde compte" in q:
+            import re
+            match = re.search(r'\d+', q)  # extraire l’ID du compte
+            if match:
+                account_id = int(match.group())
+                income = Transaction.objects.filter(account__id=account_id, transaction_type="IN").aggregate(total=Sum('amount'))['total'] or 0
+                expenses = Transaction.objects.filter(account__id=account_id, transaction_type="OUT").aggregate(total=Sum('amount'))['total'] or 0
+                balance = income - expenses
+                context_assistant = f"💳 Le solde du compte {account_id} est de {balance:,} XAF"
+            else:
+                context_assistant = "⚠️ Veuillez préciser l’ID du compte dans votre question."
+
+        else:
+            context_assistant = "❓ Désolé, je n'ai pas compris votre question. Essayez des termes comme 'résultat net', 'revenus', 'dépenses', 'transactions suspectes' ou 'solde compte <ID>'."
+
+    # ------------------------
+    # Autres variables du dashboard
+    # ------------------------
+    transactions = Transaction.objects.all().order_by('-transaction_date')[:50]
+    fraud_list = Transaction.objects.filter(is_fraud=True).order_by('-fraud_probability')[:10]
+
+    #------------------------
+    # 8 copilot
+    #------------------------
+
+    if question and queryset.exists():
+        try:
+            df_assistant = pd.DataFrame(list(
+            queryset.values(
+                "amount",
+                "account__account_number"
+            )
+        ))
+            
+            df_assistant.rename(
+            columns={"account__account_number":"account_number"},
+            inplace=True
+            )
+            
+            kpis_assistant = {
+            "net_balance": net_balance,
+            "total_transactions": total_transactions,
+            "total_income": total_income,
+            "total_expenses": total_expenses
+            }
+            assistant_answer = financial_copilot(
+            question,
+            df_assistant,
+            kpis_assistant,
+            monthly_data,
+            risk
+            )
+        except Exception as e:
+            assistant_answer = f"Erreur assistant : {str(e)}"
+    
+    #------------------------------
+    # 9 copilot_insights
+    # -----------------------------
+
+    auto_insights = auto_financial_insight(
+        kpis_ia,
+        monthly_data,
+        type_data,
+        risk
+    )     
+
+    #-------------------------------
+    # 12 Scoring
+    # ------------------------------
+    
+    client_score = compute_client_score(df)
+       
+
+    # ------------------------
+    # 8 Contexte
+    # ------------------------
+
+    context = {
+    "total_transactions": total_transactions,
+    "total_amount": total_amount,
+    "total_income": total_income,
+    "total_expenses": total_expenses,
+    "net_balance": net_balance,
+    "total_accounts": total_accounts,
+    "ai": ai_result,
+    "narrative_text": narrative_text,
+    "chart_evolution": {"labels": json.dumps(evolution_labels), "data": json.dumps(evolution_data)},
+    "chart_monthly": {"labels": json.dumps(monthly_labels), "data": json.dumps(monthly_data)},
+    "chart_types": {"labels": json.dumps(type_labels), "data": json.dumps(type_data)},
+    "chart_accounts": {"labels": json.dumps(top_accounts_labels), "data": json.dumps(top_accounts_data)},
+    "chart_fraud": {"labels": json.dumps(fraud_labels), "data": json.dumps(fraud_data)},
+    "chart_forecast": {"labels": json.dumps(forecast_labels), "data": json.dumps(forecast_values)},
+    "fraud_transactions": fraud_transactions,
+    "fraud_rate": fraud_rate,
+    "fraud_list": fraud_list,
+    "filters": {"date_start": date_start, "date_end": date_end, "transaction_type": trans_type, "account_id": account_id},
+    "transactions": transactions,
+    "context_assistant": context_assistant,
+    "question": question,
+    "auto_insights": auto_insights,
+    "client_score": client_score,
+    "chart_forecast_ml": {"labels": json.dumps(ml_forecast_labels),"data": json.dumps(ml_forecast_values),},
+    "chart_forecast_ai": {"labels": json.dumps(ai_forecast_labels),"data": json.dumps(ai_forecast_values),},
+
+}
     return render(request, "dashboard/dashboard.html", context)
 
 # =============================================

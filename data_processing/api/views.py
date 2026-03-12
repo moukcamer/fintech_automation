@@ -24,11 +24,11 @@ def kpis(request):
 def monthly_performance(request):
     qs = (
         Payment.objects
-        .annotate(month=TruncMonth("date"))
+        .annotate(month=TruncMonth("posted_at"))
         .values("month")
         .annotate(
-            income=Sum("amount", filter=~models.Q(invoice=None)),
-            expense=Sum("amount", filter=models.Q(invoice=None)),
+            income=Sum("amount", filter=Q(payment_type="IN")),
+            expense=Sum("amount", filter=Q(payment_type="OUT")),
         )
         .order_by("month")
     )
